@@ -48,7 +48,6 @@ const Table = (props) => {
       };
       columnss = [...columnss, newColumn];
     }
-
     return columnss;
   };
   const [columns, setColumns] = useState(defineTable(props.Data[0]));
@@ -81,28 +80,9 @@ const Table = (props) => {
 
 
   const rowClickedHandler = (event) => {
-    // setColumns([
-    //   {
-    //     name: "id",
-    //     selector: (row) => {
-    //       return row["id"];
-    //     },
-    //     style: {
-    //       color: "white",
-    //       font: "sans-serif",
-    //     },
-    //   },
-    //   {
-    //     name: "Test Suite",
-    //     selector: (row) => row.testSuite,
-    //     style: {
-    //       color: "white",
-    //       font: "sans-serif",
-    //     },
-    //   },
-    // ]);
-    //console.log(event.id);
-    props.onRowClicked(event);
+    
+    const newData = props.onRowClicked(event);
+    setColumns(defineTable(newData[0]));
   };
 
   return (
@@ -114,7 +94,9 @@ const Table = (props) => {
       // expandableRows
       // expandableRowsComponent={ExpandedComponent}
       theme="solarized"
-      onRowClicked={rowClickedHandler}
+      onRowDoubleClicked={rowClickedHandler}
+      pointerOnHover
+      highlightOnHover
     />
   );
 };
