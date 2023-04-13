@@ -1,5 +1,5 @@
 import DataTable, { createTheme } from "react-data-table-component";
-import { useState } from "react";
+
 createTheme(
   "solarized",
   {
@@ -27,31 +27,6 @@ createTheme(
 );
 
 const Table = (props) => {
-  //For Generic Tables
-  const defineTable = (data) => {
-    let newColumn = "";
-    let columnss = "";
-
-    for (const key of Object.keys(data)) {
-      if (data[key].toString() === "[object Object]") {
-        continue;
-      }
-      newColumn = {
-        name: key,
-        selector: (row) => {
-          return row[key];
-        },
-        style: {
-          color: "white",
-          font: "sans-serif",
-        },
-      };
-      columnss = [...columnss, newColumn];
-    }
-    return columnss;
-  };
-  const [columns, setColumns] = useState(defineTable(props.Data[0]));
-
   // FOR EXPANDED DATA -----------------------------------------
               // const dataExpandedComponent = (data) => {
               //   let output = "";
@@ -81,16 +56,16 @@ const Table = (props) => {
 
   const rowClickedHandler = (event) => {
     
-    const newData = props.onRowClicked(event);
-    setColumns(defineTable(newData[0]));
+    props.onRowClicked(event);
+    console.log("record event : " , event);
   };
 
   return (
     <DataTable
       pagination
       // paginationPerPage={18}
-      columns={columns}
-      data={props.Data}
+      columns={props.columns}
+      data={props.data}
       // expandableRows
       // expandableRowsComponent={ExpandedComponent}
       theme="solarized"
