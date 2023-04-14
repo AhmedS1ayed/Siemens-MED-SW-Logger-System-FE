@@ -1,4 +1,5 @@
 import DataTable, { createTheme } from "react-data-table-component";
+import { Link } from "react-router-dom";
 
 const columns = [
   {
@@ -33,30 +34,39 @@ const columns = [
       font: "sans-serif",
     },
   },
+  {
+    name: "test cases",
+    selector: (row) => (
+      <Link to={`/testcases?testsuitId=${row.id}`}>View Test Cases</Link>
+    ),
+  },
 ];
 
 // const dataExpandedRecursion = (obj) =>{
-//     for (const key of Object.keys(obj)) 
+//     for (const key of Object.keys(obj))
 //     {
-        
+
 //         const value = data[key];
 //         output+= key + " : " + value + "\n" ;
 //     }
 // };
 
 const dataExpandedComponent = (data) => {
-    let output="";
-    for (const key of Object.keys(data)) 
-    {
-        if(data[key].toString() === '[object Object]')
-        {
-            output += "-------------------\n" + key + " : " + "\n" + dataExpandedComponent(data[key]);
-            continue;
-        }
-        console.log(data[key]);
-        const value = data[key];
-        output+= key + " : " + value + "\n" ;
+  let output = "";
+  for (const key of Object.keys(data)) {
+    if (data[key].toString() === "[object Object]") {
+      output +=
+        "-------------------\n" +
+        key +
+        " : " +
+        "\n" +
+        dataExpandedComponent(data[key]);
+      continue;
     }
+    console.log(data[key]);
+    const value = data[key];
+    output += key + " : " + value + "\n";
+  }
   return output;
 };
 
@@ -91,6 +101,7 @@ createTheme(
 );
 
 const Table = (props) => {
+  const handleRowClick = (event) => {};
 
   return (
     <DataTable
@@ -100,6 +111,7 @@ const Table = (props) => {
       data={props.Data}
       expandableRows
       expandableRowsComponent={ExpandedComponent}
+      onRowClicked={handleRowClick}
       theme="solarized"
     />
   );
