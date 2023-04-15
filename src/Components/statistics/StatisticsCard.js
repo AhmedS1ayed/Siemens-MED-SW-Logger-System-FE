@@ -6,7 +6,6 @@ import './StatisticsCard.css';
 const StatisticCard = ({ color, title, count }) => {
     <div>
         {/* data = {Data}/ */}
-
         {/* <p>color: {color}</p> */}
         <p>title: {title}</p>
         <p>count: {count}</p>

@@ -21,7 +21,7 @@ export default function Testsuit() {
       
       <StatisticCard color={'white'} title={'Total Test Suites'} count={totalTestSuites}  ></StatisticCard>
       <StatisticCard color={'blue'} title={'Successful Test Suites'} count={successfulTestSuites}  ></StatisticCard>
-      <StatisticCard color={'blue'} title={'Failed Test Suites'} count={failedTestSuites}  ></StatisticCard>
+      <StatisticCard color={'red'} title={'Failed Test Suites'} count={failedTestSuites}  ></StatisticCard>
 
       </div>
       <br></br>
