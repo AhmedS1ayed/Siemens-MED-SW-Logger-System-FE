@@ -24,8 +24,8 @@
     "id": 3,
     "testSuite": "Randomize Port",
     "testCase": "1",
-    "validationState": "InProgress",
+    "validationState": "Failed",
     "Version": "1234",
-    "By": "Abo 7assan"
+    "By": "Abo 7assan"  
   }
 ]
