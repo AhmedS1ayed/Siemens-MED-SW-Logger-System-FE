@@ -1,12 +1,12 @@
 import React from "react";
-import Table from "../../Components/Table/Table.js";
-import id from "../../Data/Mock_Data.json";
 import { Container } from "@mui/material";
+
+import BasicExampleDataGrid from "../../Components/NewTable/NewTable.js";
 
 export default function Testsuit() {
   return (
     <Container>
-      <Table Data={id}></Table>
+      <BasicExampleDataGrid />
     </Container>
   );
 }
