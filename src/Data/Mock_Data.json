@@ -1,31 +1,36 @@
 [
   {
-    "id": 1,
-    "testSuite": "VGA",
-    "testCase": "1",
+    "ID": 1,
+    "Name": "VGA",
+    "Time": "22",
+    "dateCreated": "1990-01-01T00:00:00.000Z",
+    "Author": "Ahmed",
     "validationState": "Verified",
-    "Version": "1234",
-    "By": "Abo el Seed",
-    "Validation Tag" : {
-        "Here" : "here",
-        "There" : "here",
-        "fair" : "here"
+    "Version": "123",
+    "Validation Tag": {
+      "Here": "here",
+      "There": "here",
+      "fair": "here"
     }
   },
   {
-    "id": 2,
-    "testSuite": "Display Port",
+    "ID": 2,
+    "Name": "Display Port",
+    "Time": "48",
+    "dateCreated": "1990-01-01T00:00:00.000Z",
+    "Author": "Sayed",
     "testCase": "1",
     "validationState": "Verified",
-    "Version": "1234",
-    "By": "Abo el Sho2"
+    "Version": "1234"
   },
   {
-    "id": 3,
-    "testSuite": "Randomize Port",
-    "testCase": "1",
+    "ID": 3,
+    "Name": "Test",
+    "Time": "10",
+    "dateCreated": "1990-01-01T00:00:00.000Z",
+    "Author": "Shawky",
+    "testCase": "7",
     "validationState": "Verified",
-    "Version": "1234",
-    "By": "Abo 7assan"
+    "Version": "12344"
   }
 ]
