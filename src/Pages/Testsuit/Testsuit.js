@@ -4,6 +4,8 @@ import data from "../../Data/Mock_Data.json";
 import { Container } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard"
 import "../../Components/statistics/StatisticsCard.css"
+// import Example from "../../Components/NewTable/table.js";
+
 console.log(data.length)  
 
 
@@ -25,7 +27,8 @@ export default function Testsuit() {
 
       </div>
       <br></br>
-      <Table Data={data}></Table>
+      {/* <Example></Example> */}
+      {/* <Table Data={data}></Table> */}
     </Container>
   );
 } 
