@@ -7,8 +7,8 @@ import "../../Components/statistics/StatisticsCard.css"
 
 // console.log(data.length);  
 const totalTestSuites = data.length;
-const successfulTestSuites = data.filter((item) => item.validationState === 'Verified').length;
-const failedTestSuites = data.filter((item) => item.validationState === 'Failed').length;
+const successfulTestSuites = data.filter((item) => item.isVerified === true).length;
+const failedTestSuites = data.filter((item) => item.isVerified === false    ).length;
 
 console.log(totalTestSuites);
 export default function Testsuit() {
@@ -20,7 +20,7 @@ export default function Testsuit() {
         <StatisticCard title="Successful Test Suites" count={successfulTestSuites} color="green" />
         <StatisticCard title="Failed Test Suites" count={failedTestSuites} color="red" />
       </div>
-      <br />
+  
       <BasicExampleDataGrid />
     </Container>
   );
