@@ -1,0 +1,24 @@
+.super-app-theme--header {
+  width: 100%;
+  flex: 1;
+  background-color: rgb(192, 182, 182);
+  color: rgb(103, 9, 226);
+}
+
+.success-class {
+  background-color: rgb(210, 235, 211);
+  padding: 5px 20px 0px 20px;
+  border-radius: 50px;
+  color: rgb(27, 120, 30);
+}
+
+.failed-class {
+  background-color: rgb(245, 208, 205);
+  padding: 5px 20px 0px 20px;
+  border-radius: 50px;
+  color: rgb(233, 64, 52);
+}
+
+.row-border {
+  border-bottom: 2px solid #ccc;
+}

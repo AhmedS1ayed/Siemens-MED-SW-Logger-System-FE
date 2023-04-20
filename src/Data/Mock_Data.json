@@ -5,8 +5,9 @@
     "Time": "22",
     "dateCreated": "1990-01-01T00:00:00.000Z",
     "Author": "Ahmed",
-    "validationState": "Verified",
+    "isVerified": true,
     "Version": "123",
+    "versioned": "123",
     "Validation Tag": {
       "Here": "here",
       "There": "here",
@@ -20,7 +21,7 @@
     "dateCreated": "1990-01-01T00:00:00.000Z",
     "Author": "Sayed",
     "testCase": "1",
-    "validationState": "Verified",
+    "isVerified": false,
     "Version": "1234"
   },
   {
@@ -30,7 +31,7 @@
     "dateCreated": "1990-01-01T00:00:00.000Z",
     "Author": "Shawky",
     "testCase": "7",
-    "validationState": "Verified",
+    "isVerified": true,
     "Version": "12344"
   }
 ]
