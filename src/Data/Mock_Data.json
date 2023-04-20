@@ -30,7 +30,7 @@
     "dateCreated": "1990-01-01T00:00:00.000Z",
     "Author": "Shawky",
     "testCase": "7",
-    "validationState": "Verified",
+    "validationState": "Failed",
     "Version": "12344"
   }
 ]
