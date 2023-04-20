@@ -8,7 +8,7 @@ import InsertChartIcon from "@mui/icons-material/InsertChart";
 
 export default function Navbar() {
   return (
-    <AppBar position="static">
+    <AppBar position="static"  sx={{ backgroundColor: "#00a3e0" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <InsertChartIcon

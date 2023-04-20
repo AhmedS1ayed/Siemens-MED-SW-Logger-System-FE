@@ -11,6 +11,22 @@ export default function BasicExampleDataGrid() {
     window.location.href = `/testcases?testsuitId=${params.id}`;
   };
 
+  const CustomToolbar = () => {
+    return (
+      <GridToolbar>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ marginRight: "16px" }}>Custom Toolbar</div>
+          <div style={{ backgroundColor: "#00a3e0", marginRight: "8px" }}>
+            <GridToolbar.FilterButton />
+          </div>
+          <div style={{ backgroundColor: "#00a3e0" }}>
+            <GridToolbar.ExportButton />
+          </div>
+        </div>
+      </GridToolbar>
+    );
+  };
+
   const getColumnsName = (data, columnWidts = {}) => {
     return Object.keys(data)
       .map((field) => {
@@ -39,6 +55,7 @@ export default function BasicExampleDataGrid() {
             },
             width: columnWidth,
             flex: 1,
+            
           };
         }
         return null;
@@ -63,7 +80,13 @@ export default function BasicExampleDataGrid() {
   //     />
   //   ),
   // });
+  // const getRowClassName = (params) => {
+  //   return clsx("row-border", {
+  //     "clickable-row": true, // add a class for clickable rows
+  //   });
+  // };
 
+  
   return (
     <div style={{ height: 800, width: "100%" }} className="dataGridContainer">
       <DataGrid   
@@ -72,16 +95,21 @@ export default function BasicExampleDataGrid() {
         slots={{ toolbar: GridToolbar }}
         getRowId={(row) => row.ID}
         getRowClassName={() => "row-border"}
-        onRowDoubleClick={handleRowDoubleClick}
+        onRowClick={handleRowDoubleClick} 
+         components={{
+          Toolbar: CustomToolbar, // use the custom toolbar component
+        }}       
         sx={{ 
           autoWidth:true,
-          boxShadow: 2,
+          boxShadow: "1px 1px 5px 2px  #00a3e0",
           paddingLeft: "40px",
           paddingRight: "40px",
           paddingTop: "20px",
-          borderColor: "primary.light",
+          // borderColor: "primary.light",
           marginTop: "40px",
           fontWeight: "bold",
+          ":hover": { cursor: "pointer" },
+          
         }}
         // autoHeight={true}
       />

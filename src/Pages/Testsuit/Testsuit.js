@@ -16,9 +16,9 @@ export default function Testsuit() {
   
     <Container>
        <div className="statistics-container">
-        <StatisticCard title="Total Test Suites" count={totalTestSuites} color="blue" />
-        <StatisticCard title="Successful Test Suites" count={successfulTestSuites} color="green" />
-        <StatisticCard title="Failed Test Suites" count={failedTestSuites} color="red" />
+        <StatisticCard title="Total Test Suites" count={totalTestSuites} color="#00a3e0" />
+        <StatisticCard title="Successful Test Suites" count={successfulTestSuites} color="#00b894" />
+        <StatisticCard title="Failed Test Suites" count={failedTestSuites} color="#e74c3c" />
       </div>
   
       <BasicExampleDataGrid />
