@@ -1,15 +1,14 @@
 import React from "react";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
+
+
 export default function Navbar() {
-
-
   return (
-    <AppBar position="static">
+    <AppBar position="static"  sx={{ backgroundColor: "#00a3e0" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <InsertChartIcon
@@ -32,11 +31,6 @@ export default function Navbar() {
           >
             LOGGER
           </Typography>
-
-
-          <Box sx={{ flexGrow: 0 }}>
-            
-          </Box>
         </Toolbar>
       </Container>
     </AppBar>
