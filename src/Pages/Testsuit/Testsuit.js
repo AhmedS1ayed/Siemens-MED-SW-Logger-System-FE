@@ -5,6 +5,7 @@ import data from "../../Data/Mock_Data.json";
 import DataGrid from "../../Components/DataGrid/DataGrid.js";
 import { getColumnsName } from "../../Utils/utilities";
 import { Link } from "react-router-dom";
+import ExpandableRowTable from "../../Components/NewTable/NewTable.js";
 
 export default function Testsuit() {
   let data_columns = getColumnsName(data[0], { dateCreated: 250 });
@@ -36,9 +37,40 @@ export default function Testsuit() {
       />
     ),
   });
+
+  const getColumnName = (data) => {
+    let columnsName = [];
+    Object.keys(data).forEach((key) => {
+      if (typeof data[key] !== "object") {
+        let newColumn = {
+          name: key,
+          label: key,
+        };
+        if (
+          !columnsName.find((column) => {
+            return JSON.stringify(column) === JSON.stringify(newColumn);
+          })
+        ) {
+          columnsName.push(newColumn);
+        }
+      }
+    });
+    return columnsName;
+  };
+
+  let regularColumns = [];
+
+  data.forEach((row) => {
+    regularColumns = getColumnName(row);
+  });
+
   return (
     <Container>
-      <DataGrid data={data} data_columns={data_columns} />
+      <ExpandableRowTable
+        title="Test Suites"
+        Data={data}
+        regularColumns={regularColumns}
+      />
     </Container>
   );
 }
