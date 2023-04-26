@@ -71,6 +71,8 @@ export default function Testsuit() {
         Data={data}
         regularColumns={regularColumns}
       />
+      <DataGrid data={data} data_columns={data_columns} />
+
     </Container>
   );
 }
