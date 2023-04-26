@@ -4,6 +4,12 @@ import data from "../../Data/Mock_Test_Case.json";
 import { getColumnsName } from "../../Utils/utilities";
 import DataGrid from "../../Components/DataGrid/DataGrid.js";
 import { Container } from "@mui/material";
+import StatisticCard from "../../Components/statistics/StatisticsCard";
+import "../../Components/statistics/StatisticsCard.css";
+
+const totalTestCases = data.length;
+const successfulTestCases = data.filter((item) => item.isSuccess === true).length;
+const failedTestCases = data.filter((item) => item.isSuccess === false).length;
 
 export default function Testcase() {
   const location = useLocation();
@@ -30,6 +36,12 @@ export default function Testcase() {
   });
   return (
     <Container>
+        <div className="statistics-container">
+        <StatisticCard title="Total Test Cases" count={totalTestCases} color="#00a3e0" />
+        <StatisticCard title="Successful Test Cases" count={successfulTestCases} color="#00b894" />
+        <StatisticCard title="Failed Test Cases" count={failedTestCases} color="#e74c3c" />
+      </div>
+  
       <DataGrid data={data} data_columns={data_columns} />
     </Container>
   );

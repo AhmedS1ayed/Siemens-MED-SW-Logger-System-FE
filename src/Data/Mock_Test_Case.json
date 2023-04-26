@@ -6,6 +6,7 @@
     "Time": 20,
     "dateCreated": "1990-01-01T00:00:00.000Z",
     "isSuccess": true
+
   },
   {
     "ID": 2,
@@ -14,6 +15,7 @@
     "Time": 40,
     "dateCreated": "1991-01-01T00:00:00.000Z",
     "isSuccess": false
+
   },
   {
     "ID": 3,
@@ -22,5 +24,6 @@
     "Time": 27,
     "dateCreated": "1992-01-01T00:00:00.000Z",
     "isSuccess": false
+
   }
 ]

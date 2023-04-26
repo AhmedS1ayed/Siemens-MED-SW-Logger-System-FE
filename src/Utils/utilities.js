@@ -8,6 +8,9 @@ export const getColumnsName = (data, columnWidts = {}) => {
         let columnWidth = columnWidts[field] || 120;
         return {
           field,
+          resizable: true,
+          autoWidth: true,
+          flex: 1,  
           headerName: field,
           headerClassName: "super-app-theme--header",
           renderCell: (params) => {
