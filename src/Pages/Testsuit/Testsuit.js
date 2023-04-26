@@ -2,21 +2,13 @@ import React from "react";
 import { Container } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import BasicExampleDataGrid from "../../Components/NewTable/NewTable.js";
-import data from "../../Data/Mock_Data.json";
 import "../../Components/statistics/StatisticsCard.css";
 import { useState, useEffect } from "react";
 import id from "../../Data/Mock_Data.json";
 
 // console.log(data.length);
-const totalTestSuites = data.length;
-const successfulTestSuites = data.filter(
-  (item) => item.isVerified === true
-).length;
-const failedTestSuites = data.filter(
-  (item) => item.isVerified === false
-).length;
 
-console.log(totalTestSuites);
+
 export default function Testsuit() {
   // const [data, setData] = useState(null);
   // const getData = null;
@@ -42,14 +34,22 @@ export default function Testsuit() {
   const [data, setData] = useState(
   [
     {
-      ID: "none",
+      _id: "none",
     },
   ]);
+
+  const totalTestSuites = data.length;
+  const successfulTestSuites = data.filter(
+    (item) => item.isSuccessful === true
+  ).length;
+  const failedTestSuites = data.filter(
+    (item) => item.isSuccessful === false
+  ).length;
 
   useEffect(() => {
     fetch('http://localhost:8080/TestSuites/')
       .then(response => response.json())
-      .then(json => {if(json) setData(json)})
+      .then(json => {if(json) setData(json);})
       .catch(error => console.error(error));
   }, []);
 

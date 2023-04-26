@@ -8,7 +8,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 export default function BasicExampleDataGrid(props) {
-
   const handleRowDoubleClick = (params) => {
     window.location.href = `/testcases?testsuitId=${params.id}`;
   };
@@ -58,13 +57,15 @@ export default function BasicExampleDataGrid(props) {
             width: columnWidth,
             flex: 1,
           };
-        }
+        } 
         return null;
       })
       .filter((column) => column !== null);
   };
 
+  // const [data_col,setDataCol] = useState(getColumnsName(props.data[0], { dateCreated: 250 }));
   let data_columns = getColumnsName(props.data[0], { dateCreated: 250 });
+  console.log(data_columns);
   // data_columns.push({
   //   field: "delete",
   //   headerName: "delete",
@@ -93,7 +94,7 @@ export default function BasicExampleDataGrid(props) {
         columns={data_columns}
         rows={props.data}
         slots={{ toolbar: GridToolbar }}
-        getRowId={(row) => row.ID}
+        getRowId={(row) => row._id}
         getRowClassName={() => "row-border"}
         onRowDoubleClick={handleRowDoubleClick}
         components={{
