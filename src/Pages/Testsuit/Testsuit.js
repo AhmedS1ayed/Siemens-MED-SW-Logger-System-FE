@@ -6,6 +6,8 @@ import DataGrid from "../../Components/DataGrid/DataGrid.js";
 import { getColumnsName } from "../../Utils/utilities";
 import { Link } from "react-router-dom";
 import ExpandableRowTable from "../../Components/NewTable/NewTable.js";
+import { getColumnName } from "../../Utils/utilities";
+import LinkIcon from "@mui/icons-material/Link";
 
 export default function Testsuit() {
   let data_columns = getColumnsName(data[0], { dateCreated: 250 });
@@ -38,39 +40,35 @@ export default function Testsuit() {
     ),
   });
 
-  const getColumnName = (data) => {
-    let columnsName = [];
-    Object.keys(data).forEach((key) => {
-      if (typeof data[key] !== "object") {
-        let newColumn = {
-          name: key,
-          label: key,
-        };
-        if (
-          !columnsName.find((column) => {
-            return JSON.stringify(column) === JSON.stringify(newColumn);
-          })
-        ) {
-          columnsName.push(newColumn);
-        }
-      }
-    });
-    return columnsName;
-  };
-
   let regularColumns = [];
 
   data.forEach((row) => {
     regularColumns = getColumnName(row);
   });
 
+  regularColumns.push({
+    name: "Link",
+    label: "Link",
+    options: {
+      customBodyRender: (value, tableMeta, updateValue) => {
+        const testsuitId = tableMeta.rowData[0];
+        return (
+          <Link to={`/testcases?testsuitId=${testsuitId}`}>
+            <LinkIcon />
+          </Link>
+        );
+      },
+    },
+  });
+
   return (
-    <Container>
+    <Container maxWidth="xl">
       <ExpandableRowTable
         title="Test Suites"
         Data={data}
         regularColumns={regularColumns}
       />
+      {/* <DataGrid data={data} data_columns={data_columns} /> */}
     </Container>
   );
 }

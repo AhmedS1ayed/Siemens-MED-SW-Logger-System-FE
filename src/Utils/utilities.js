@@ -34,3 +34,34 @@ export const getColumnsName = (data, columnWidts = {}) => {
     })
     .filter((column) => column !== null);
 };
+
+export const getColumnName = (data) => {
+  let columnsName = [];
+  Object.keys(data).forEach((key) => {
+    if (typeof data[key] !== "object") {
+      let newColumn = {
+        name: key,
+        label: key,
+        options: {
+          customBodyRender: (value) => {
+            if (typeof value === "boolean")
+              return value ? (
+                <CheckIcon className="success-class" />
+              ) : (
+                <ClearIcon className="failed-class" />
+              );
+            else return value;
+          },
+        },
+      };
+      if (
+        !columnsName.find((column) => {
+          return JSON.stringify(column) === JSON.stringify(newColumn);
+        })
+      ) {
+        columnsName.push(newColumn);
+      }
+    }
+  });
+  return columnsName;
+};
