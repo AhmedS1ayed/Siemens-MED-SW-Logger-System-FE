@@ -1,33 +1,38 @@
 [
   {
-    "id": 1,
-    "testSuite": "VGA",
-    "testCase": "1",
-    "validationState": "Verified",
-    "Version": "1234",
-    "By": "Abo el Seed",
-    "ally": "Abo el Seed",
-    "HELLL" : "HELLO",
-    "Validation Tag" : {
-        "Here" : "here",
-        "There" : "here",
-        "fair" : "here"
+    "ID": 1,
+    "Name": "VGA",
+    "Time": "22",
+    "dateCreated": "1990-01-01T00:00:00.000Z",
+    "Author": "Ahmed",
+    "isVerified": true,
+    "Version": "123",
+    "versioned": "123",
+    "Validation Tag": { 
+      "Here": "here",
+      "There": "here",
+      "fair": "here"
     }
   },
   {
-    "id": 2,
-    "testSuite": "Display Port",
+    "ID": 2,
+    "Name": "Display Port",
+    "Time": "48",
+    "dateCreated": "1990-01-01T00:00:00.000Z",
+    "Author": "Sayed",
     "testCase": "1",
-    "validationState": "Verified",
-    "Version": "1234",
-    "By": "Abo el Sho2"
+    "isVerified": false,
+    "Version": "1234"
   },
   {
-    "id": 3,
-    "testSuite": "Randomize Port",
-    "testCase": "1",
-    "validationState": "Verified",
-    "Version": "1234",
-    "By": "Abo 7assan"
+    "ID": 3,
+    "Name": "Test",
+    "Time": "10",
+    "dateCreated": "1990-01-01T00:00:00.000Z",
+    "Author": "Shawky",
+    "testCase": "7",
+    "validationState": "Failed",
+    "isVerified": true,
+    "Version": "12344"
   }
 ]

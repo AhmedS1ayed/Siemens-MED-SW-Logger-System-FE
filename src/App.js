@@ -1,30 +1,24 @@
-import './App.css';
-import Table from './Components/Table.js'
-import id from './Data/Mock_Data.json'
-import { useState } from 'react';
-import defineTable from './Util/defineTable';
-function App() 
-{
-  const [data,setData] = useState(id);
-  const [columns,setColumns] = useState(defineTable(data[0]));
-  
-  const rowClickedHandler = (requestParameters)=>
-  {
-    console.log("rowHandler in application");
-    console.log(requestParameters);
-    let newData =[{
-      "id": 3,
-      "ff": "new Port",
-      "gg": "1",
-      "state": "Verified",
-    }]; 
-    setData(newData);
-    setColumns(defineTable(newData[0]));
-  }
+import "./App.css";
+import Navbar from "./Components/Navbar/Navbar.js";
+
+// import pages
+import Testsuit from "./Pages/Testsuit/Testsuit";
+import Testcase from "./Pages/Testcase/Testcase";
+
+//import components
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+function App() {
   return (
     <>
-      <h1> HELLO </h1>
-      <Table data = {data} columns={columns} onRowClicked={rowClickedHandler}></Table>
+      <Navbar />
+      <br />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/testsuits" element={<Testsuit />} />
+          <Route path="/testcases" element={<Testcase />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
