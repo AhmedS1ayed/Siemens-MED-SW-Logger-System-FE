@@ -15,6 +15,7 @@ export default function Testsuit() {
   return (
   
     <Container>
+        {/* <h1>statistics</h1> */}
        <div className="statistics-container">
         <StatisticCard title="Total Test Suites" count={totalTestSuites} color="#00a3e0" />
         <StatisticCard title="Successful Test Suites" count={successfulTestSuites} color="#00b894" />
@@ -22,6 +23,7 @@ export default function Testsuit() {
       </div>
   
       <BasicExampleDataGrid />
+      <br />  
     </Container>
   );
 }
