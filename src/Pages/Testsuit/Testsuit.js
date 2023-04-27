@@ -4,33 +4,11 @@ import StatisticCard from "../../Components/statistics/StatisticsCard";
 import BasicExampleDataGrid from "../../Components/NewTable/NewTable.js";
 import "../../Components/statistics/StatisticsCard.css";
 import { useState, useEffect } from "react";
-import id from "../../Data/Mock_Data.json";
 
 // console.log(data.length);
 
 
 export default function Testsuit() {
-  // const [data, setData] = useState(null);
-  // const getData = null;
-  // useEffect(() => {
-  //   fetchTestSuiteHandler();
-  // }, []);
-
-  // async function fetchTestSuiteHandler()
-  // {
-  //   try
-  //   {
-  //     const response = await fetch("http://localhost:8080/TestSuites/")
-  //     if(!response.ok) console.log("something went wrong");
-  //     getData = await response.json();
-  //     // console.log(getData);
-  //   }
-  //   catch (error)
-  //   {
-  //     console.error(error);
-  //   }
-  // }
-
   const [data, setData] = useState(
   [
     {
