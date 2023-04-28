@@ -3,10 +3,12 @@ import MUIDataTable from "mui-datatables";
 import { getColumnName } from "../../Utils/utilities";
 
 import "./newTable.css";
+import MetaDataCard from "../MetaDataCard/MetaDataCard";
 
 export const ExpandableRowTable = (props) => {
   const options = {
     filter: true,
+    toolbar: false,
     selectableRows: "multiple",
     filterType: "multiselect",
     responsive: "scroll",
@@ -17,30 +19,30 @@ export const ExpandableRowTable = (props) => {
       };
     },
     expandableRows: true,
+    onRowClick: (rowData, rowMeta) => {
+      if (props.onRowClickEnabled) {
+        props.onRowClick(rowMeta.dataIndex);
+      }
+    },
+
     renderExpandableRow: (rowData, rowMeta) => {
       const dataIndex = rowMeta.dataIndex;
       const rowObject = props.Data[dataIndex];
-      const expandableRows = [];
-
-      Object.keys(rowObject).map((key) => {
-        if (typeof rowObject[key] === "object") {
-          expandableRows.push(key);
-        }
-      });
-
+      let keys = [];
+      let values = [];
+      if (rowObject["meta_data"]) {
+        Object.keys(rowObject["meta_data"]).forEach((key) => {
+          keys.push(key);
+          values.push(rowObject["meta_data"][key]);
+        });
+      }
       return (
         <React.Fragment>
-          {expandableRows.map((key) => (
-            <tr key={key}>
-              <td colSpan={12}>
-                <ExpandableRowTable
-                  title={key}
-                  Data={[rowObject[key]]}
-                  regularColumns={getColumnName(rowObject[key])}
-                />
-              </td>
-            </tr>
-          ))}
+          <tr>
+            <td colSpan={3}>
+              <MetaDataCard keys={keys} values={values} />
+            </td>
+          </tr>
         </React.Fragment>
       );
     },
@@ -48,12 +50,14 @@ export const ExpandableRowTable = (props) => {
   };
 
   return (
-    <MUIDataTable
-      title={props.title}
-      data={props.Data}
-      columns={props.regularColumns}
-      options={options}
-    />
+    <div className="table-container">
+      <MUIDataTable
+        title={props.title}
+        data={props.Data}
+        columns={props.regularColumns}
+        options={options}
+      />
+    </div>
   );
 };
 
