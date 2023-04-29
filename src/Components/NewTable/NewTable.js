@@ -1,7 +1,6 @@
 import React from "react";
 import MUIDataTable from "mui-datatables";
 import { getColumnName } from "../../Utils/utilities";
-
 import "./newTable.css";
 import MetaDataCard from "../MetaDataCard/MetaDataCard";
 
@@ -38,7 +37,7 @@ import MetaDataCard from "../MetaDataCard/MetaDataCard";
 export const ExpandableRowTable = (props) => {
   const options = {
     filter: true,
-    toolbar: false,
+    // toolbar: false,
     selectableRows: "multiple",
     filterType: "multiselect",
     responsive: "scroll",

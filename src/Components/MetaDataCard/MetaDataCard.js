@@ -1,38 +1,40 @@
-import React from "react";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { key } from "localforage";
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import React from 'react';
+import './MetaDataCard.css';
 
 export default function MetaDataCard({ keys, values }) {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(Array(keys.length).fill(false));
 
   const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
+    const newExpanded = [...expanded];
+    newExpanded[panel] = isExpanded;
+    setExpanded(newExpanded);
   };
 
   return (
-    <div>
+    <div className="meta-data-card__container">
       {keys &&
         keys.map((key, idx) => {
           return (
             <Accordion
-              expanded={expanded === key}
-              onChange={handleChange(`${key}`)}
+              key={key}
+              expanded={expanded[idx]}
+              onChange={handleChange(idx)}
+              className="meta-data-card__accordion"
             >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
+                className="meta-data-card__accordion-summary"
               >
-                <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                <Typography variant="subtitle1" className="meta-data-card__header">
                   {key}
                 </Typography>
               </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{values[idx]}</Typography>
+              <AccordionDetails className="meta-data-card__accordion-details">
+                <Typography variant="body1">{values[idx]}</Typography>
               </AccordionDetails>
             </Accordion>
           );

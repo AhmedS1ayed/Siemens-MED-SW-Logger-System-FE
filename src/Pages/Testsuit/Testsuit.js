@@ -25,9 +25,6 @@ import LinkIcon from "@mui/icons-material/Link";
       //       },
       //     ]);
       
-      //     const totalTestSuites = data.length;
-      //     const successfulTestSuites = data.filter((item) => item.isSuccessful === true).length;
-//     const failedTestSuites = data.filter((item) => item.isSuccessful === false ).length;
 
 //   let data_columns = getColumnsName(data[0], { dateCreated: 250 });
 //   data_columns.push({
@@ -80,6 +77,10 @@ import LinkIcon from "@mui/icons-material/Link";
   //   };
     
     export default function Testsuit() {
+      const totalTestSuites = data.length;
+      const successfulTestSuites = data.filter((item) => item.isSuccessful === true).length;
+const failedTestSuites = data.filter((item) => item.isSuccessful === false ).length;
+
       let data_columns = [];
       data.forEach((row) => getColumnName(row, data_columns));
     
@@ -115,12 +116,7 @@ import LinkIcon from "@mui/icons-material/Link";
   return (
   
     // <Container>
-    //     {/* <h1>statistics</h1> */}
-    //    <div className="statistics-container">
-    //     <StatisticCard title="Total Test Suites" count={totalTestSuites} color="#00a3e0" />
-    //     <StatisticCard title="Successful Test Suites" count={successfulTestSuites} color="#00b894" />
-    //     <StatisticCard title="Failed Test Suites" count={failedTestSuites} color="#e74c3c" />
-    //   </div>
+
   
     //   {/* <BasicExampleDataGrid /> */}
     //   {/* <br /> */}
@@ -132,7 +128,13 @@ import LinkIcon from "@mui/icons-material/Link";
 
 
   // return (
-    <Container maxWidth="xl">
+    <Container maxWidth="x">
+        {/* <h1>statistics</h1> */}
+        <div className="statistics-container">
+          <StatisticCard title="Total Test Suites" count={totalTestSuites} color="#ffffff" icon="equalizer" />
+          <StatisticCard title="Successful Test Suites" count={successfulTestSuites} color="#fffff3" icon="check" />
+          <StatisticCard title="Failed Test Suites" count={failedTestSuites} color="#ffffff" icon="error" />
+        </div>
       <ExpandableRowTable
         title="Test Suites"
         Data={data}

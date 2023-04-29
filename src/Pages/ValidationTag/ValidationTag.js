@@ -42,7 +42,8 @@ export default function ValidationTag() {
 
   let sad = [];
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="x">
+
       <ExpandableRowTable
         title="Test Suites"
         Data={data}
@@ -51,6 +52,7 @@ export default function ValidationTag() {
         onRowClickEnabled={true}
         onRowClick={handleRowClick}
       />
+
       <section className="validation_points_section">
         <Box>
           {selectedRow === -1 ? (
@@ -61,6 +63,7 @@ export default function ValidationTag() {
             <h2 className="validation_points_header">Validation Points</h2>
           )}
         </Box>
+
         <Grid
           container
           spacing={{ xs: 2, md: 3 }}
@@ -73,7 +76,10 @@ export default function ValidationTag() {
             data[selectedRow]["validation_points"].map((valid_point, idx) => {
               return (
                 <Grid item xs={12} sm={6} md={4} lg={3}>
+                  
                   <Box className="validation_point scale-up-center">
+                    {/* console.log({valid_point}) */}
+                    <bold> {data[selectedRow]["name"]}</bold>
                     <TreeView
                       aria-label="file system navigator"
                       defaultCollapseIcon={<ExpandMoreIcon />}
@@ -89,6 +95,7 @@ export default function ValidationTag() {
                         if (valid_key !== "results") {
                           return (
                             <>
+                  
                               <TreeItem nodeId={valid_key} label={valid_key}>
                                 {Object.keys(valid_point[valid_key]).map(
                                   (valid_data) => {
