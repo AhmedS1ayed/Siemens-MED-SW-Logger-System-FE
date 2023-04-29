@@ -11,7 +11,6 @@
   {
     "ID": 2,
     "Name": "testCase 2",
-    "Tester": "Ahmed Sayed",
     "Time": 40,
     "dateCreated": "1991-01-01T00:00:00.000Z",
     "isSuccess": false
@@ -22,7 +21,6 @@
     "Name": "testCase 3",
     "Tester": "Ahmed Hassan",
     "Time": 27,
-    "dateCreated": "1992-01-01T00:00:00.000Z",
     "isSuccess": false
 
   }

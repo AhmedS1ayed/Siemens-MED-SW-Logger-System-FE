@@ -33,11 +33,7 @@
     "Author": "Sayed",
     "testCase": "1",
     "isVerified": false,
-    "Version": "1234",
-    "Validation Tag": {
-      "There": "here",
-      "fair": "here"
-    }
+    "Version": "1234"
   },
   {
     "ID": 3,
@@ -48,20 +44,15 @@
     "testCase": "7",
     "validationState": "Failed",
     "isVerified": true,
-    "Version": "12344"
+    "Version": "1233"
   },
   {
     "ID": 4,
     "Name": "Test",
-    "Time": "22",
+    "Time": "16",
     "dateCreated": "1990-01-01T00:00:00.000Z",
-    "Author": "Ahmed2",
-    "isVerified": true,
-    "Version": "123",
-    "Validation Tag": { 
-      "Here": "here",
-      "There": "here",
-      "fair": "here"
-    }
+    "Author": "Shawky",
+    "testCase": "7",
+    "isVerified": true
   }
 ]

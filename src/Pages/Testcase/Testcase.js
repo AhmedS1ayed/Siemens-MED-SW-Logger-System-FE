@@ -1,12 +1,13 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import data from "../../Data/Mock_Test_Case.json";
-import { getColumnsName } from "../../Utils/utilities";
-import DataGrid from "../../Components/DataGrid/DataGrid.js";
+import { getColumnName, getColumnsName } from "../../Utils/utilities";
 import { Container } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
 import { useEffect, useState } from "react";
+import ExpandableRowTable from "../../Components/NewTable/NewTable";
+import LinkIcon from "@mui/icons-material/Link";
 
 export default function Testcase() {
 
@@ -23,44 +24,64 @@ export default function Testcase() {
   const testsuitId = searchParams.get("testsuitId");
   // ! This is not working backend need to implement a new api
   // const testcaseId = searchParams.get("testcaseId");
-  useEffect(() => {
-    fetch(`http://localhost:8080/`)
-      .then(response => response.json())
-      .then(data => {if(data) setData(data);})
-      .catch(error => console.error(error));
-  }, []);
+  // useEffect(() => {
+  //   fetch(`http://localhost:8080/`)
+  //     .then(response => response.json())
+  //     .then(data => {if(data) setData(data);})
+  //     .catch(error => console.error(error));
+  // }, []);
 
   const totalTestCases = data.length;
   const successfulTestCases = data.filter((item) => item.isSuccessful === true).length;
   const failedTestCases = data.filter((item) => item.isSuccessful === false).length;
-  let data_columns = getColumnsName(data[0], { dateCreated: 250 });
+  // let data_columns = getColumnsName(data[0], { dateCreated: 250 });
+
+  // data_columns.push({
+  //   field: "link",
+  //   headerName: "Link",
+  //   headerClassName: "super-app-theme--header",
+  //   width: 120,
+  //   renderCell: (params) => {
+  //     let testcaseId = params.id;
+  let data_columns = [];
+  data.forEach((row) => getColumnName(row, data_columns));
 
   data_columns.push({
-    field: "link",
-    headerName: "Link",
-    headerClassName: "super-app-theme--header",
-    width: 120,
-    renderCell: (params) => {
-      let testcaseId = params.id;
-
-      return (
-        <Link
-          to={`/validtags?testsuitId=${testsuitId}&testcaseId=${testcaseId}`}
-        >
-          Show more
-        </Link>
-      );
+    name: "",
+    label: "",
+    options: {
+      filter: false,
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        const testcaseId = tableMeta.rowData[0];
+        return (
+          <Link
+            to={`/validtags?testsuitId=${testsuitId}&testcaseId=${testcaseId}`}
+          >
+            <LinkIcon />
+          </Link>
+        );
+      },
     },
   });
+
   return (
-    <Container>
-        <div className="statistics-container">
-        <StatisticCard title="Total Test Cases" count={totalTestCases} color="#00a3e0" />
-        <StatisticCard title="Successful Test Cases" count={successfulTestCases} color="#00b894" />
-        <StatisticCard title="Failed Test Cases" count={failedTestCases} color="#e74c3c" />
-      </div>
+    // <Container>
+    //     <div className="statistics-container">
+    //     <StatisticCard title="Total Test Cases" count={totalTestCases} color="#00a3e0" />
+    //     <StatisticCard title="Successful Test Cases" count={successfulTestCases} color="#00b894" />
+    //     <StatisticCard title="Failed Test Cases" count={failedTestCases} color="#e74c3c" />
+    //   </div>
   
-      <DataGrid data={data} data_columns={data_columns} />
+    //   <DataGrid data={data} data_columns={data_columns} />
+    <Container maxWidth="xl">
+      <ExpandableRowTable
+        title="Test Cases"
+        Data={data}
+        regularColumns={data_columns}
+        onRowClickEnabled={false}
+      />
+      {/* <DataGrid data={data} data_columns={data_columns} /> */}
     </Container>
   );
 }

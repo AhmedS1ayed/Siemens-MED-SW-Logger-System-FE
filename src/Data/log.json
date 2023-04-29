@@ -1,0 +1,245 @@
+[
+  {
+    "ID": 1,
+    "name": "Signature Settings Validation",
+    "meta_data": {
+      "description": "Validating Signature Settings for each DUT"
+    },
+    "validation_points": [
+      {
+        "levels": {},
+        "meta_data": {
+          "description": "Validating Signature Settings for DUT"
+        },
+        "results": {
+          "flow_number_size": {
+            "expected": 2,
+            "actual": 2,
+            "tolerance": 0,
+            "status": "pass"
+          },
+          "sequence_number_size": {
+            "expected": 5,
+            "actual": 4,
+            "tolerance": 0,
+            "status": "fail"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "ID": 2,
+    "name": "FEC Validation",
+    "meta_data": {
+      "description": "Validating FEC for each Mac",
+      "executable_path": "/project/path/to/executable"
+    },
+    "validation_points": [
+      {
+        "levels": {
+          "mac": "1"
+        },
+        "meta_data": {
+          "description": "Validating FEC for Mac 1",
+          "mac_mii_type": "CGMII-PCS-4x40"
+        },
+        "results": {
+          "fec_errors": {
+            "expected": "RC",
+            "actual": "RC",
+            "status": "pass"
+          }
+        }
+      },
+      {
+        "levels": {
+          "mac": "2"
+        },
+        "meta_data": {
+          "description": "Validating FEC for Mac 2",
+          "mac_mii_type": "CGMII-PCS-1x40"
+        },
+        "results": {
+          "fec_errors": {
+            "expected": "RC",
+            "actual": "RC",
+            "status": "pass"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "ID": 3,
+    "name": "Signature Elements Validation",
+    "meta_data": {
+      "description": "Validating Signature Element for each Mac in Rx and Tx Direction",
+      "executable_path": "/project/path/to/executable"
+    },
+    "validation_points": [
+      {
+        "levels": {
+          "mac": "1",
+          "direction": "Rx"
+        },
+        "meta_data": {
+          "description": "Validating Signature Element for Mac 1 in Rx Direction",
+          "executable_path": "/project/path/to/executable"
+        },
+        "results": {
+          "flow_number_errors": {
+            "expected": 0,
+            "actual": 1,
+            "tolerance": 0,
+            "status": "fail"
+          },
+          "origin_ports_errors": {
+            "expected": 0,
+            "actual": 0,
+            "tolerance": 0,
+            "status": "pass"
+          }
+        }
+      },
+      {
+        "levels": {
+          "mac": "1",
+          "direction": "Tx"
+        },
+        "meta_data": {
+          "description": "Validating Signature Element for Mac 1 in Tx Direction",
+          "executable_path": "/project/path/to/executable"
+        },
+        "results": {
+          "flow_number_errors": {
+            "expected": 0,
+            "actual": 0,
+            "tolerance": 0,
+            "status": "pass"
+          },
+          "origin_ports_errors": {
+            "expected": 0,
+            "actual": 0,
+            "tolerance": 0,
+            "status": "pass"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "ID": 4,
+    "name": "Packet Fields Elements Validation",
+    "meta_data": {
+      "description": "Validating Packet Fields Element for each Mac in Rx and Tx Direction",
+      "executable_path": "/project/path/to/executable"
+    },
+    "validation_points": [
+      {
+        "levels": {
+          "mac": 1,
+          "direction": "Rx",
+          "packet_field": "Dst Mac Address"
+        },
+        "meta_data": {
+          "description": "Validating Dst Mac Address for Mac 1 in Rx Direction",
+          "executable_path": "/project/path/to/executable"
+        },
+        "results": {
+          "id": 1,
+          "flow_number_152": {
+            "expected": 0,
+            "actual": 1,
+            "tolerance": 0,
+            "status": "fail"
+          },
+          "flow_number_153": {
+            "expected": 0,
+            "actual": 0,
+            "tolerance": 0,
+            "status": "pass"
+          }
+        }
+      },
+      {
+        "levels": {
+          "mac": 1,
+          "direction": "Tx",
+          "packet_filed": "Packet Length"
+        },
+        "meta_data": {
+          "description": "Validating Packet Length for Mac 1 in Tx Direction",
+          "executable_path": "/project/path/to/executable"
+        },
+        "results": {
+          "id": 2,
+          "flow_number_152": {
+            "expected": 0,
+            "actual": 0,
+            "tolerance": 0,
+            "status": "pass"
+          },
+          "flow_number_153": {
+            "expected": 0,
+            "actual": 0,
+            "tolerance": 0,
+            "status": "pass"
+          }
+        }
+      },
+      {
+        "levels": {
+          "mac": 1,
+          "direction": "Rx",
+          "packet_field": "Dst Mac Address"
+        },
+        "meta_data": {
+          "description": "Validating Dst Mac Address for Mac 1 in Rx Direction",
+          "executable_path": "/project/path/to/executable"
+        },
+        "results": {
+          "id": 3,
+          "flow_number_152": {
+            "expected": 0,
+            "actual": 1,
+            "tolerance": 0,
+            "status": "fail"
+          },
+          "flow_number_153": {
+            "expected": 0,
+            "actual": 0,
+            "tolerance": 0,
+            "status": "pass"
+          }
+        }
+      },
+      {
+        "levels": {
+          "mac": 2,
+          "direction": "Tx",
+          "packet_filed": "Packet Length"
+        },
+        "meta_data": {
+          "description": "Validating Packet Length for Mac 2 in Tx Direction",
+          "executable_path": "/project/path/to/executable"
+        },
+        "results": {
+          "id": 4,
+          "flow_number_25": {
+            "expected": 1000,
+            "actual": 1000,
+            "tolerance": 0,
+            "status": "pass"
+          },
+          "flow_number_26": {
+            "expected": 1000,
+            "actual": 1000,
+            "tolerance": 0,
+            "status": "pass"
+          }
+        }
+      }
+    ]
+  }
+]

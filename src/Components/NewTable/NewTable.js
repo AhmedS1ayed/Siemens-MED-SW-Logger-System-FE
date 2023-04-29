@@ -1,25 +1,9 @@
 import React from "react";
 import MUIDataTable from "mui-datatables";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import Data from "../../Data/Mock_Data.json";
+import { getColumnName } from "../../Utils/utilities";
 
-// import "./newTable.css";
-// const Card = () => (
-//   <tr>
-//     <td className="fullWidth">
-//       <h1>
-//         lorem ipsum dorel em quol acee, vion, bloolw, wafeo, feiwjfoiew,
-//         foiwejifowefjweoi, fewjoewjfowei, fwefwefewfewfewf
-//       </h1>
-//     </td>
-//   </tr>
-// );
+import "./newTable.css";
+import MetaDataCard from "../MetaDataCard/MetaDataCard";
 
   // const getColumnsName = (data, columnWidts = {}) => {
   //   return Object.keys(data)
@@ -52,87 +36,43 @@ import Data from "../../Data/Mock_Data.json";
   //         };
   
 export const ExpandableRowTable = (props) => {
-  const getColumnsName = (data) => {
-    let columnsName = [];
-    Object.keys(data).forEach((key) => {
-      if (typeof data[key] !== "object") {
-        let newColumn = {
-          name: key,
-          label: key,
-        };
-        if (
-          !columnsName.find((column) => {
-            return JSON.stringify(column) === JSON.stringify(newColumn);
-          })
-        ) {
-          columnsName.push(newColumn);
-        }
-      }
-    });
-    return columnsName;
-  };
-
-  // let regularColumns = [];
-
-  // Data.forEach((row) => {
-  //   regularColumns = getColumnsName(row);
-  // });
-  // const getRowClassName = (params) => {
-  //   return clsx("row-border", {
-  //     "clickable-row": true, // add a class for clickable rows
-  //   });
-  // };
-  const expandableTableOptions = {
-    filter: false,
-    selectableRows: "none",
-    responsive: "scrollMaxHeight",
-    rowsPerPage: 5,
-    download: false,
-    print: false,
-    viewColumns: false,
-    pagination: false,
-    search: false,
-    toolbar: false, // remove the toolbar
-  };
   const options = {
     filter: true,
-    onFilterChange: (changedColumn, filterList) => {
-      console.log(changedColumn, filterList);
-    },
-    selectableRows: "single",
-    filterType: "dropdown",
-    responsive: "scrollMaxHeight",
+    toolbar: false,
+    selectableRows: "multiple",
+    filterType: "multiselect",
+    responsive: "scroll",
     rowsPerPage: 10,
+    setRowProps: (row, rowIndex) => {
+      return {
+        className: rowIndex % 2 === 0 ? "even-row" : "odd-row",
+      };
+    },
     expandableRows: true,
-    renderExpandableRow: (rowData, rowMeta) => {
-      // Find the index of the current row in the data array
-      const dataIndex = rowMeta.dataIndex;
+    onRowClick: (rowData, rowMeta) => {
+      if (props.onRowClickEnabled) {
+        props.onRowClick(rowMeta.dataIndex);
+      }
+    },
 
-      // Get the object from the data array corresponding to the current row
+    renderExpandableRow: (rowData, rowMeta) => {
+      const dataIndex = rowMeta.dataIndex;
       const rowObject = props.Data[dataIndex];
-      const expandableRows = [];
-      console.log(rowObject);
-      Object.keys(rowObject).map((key) => {
-        if (typeof rowObject[key] === "object") {
-          expandableRows.push(key);
-        }
-      });
-     
-      // Loop over the keys of the expandable rows array to create a table of key-value pairs for the object
+      let keys = [];
+      let values = [];
+      if (rowObject["meta_data"]) {
+        Object.keys(rowObject["meta_data"]).forEach((key) => {
+          keys.push(key);
+          values.push(rowObject["meta_data"][key]);
+        });
+      }
       return (
         <React.Fragment>
-          {expandableRows.map((key) => (
-            <tr key={key}>
-              <td colSpan={12}>
-                <ExpandableRowTable
-                  title={key}
-                  Data={[rowObject[key]]}
-                  regularColumns={getColumnsName(rowObject[key])}
-                  options={expandableTableOptions}
-                />
-              </td>
-            </tr>
-          ))}
+          <tr>
+            <td colSpan={3}>
+              <MetaDataCard keys={keys} values={values} />
+            </td>
+          </tr>
         </React.Fragment>
       );
     },
@@ -141,12 +81,14 @@ export const ExpandableRowTable = (props) => {
   };
 
   return (
-    <MUIDataTable
-      title={props.title}
-      data={props.Data}
-      columns={props.regularColumns}
-      options={options}
-    />
+    <div className="table-container">
+      <MUIDataTable
+        title={props.title}
+        data={props.Data}
+        columns={props.regularColumns}
+        options={options}
+      />
+    </div>
   );
 };
 
