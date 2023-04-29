@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import data from "../../Data/log.json";
 import { getColumnName } from "../../Utils/utilities";
-import { Container } from "@mui/material";
+import { Container, Dialog, Divider, Grid } from "@mui/material";
 import ExpandableRowTable from "../../Components/NewTable/NewTable";
 import { Box } from "@mui/material";
 import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
+import "./ValidationTag.css";
+import { DialogTitle } from "@mui/material";
 
 export default function ValidationTag() {
   const location = useLocation();
@@ -17,6 +19,19 @@ export default function ValidationTag() {
   const testcaseId = searchParams.get("testcaseId");
 
   const [selectedRow, setSelectedRow] = useState(-1);
+  const [openDialogs, setOpenDialogs] = useState([]);
+
+  useEffect(() => {
+    if (selectedRow !== -1) {
+      setOpenDialogs(data[selectedRow]["validation_points"].map(() => false));
+    }
+  }, [data, selectedRow]);
+
+  const toggleDialog = (index) => {
+    const newOpenDialogs = [...openDialogs];
+    newOpenDialogs[index] = !newOpenDialogs[index];
+    setOpenDialogs(newOpenDialogs);
+  };
 
   let data_columns = [];
   data.forEach((row) => getColumnName(row, data_columns));
@@ -25,6 +40,7 @@ export default function ValidationTag() {
     rowIdx === selectedRow ? setSelectedRow(-1) : setSelectedRow(rowIdx);
   };
 
+  let sad = [];
   return (
     <Container maxWidth="xl">
       <ExpandableRowTable
@@ -35,61 +51,93 @@ export default function ValidationTag() {
         onRowClickEnabled={true}
         onRowClick={handleRowClick}
       />
-      <section>
+      <section className="validation_points_section">
         <Box>
-          <h2>Validation Points</h2>
+          {selectedRow === -1 ? (
+            <h2 className="validation_points_header">
+              Click on a row to show validation points
+            </h2>
+          ) : (
+            <h2 className="validation_points_header">Validation Points</h2>
+          )}
         </Box>
-        <Box className="validatio_points_container">
-          {/* <TreeView
-            aria-label="file system navigator"
-            defaultCollapseIcon={<ExpandMoreIcon />}
-            defaultExpandIcon={<ChevronRightIcon />}
-            sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
-          >
-            <TreeItem nodeId="1" label="Applications">
-              <TreeItem nodeId="2" label="Calendar" />
-            </TreeItem>
-          </TreeView> */}
+        <Grid
+          container
+          spacing={{ xs: 2, md: 3 }}
+          columns={{ xs: 6, sm: 10, md: 11, lg: 12 }}
+          direction="row"
+          justifyContent="space-evenly"
+          className="validation_points_container"
+        >
           {selectedRow !== -1 &&
-            data[selectedRow]["validation_points"].map((valid_point) => {
+            data[selectedRow]["validation_points"].map((valid_point, idx) => {
               return (
-                <Box>
-                  <TreeView
-                    aria-label="file system navigator"
-                    defaultCollapseIcon={<ExpandMoreIcon />}
-                    defaultExpandIcon={<ChevronRightIcon />}
-                    sx={{
-                      height: 240,
-                      flexGrow: 1,
-                      maxWidth: 400,
-                      overflowY: "auto",
-                    }}
-                  >
-                    {Object.keys(valid_point).map((valid_key) => {
-                      return (
-                        <TreeItem nodeId={valid_key} label={valid_key}>
-                          {Object.keys(valid_point[valid_key]).map(
-                            (valid_data) => {
-                              return (
-                                <TreeItem
-                                  nodeId={valid_data}
-                                  label={
-                                    valid_data +
-                                    ": " +
-                                    valid_point[valid_key][valid_data]
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                  <Box className="validation_point scale-up-center">
+                    <TreeView
+                      aria-label="file system navigator"
+                      defaultCollapseIcon={<ExpandMoreIcon />}
+                      defaultExpandIcon={<ChevronRightIcon />}
+                      sx={{
+                        height: 300,
+                        flexGrow: 1,
+                        maxWidth: 400,
+                        overflowY: "auto",
+                      }}
+                    >
+                      {Object.keys(valid_point).map((valid_key) => {
+                        if (valid_key !== "results") {
+                          return (
+                            <>
+                              <TreeItem nodeId={valid_key} label={valid_key}>
+                                {Object.keys(valid_point[valid_key]).map(
+                                  (valid_data) => {
+                                    return (
+                                      <TreeItem
+                                        nodeId={valid_data}
+                                        label={
+                                          valid_data +
+                                          ": " +
+                                          valid_point[valid_key][valid_data]
+                                        }
+                                      />
+                                    );
                                   }
-                                />
-                              );
-                            }
-                          )}
-                        </TreeItem>
-                      );
-                    })}
-                  </TreeView>
-                </Box>
+                                )}
+                              </TreeItem>
+                              <Divider className="divider" />
+                            </>
+                          );
+                        }
+                      })}
+                    </TreeView>
+                    <button
+                      className="results_btn"
+                      onClick={() => toggleDialog(idx)}
+                    >
+                      Results
+                    </button>
+                    <Dialog
+                      onClose={() => toggleDialog(idx)}
+                      open={openDialogs[idx]}
+                    >
+                      <DialogTitle>{valid_point["results"]["id"]}</DialogTitle>
+                      <ExpandableRowTable
+                        title={valid_point["levels"]["mac"]}
+                        Data={data}
+                        regularColumns={getColumnName(
+                          valid_point["results"],
+                          sad
+                        )}
+                        expandable={false}
+                        onRowClickEnabled={false}
+                      />
+                    </Dialog>
+                  </Box>
+                </Grid>
               );
             })}
-        </Box>
+        </Grid>
       </section>
     </Container>
   );

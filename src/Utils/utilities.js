@@ -38,4 +38,5 @@ export const getColumnName = (data, data_columns) => {
       }
     }
   });
+  return data_columns;
 };
