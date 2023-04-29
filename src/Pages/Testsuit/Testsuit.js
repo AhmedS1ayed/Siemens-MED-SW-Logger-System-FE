@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import BasicExampleDataGrid from "../../Components/NewTable/NewTable.js";
-import data from "../../Data/Mock_Data.json";
+// import data from "../../Data/Mock_Data.json";
 import "../../Components/statistics/StatisticsCard.css"
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataGrid from "../../Components/DataGrid/DataGrid.js";
@@ -10,14 +10,24 @@ import { getColumnsName } from "../../Utils/utilities";
 import { Link } from "react-router-dom";
 import ExpandableRowTable from "../../Components/NewTable/NewTable.js";
 import "../../Components/DataGrid/DataGrid.css"
+import { useEffect , setData } from "react";
+import { useState } from "react";
 
 // console.log(data.length);  
-const totalTestSuites = data.length;
-const successfulTestSuites = data.filter((item) => item.isVerified === true).length;
-const failedTestSuites = data.filter((item) => item.isVerified === false    ).length;
 
-console.log(totalTestSuites);
 export default function Testsuit() {
+
+  const [data, setData] = useState(
+    [
+      {
+        _id: "none",
+      },
+    ]);
+
+    const totalTestSuites = data.length;
+    const successfulTestSuites = data.filter((item) => item.isSuccessful === true).length;
+    const failedTestSuites = data.filter((item) => item.isSuccessful === false ).length;
+
   let data_columns = getColumnsName(data[0], { dateCreated: 250 });
   data_columns.push({
     field: "link",
@@ -26,7 +36,7 @@ export default function Testsuit() {
     // width: 120,
     renderCell: (params) => {
       let testsuitId = params.id;
-
+      
       return <Link to={`/testcases?testsuitId=${testsuitId}`}>Show more</Link>;
     },
   });
@@ -74,6 +84,13 @@ export default function Testsuit() {
     regularColumns = getColumnName(row);
   });
 
+  useEffect(() => {
+    fetch('http://localhost:8080/TestSuites/')
+      .then(response => response.json())
+      .then(data => {if(data) setData(data);})
+      .catch(error => console.error(error));
+  }, []);
+
   return (
   
     <Container>
@@ -85,14 +102,14 @@ export default function Testsuit() {
       </div>
   
       {/* <BasicExampleDataGrid /> */}
-      <br />  
+      {/* <br /> */}
       {/* <ExpandableRowTable
         title="Test Suites"
         Data={data}
         regularColumns={regularColumns}
       /> */}
       <DataGrid data={data} data_columns={data_columns} />
-
+      <br />
     </Container>
   );
 }

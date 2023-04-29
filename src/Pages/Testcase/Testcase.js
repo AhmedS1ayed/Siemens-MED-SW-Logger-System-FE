@@ -6,17 +6,35 @@ import DataGrid from "../../Components/DataGrid/DataGrid.js";
 import { Container } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
-
-const totalTestCases = data.length;
-const successfulTestCases = data.filter((item) => item.isSuccess === true).length;
-const failedTestCases = data.filter((item) => item.isSuccess === false).length;
+import { useEffect, useState } from "react";
 
 export default function Testcase() {
+
+  const [data, setData] = useState(
+    [
+      {
+        _id: "none",
+      },
+    ]);
+
+
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const testsuitId = searchParams.get("testsuitId");
+  // ! This is not working backend need to implement a new api
+  // const testcaseId = searchParams.get("testcaseId");
+  useEffect(() => {
+    fetch(`http://localhost:8080/`)
+      .then(response => response.json())
+      .then(data => {if(data) setData(data);})
+      .catch(error => console.error(error));
+  }, []);
 
+  const totalTestCases = data.length;
+  const successfulTestCases = data.filter((item) => item.isSuccessful === true).length;
+  const failedTestCases = data.filter((item) => item.isSuccessful === false).length;
   let data_columns = getColumnsName(data[0], { dateCreated: 250 });
+
   data_columns.push({
     field: "link",
     headerName: "Link",

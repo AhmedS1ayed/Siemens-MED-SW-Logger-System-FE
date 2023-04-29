@@ -9,6 +9,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Data from "../../Data/Mock_Data.json";
 
+// import "./newTable.css";
 // const Card = () => (
 //   <tr>
 //     <td className="fullWidth">
@@ -81,7 +82,18 @@ export const ExpandableRowTable = (props) => {
   //     "clickable-row": true, // add a class for clickable rows
   //   });
   // };
-
+  const expandableTableOptions = {
+    filter: false,
+    selectableRows: "none",
+    responsive: "scrollMaxHeight",
+    rowsPerPage: 5,
+    download: false,
+    print: false,
+    viewColumns: false,
+    pagination: false,
+    search: false,
+    toolbar: false, // remove the toolbar
+  };
   const options = {
     filter: true,
     onFilterChange: (changedColumn, filterList) => {
@@ -105,7 +117,7 @@ export const ExpandableRowTable = (props) => {
           expandableRows.push(key);
         }
       });
-
+     
       // Loop over the keys of the expandable rows array to create a table of key-value pairs for the object
       return (
         <React.Fragment>
@@ -116,6 +128,7 @@ export const ExpandableRowTable = (props) => {
                   title={key}
                   Data={[rowObject[key]]}
                   regularColumns={getColumnsName(rowObject[key])}
+                  options={expandableTableOptions}
                 />
               </td>
             </tr>
@@ -124,6 +137,7 @@ export const ExpandableRowTable = (props) => {
       );
     },
     page: 1,
+    // toolbar: false,
   };
 
   return (

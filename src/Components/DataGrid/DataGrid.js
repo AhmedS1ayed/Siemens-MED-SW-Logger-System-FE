@@ -9,7 +9,7 @@ export default function BasicExampleDataGrid({ data, data_columns }) {
         columns={data_columns}
         rows={data}
         slots={{ toolbar: GridToolbar }}
-        getRowId={(row) => row.ID}
+        getRowId={(row) => row._id}
         getRowClassName={() => "row-border"}
         sx={{
           flex: 1,
