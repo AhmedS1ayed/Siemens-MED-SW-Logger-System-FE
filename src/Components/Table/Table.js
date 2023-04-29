@@ -101,7 +101,6 @@ createTheme(
 );
 
 const Table = (props) => {
-
   return (
     <DataTable
       pagination

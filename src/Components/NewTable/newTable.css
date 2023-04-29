@@ -1,0 +1,42 @@
+.css-11mde6h-MuiPaper-root {
+  margin: 30px 15px;
+  border-bottom: 2px solid rgba(38, 96, 244, 0.654);
+}
+
+.tss-1akey0g-MUIDataTableHeadCell-data {
+  font-weight: bold !important;
+  color: #fff;
+}
+
+.MuiTableCell-head {
+  padding-left: 0 !important;
+  background-color: rgb(25, 118, 210) !important;
+}
+
+.MuiButton-root {
+  padding-left: 0 !important;
+}
+
+.MuiFormControl-root {
+  padding-left: 10px !important;
+}
+
+.odd-row {
+  background-color: #e2e0e0;
+}
+
+.success-class {
+  background-color: rgb(210, 235, 211);
+  color: rgb(27, 120, 30);
+  border-radius: 50px;
+  padding: 10px 0px 10px 0px;
+  font-size: 3em !important;
+}
+
+.failed-class {
+  background-color: rgb(245, 208, 205);
+  color: rgb(233, 64, 52);
+  border-radius: 50px;
+  padding: 10px 0px 10px 0px;
+  font-size: 3em !important;
+}

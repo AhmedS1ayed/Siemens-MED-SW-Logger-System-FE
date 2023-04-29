@@ -7,6 +7,7 @@ import Testcase from "./Pages/Testcase/Testcase";
 
 //import components
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ValidationTag from "./Pages/ValidationTag/ValidationTag";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/testsuits" element={<Testsuit />} />
           <Route path="/testcases" element={<Testcase />} />
+          <Route path="/validtags" element={<ValidationTag />} />
         </Routes>
       </BrowserRouter>
     </>
