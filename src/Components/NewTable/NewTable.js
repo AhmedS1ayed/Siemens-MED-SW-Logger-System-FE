@@ -18,7 +18,7 @@ export const ExpandableRowTable = (props) => {
         className: rowIndex % 2 === 0 ? "even-row" : "odd-row",
       };
     },
-    expandableRows: true,
+    expandableRows: props.expandable,
     onRowClick: (rowData, rowMeta) => {
       if (props.onRowClickEnabled) {
         props.onRowClick(rowMeta.dataIndex);

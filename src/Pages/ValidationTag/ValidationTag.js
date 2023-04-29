@@ -47,7 +47,7 @@ export default function ValidationTag() {
         title="Test Suites"
         Data={data}
         regularColumns={data_columns}
-        expandable={false}
+        expandable={true}
         onRowClickEnabled={true}
         onRowClick={handleRowClick}
       />
@@ -122,13 +122,14 @@ export default function ValidationTag() {
                       open={openDialogs[idx]}
                     >
                       <DialogTitle>{valid_point["results"]["id"]}</DialogTitle>
+                      {valid_point["results"].forEach((result) =>
+                        getColumnName(result, sad)
+                      )}
+                      {console.log("saddassd", sad)}
                       <ExpandableRowTable
                         title={valid_point["levels"]["mac"]}
-                        Data={data}
-                        regularColumns={getColumnName(
-                          valid_point["results"],
-                          sad
-                        )}
+                        Data={valid_point["results"]}
+                        regularColumns={sad}
                         expandable={false}
                         onRowClickEnabled={false}
                       />
