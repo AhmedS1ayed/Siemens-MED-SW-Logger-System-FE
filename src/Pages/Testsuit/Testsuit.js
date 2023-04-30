@@ -68,13 +68,13 @@ export default function Testsuit() {
         <StatisticCard
           title="Successful Test Suites"
           count={successfulTestSuites}
-          color="#fffff3"
+          color="#98D7C2"
           icon="check"
         />
         <StatisticCard
           title="Failed Test Suites"
           count={failedTestSuites}
-          color="#ffffff"
+          color="#FF5C5C"
           icon="error"
         />
       </div>
