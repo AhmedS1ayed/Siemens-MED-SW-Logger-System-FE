@@ -101,8 +101,6 @@ createTheme(
 );
 
 const Table = (props) => {
-  const handleRowClick = (event) => {};
-
   return (
     <DataTable
       pagination
@@ -111,7 +109,6 @@ const Table = (props) => {
       data={props.Data}
       expandableRows
       expandableRowsComponent={ExpandedComponent}
-      onRowClicked={handleRowClick}
       theme="solarized"
     />
   );
