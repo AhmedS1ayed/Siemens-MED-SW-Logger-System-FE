@@ -69,6 +69,22 @@ export default function Testcase() {
     },
   });
 
+  let count = 0;
+  data_columns.push({
+    name: "INDEX",
+    label: "INDEX",
+    options: {
+      filter: false,
+      sort: true,
+      customBodyRender: () => {
+       if(count === data.length) count = 0; 
+        count++;
+        return (count);
+      },
+    },
+  });
+
+
   return (
     // <Container>
     //     <div className="statistics-container">

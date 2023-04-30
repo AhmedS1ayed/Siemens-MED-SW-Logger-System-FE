@@ -2,12 +2,15 @@ import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
 
 export const getColumnName = (data, data_columns) => {
+  console.log(data);
   Object.keys(data).forEach((key) => {
     if (typeof data[key] !== "object") {
       let newColumn = {
         name: key,
         label: key,
         options: {
+          display : (key === "_id" || key === "id" || key === "__v") ? false : true ,
+
           filterOptions: {
             renderValue: (value) => {
               if (value === "" || value === null || value === undefined) {
