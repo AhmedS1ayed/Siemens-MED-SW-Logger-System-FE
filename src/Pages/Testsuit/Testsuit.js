@@ -62,15 +62,15 @@ export default function Testsuit() {
     label: "INDEX",
     options: {
       filter: false,
-      sort: false,
+      sort: true,
       customBodyRender: () => {
-        
+       if(count === data.length) count = 0; 
         count++;
         return (count);
       },
     },
   });
-
+  
   return (
     <Container maxWidth="x">
       {/* <h1>statistics</h1> */}

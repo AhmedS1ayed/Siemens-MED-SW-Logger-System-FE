@@ -75,9 +75,9 @@ export default function Testcase() {
     label: "INDEX",
     options: {
       filter: false,
-      sort: false,
+      sort: true,
       customBodyRender: () => {
-        
+       if(count === data.length) count = 0; 
         count++;
         return (count);
       },
