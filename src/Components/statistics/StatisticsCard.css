@@ -1,7 +1,7 @@
 .statistics-container {
   margin: 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .statistics-card {

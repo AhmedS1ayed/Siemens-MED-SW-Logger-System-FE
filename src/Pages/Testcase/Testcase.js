@@ -66,15 +66,14 @@ export default function Testcase() {
   });
 
   return (
-    // <Container>
-    //     <div className="statistics-container">
-    //     <StatisticCard title="Total Test Cases" count={totalTestCases} color="#00a3e0" />
-    //     <StatisticCard title="Successful Test Cases" count={successfulTestCases} color="#00b894" />
-    //     <StatisticCard title="Failed Test Cases" count={failedTestCases} color="#e74c3c" />
-    //   </div>
-  
+
     //   <DataGrid data={data} data_columns={data_columns} />
-    <Container maxWidth="xl">
+    <Container maxWidth="x">
+       <div className="statistics-container">
+          <StatisticCard title="Total Test Suites" count={totalTestCases } color="#ffffff" icon="equalizer" />
+          <StatisticCard title="Successful Test Suites" count={successfulTestCases } color="#fffff3" icon="check" />
+          <StatisticCard title="Failed Test Suites" count={failedTestCases } color="#ffffff" icon="error" />
+        </div>
       <ExpandableRowTable
         title="Test Cases"
         Data={data}
