@@ -55,6 +55,22 @@ export default function Testsuit() {
       },
     },
   });
+
+  let count = 0;
+  data_columns.push({
+    name: "INDEX",
+    label: "INDEX",
+    options: {
+      filter: false,
+      sort: false,
+      customBodyRender: () => {
+        
+        count++;
+        return (count);
+      },
+    },
+  });
+
   return (
     <Container maxWidth="x">
       {/* <h1>statistics</h1> */}
