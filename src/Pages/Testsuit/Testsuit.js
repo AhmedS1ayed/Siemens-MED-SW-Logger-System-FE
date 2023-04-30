@@ -1,140 +1,83 @@
 import React from "react";
 import { Container } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
-import BasicExampleDataGrid from "../../Components/NewTable/NewTable.js";
-import "../../Components/statistics/StatisticsCard.css"
-import DeleteIcon from "@mui/icons-material/Delete";
-import DataGrid from "../../Components/DataGrid/DataGrid.js";
+import "../../Components/statistics/StatisticsCard.css";
 import { Link } from "react-router-dom";
 import ExpandableRowTable from "../../Components/NewTable/NewTable.js";
-import "../../Components/DataGrid/DataGrid.css"
-import { useEffect , setData } from "react";
+import "../../Components/DataGrid/DataGrid.css";
+import { useEffect, setData } from "react";
 import { useState } from "react";
-import data from "../../Data/Mock_Data.json";
+// import data from "../../Data/Mock_Data.json";
 import { getColumnName } from "../../Utils/utilities";
 import LinkIcon from "@mui/icons-material/Link";
 
-
-
-// export default function Testsuit() {
+export default function Testsuit() {
+  useEffect(() => {
+    fetch('http://localhost:8080/TestSuites/')
+      .then(response => response.json())
+      .then(data => {
+        if(data) setData(data);
+        console.log(data);
+      })
+      .catch(error => console.error(error));
+  }, []);
   
-//   const [data, setData] = useState(
-  //     [
-    //       {
-      //         _id: "none",
-      //       },
-      //     ]);
-      
-
-//   let data_columns = getColumnsName(data[0], { dateCreated: 250 });
-//   data_columns.push({
-  //     field: "link",
-  //     headerName: "Link",
-  //     headerClassName: "super-app-theme--header",
-  //     // width: 120,
-  //     renderCell: (params) => {
-//       let testsuitId = params.id;
-
-//       return <Link to={`/testcases?testsuitId=${testsuitId}`}>Show more</Link>;
-//     },
-//   });
-
-// data_columns.push({
-  //   field: "delete",
-  //   headerName: "",
-  //   width: 70,
-  //   headerClassName: "super-app-theme--header",
-  //   sortable: false,
-  //   filterable: false,
-  //   disableColumnMenu: true,
-  //   renderCell: (params) => (
-    //     <DeleteIcon
-    //       color="primary"
-    //       style={{ cursor: "pointer" }}
-    //       onClick={() => console.log(`Deleting row ${params.id}`)}
-    //     />
-  //   ),
-  // });
+  const [data, setData] = useState([
+    {
+      _id: "none",
+    },
+  ]);
   
-  // const getColumnName = (data) => {
-  //   let columnsName = [];
-  //   Object.keys(data).forEach((key) => {
-  //     if (typeof data[key] !== "object") {
-  //       let newColumn = {
-  //         name: key,
-  //         label: key,
-  //       };
-  //       if (
-  //         !columnsName.find((column) => {
-  //           return JSON.stringify(column) === JSON.stringify(newColumn);
-  //         })
-  //         ) {
-  //           columnsName.push(newColumn);
-  //         }
-  //       }
-  //     });
-  //     return columnsName;
-  //   };
-    
-    export default function Testsuit() {
-      const totalTestSuites = data.length;
-      const successfulTestSuites = data.filter((item) => item.isSuccessful === true).length;
-const failedTestSuites = data.filter((item) => item.isSuccessful === false ).length;
+  const totalTestSuites = data.length;
+  const successfulTestSuites = data.filter(
+    (item) => item.isSuccessful === true
+  ).length;
+  const failedTestSuites = data.filter(
+    (item) => item.isSuccessful === false
+  ).length;
 
-      let data_columns = [];
-      data.forEach((row) => getColumnName(row, data_columns));
-    
-      data_columns.push({
-        name: "",
-        label: "",
-        options: {
-          filter: false,
-          sort: false,
-          customBodyRender: (value, tableMeta, updateValue) => {
-            const testsuitId = tableMeta.rowData[0];
-            return (
-              <Link to={`/testcases?testsuitId=${testsuitId}`}>
-                <LinkIcon />
-              </Link>
-            );
-          },
-        },
-      });
-    let regularColumns = [];
-    
-  // data.forEach((row) => {
-  //   regularColumns = getColumnName(row);
-  // });
+  const data_columns = [];
+  data.forEach((row) => getColumnName(row, data_columns));
 
-  // useEffect(() => {
-  //   fetch('http://localhost:8080/TestSuites/')
-  //     .then(response => response.json())
-  //     .then(data => {if(data) setData(data);})
-  //     .catch(error => console.error(error));
-  // }, []);
-
+  data_columns.push({
+    name: "",
+    label: "",
+    options: {
+      filter: false,
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        const testsuitId = tableMeta.rowData[0];
+        return (
+          <Link to={`/testcases?testsuitId=${testsuitId}`}>
+            <LinkIcon />
+          </Link>
+        );
+      },
+    },
+  });
   return (
-  
-    // <Container>
-
-  
-    //   {/* <BasicExampleDataGrid /> */}
-    //   {/* <br /> */}
-    //   {/* <ExpandableRowTable
-    //     title="Test Suites"
-    //     Data={data}
-    //     regularColumns={regularColumns}
-    //   /> */}
-
-
-  // return (
     <Container maxWidth="x">
-        {/* <h1>statistics</h1> */}
-        <div className="statistics-container">
-          <StatisticCard title="Total Test Suites" count={totalTestSuites} color="#ffffff" icon="equalizer" />
-          <StatisticCard title="Successful Test Suites" count={successfulTestSuites} color="#fffff3" icon="check" />
-          <StatisticCard title="Failed Test Suites" count={failedTestSuites} color="#ffffff" icon="error" />
-        </div>
+      {/* <h1>statistics</h1> */}
+      <div className="statistics-container">
+        <StatisticCard
+          title="Total Test Suites"
+          count={totalTestSuites}
+          color="#ffffff"
+          icon="equalizer"
+        />
+        <StatisticCard
+          title="Successful Test Suites"
+          count={successfulTestSuites}
+          color="#d4ead4"
+          icon="check"
+        />
+        <StatisticCard
+          title="Failed Test Suites"
+          count={failedTestSuites}
+          color="#f3d4d1"
+          icon="error"
+        />
+      </div>
       <ExpandableRowTable
         title="Test Suites"
         Data={data}

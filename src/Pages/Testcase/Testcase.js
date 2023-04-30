@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import data from "../../Data/Mock_Test_Case.json";
+// import data from "../../Data/Mock_Test_Case.json";
 import { getColumnName, getColumnsName } from "../../Utils/utilities";
 import { Container } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
@@ -23,17 +23,21 @@ export default function Testcase() {
   const searchParams = new URLSearchParams(location.search);
   const testsuitId = searchParams.get("testsuitId");
   // ! This is not working backend need to implement a new api
-  // const testcaseId = searchParams.get("testcaseId");
-  // useEffect(() => {
-  //   fetch(`http://localhost:8080/`)
-  //     .then(response => response.json())
-  //     .then(data => {if(data) setData(data);})
-  //     .catch(error => console.error(error));
-  // }, []);
+  const testcaseId = searchParams.get("testcaseId");
+  useEffect(() => {
+    fetch(`http://localhost:8080/testCases/?testSuite[_id]=${testsuitId}`)
+      .then(response => response.json())
+      .then(data => {if(data) setData(data);})
+      .catch(error => console.error(error));
+  }, []);
 
-  const totalTestCases = data.length;
-  const successfulTestCases = data.filter((item) => item.isSuccessful === true).length;
-  const failedTestCases = data.filter((item) => item.isSuccessful === false).length;
+  const totalTestSuites = data.length;
+  const successfulTestSuites = data.filter(
+    (item) => item.isSuccessful === true
+  ).length;
+  const failedTestSuites = data.filter(
+    (item) => item.isSuccessful === false
+  ).length;
   // let data_columns = getColumnsName(data[0], { dateCreated: 250 });
 
   // data_columns.push({
@@ -66,14 +70,35 @@ export default function Testcase() {
   });
 
   return (
-
+    // <Container>
+    //     <div className="statistics-container">
+    //     <StatisticCard title="Total Test Cases" count={totalTestCases} color="#00a3e0" />
+    //     <StatisticCard title="Successful Test Cases" count={successfulTestCases} color="#00b894" />
+    //     <StatisticCard title="Failed Test Cases" count={failedTestCases} color="#e74c3c" />
+    //   </div>
+  
     //   <DataGrid data={data} data_columns={data_columns} />
     <Container maxWidth="x">
-       <div className="statistics-container">
-          <StatisticCard title="Total Test Suites" count={totalTestCases } color="#ffffff" icon="equalizer" />
-          <StatisticCard title="Successful Test Suites" count={successfulTestCases } color="#fffff3" icon="check" />
-          <StatisticCard title="Failed Test Suites" count={failedTestCases } color="#ffffff" icon="error" />
-        </div>
+      <div className="statistics-container">
+        <StatisticCard
+          title="Total Test Cases"
+          count={totalTestSuites}
+          color="#ffffff"
+          icon="equalizer"
+        />
+        <StatisticCard
+          title="Successful Test Cases"
+          count={successfulTestSuites}
+          color="#d4ead4"
+          icon="check"
+        />
+        <StatisticCard
+          title="Failed Test Cases"
+          count={failedTestSuites}
+          color="#f3d4d1"
+          icon="error"
+        />
+      </div>
       <ExpandableRowTable
         title="Test Cases"
         Data={data}

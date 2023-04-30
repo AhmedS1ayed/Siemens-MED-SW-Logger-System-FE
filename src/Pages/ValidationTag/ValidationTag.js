@@ -60,7 +60,17 @@ export default function ValidationTag() {
               Click on a row to show validation points
             </h2>
           ) : (
-            <h2 className="validation_points_header">Validation Points</h2>
+            <div>
+            <h2 className="validation_points_header">
+              Validation Points 
+            </h2>
+            <h2 className="validation_points_header">
+            {data[selectedRow]["name"]}
+            </h2>
+          </div>
+            // <h2 className="validation_points_header">Validation Points </h2>
+            // <h2 className="validation_points_header">Validation Points of {data[selectedRow]["name"]}  </h2>
+            // <h3 validation_points_header> {data[selectedRow]["name"]}</h3>
           )}
         </Box>
 
@@ -79,7 +89,7 @@ export default function ValidationTag() {
                   
                   <Box className="validation_point scale-up-center">
                     {/* console.log({valid_point}) */}
-                    <bold> {data[selectedRow]["name"]}</bold>
+                 
                     <TreeView
                       aria-label="file system navigator"
                       defaultCollapseIcon={<ExpandMoreIcon />}

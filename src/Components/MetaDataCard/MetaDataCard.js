@@ -1,7 +1,7 @@
 import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from 'react';
-import './MetaDataCard.css';
+// import './MetaDataCard.css';
 
 export default function MetaDataCard({ keys, values }) {
   const [expanded, setExpanded] = React.useState(Array(keys.length).fill(false));

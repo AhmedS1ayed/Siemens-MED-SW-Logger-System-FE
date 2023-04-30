@@ -1,7 +1,7 @@
 import React from "react";
 import MUIDataTable from "mui-datatables";
 import { getColumnName } from "../../Utils/utilities";
-import "./newTable.css";
+import "./NewTable.css";
 import MetaDataCard from "../MetaDataCard/MetaDataCard";
 
   // const getColumnsName = (data, columnWidts = {}) => {
@@ -34,10 +34,12 @@ import MetaDataCard from "../MetaDataCard/MetaDataCard";
   //           flex: 1,
   //         };
   
+  
 export const ExpandableRowTable = (props) => {
   const options = {
     filter: true,
     // toolbar: false,
+    ViewColumns:"ID",
     selectableRows: "multiple",
     filterType: "multiselect",
     responsive: "scroll",
@@ -59,10 +61,10 @@ export const ExpandableRowTable = (props) => {
       const rowObject = props.Data[dataIndex];
       let keys = [];
       let values = [];
-      if (rowObject["meta_data"]) {
-        Object.keys(rowObject["meta_data"]).forEach((key) => {
+      if (rowObject["metaData"]) {
+        Object.keys(rowObject["metaData"]).forEach((key) => {
           keys.push(key);
-          values.push(rowObject["meta_data"][key]);
+          values.push(rowObject["metaData"][key]);
         });
       }
       return (
