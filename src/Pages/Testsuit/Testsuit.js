@@ -1,43 +1,33 @@
 import React from "react";
 import { Container } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
-import BasicExampleDataGrid from "../../Components/NewTable/NewTable.js";
 import "../../Components/statistics/StatisticsCard.css";
-import { useState, useEffect } from "react";
-import id from "../../Data/Mock_Data.json";
-
-// console.log(data.length);
-
+import { Link } from "react-router-dom";
+import ExpandableRowTable from "../../Components/NewTable/NewTable.js";
+import "../../Components/DataGrid/DataGrid.css";
+import { useEffect, setData } from "react";
+import { useState } from "react";
+// import data from "../../Data/Mock_Data.json";
+import { getColumnName } from "../../Utils/utilities";
+import LinkIcon from "@mui/icons-material/Link";
 
 export default function Testsuit() {
-  // const [data, setData] = useState(null);
-  // const getData = null;
-  // useEffect(() => {
-  //   fetchTestSuiteHandler();
-  // }, []);
-
-  // async function fetchTestSuiteHandler()
-  // {
-  //   try
-  //   {
-  //     const response = await fetch("http://localhost:8080/TestSuites/")
-  //     if(!response.ok) console.log("something went wrong");
-  //     getData = await response.json();
-  //     // console.log(getData);
-  //   }
-  //   catch (error)
-  //   {
-  //     console.error(error);
-  //   }
-  // }
-
-  const [data, setData] = useState(
-  [
+  useEffect(() => {
+    fetch('http://localhost:8080/TestSuites/')
+      .then(response => response.json())
+      .then(data => {
+        if(data) setData(data);
+        console.log(data);
+      })
+      .catch(error => console.error(error));
+  }, []);
+  
+  const [data, setData] = useState([
     {
       _id: "none",
     },
   ]);
-
+  
   const totalTestSuites = data.length;
   const successfulTestSuites = data.filter(
     (item) => item.isSuccessful === true
@@ -46,33 +36,56 @@ export default function Testsuit() {
     (item) => item.isSuccessful === false
   ).length;
 
-  useEffect(() => {
-    fetch('http://localhost:8080/TestSuites/')
-      .then(response => response.json())
-      .then(json => {if(json) setData(json);})
-      .catch(error => console.error(error));
-  }, []);
+  const data_columns = [];
+  data.forEach((row) => getColumnName(row, data_columns));
 
+  data_columns.push({
+    name: "",
+    label: "",
+    options: {
+      filter: false,
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        const testsuitId = tableMeta.rowData[0];
+        return (
+          <Link to={`/testcases?testsuitId=${testsuitId}`}>
+            <LinkIcon />
+          </Link>
+        );
+      },
+    },
+  });
   return (
-    <Container>
+    <Container maxWidth="x">
+      {/* <h1>statistics</h1> */}
       <div className="statistics-container">
         <StatisticCard
           title="Total Test Suites"
           count={totalTestSuites}
-          color="#00a3e0"
+          color="#ffffff"
+          icon="equalizer"
         />
         <StatisticCard
           title="Successful Test Suites"
           count={successfulTestSuites}
-          color="#00b894"
+          color="#d4ead4"
+          icon="check"
         />
         <StatisticCard
           title="Failed Test Suites"
           count={failedTestSuites}
-          color="#e74c3c"
+          color="#f3d4d1"
+          icon="error"
         />
       </div>
-      <BasicExampleDataGrid data={data} />
+      <ExpandableRowTable
+        title="Test Suites"
+        Data={data}
+        regularColumns={data_columns}
+        expandable={false}
+        onRowClickEnabled={false}
+      />
+      <br />
     </Container>
   );
 }
