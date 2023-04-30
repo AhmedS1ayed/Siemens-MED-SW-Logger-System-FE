@@ -78,8 +78,8 @@ export default function Testcase() {
     //   </div>
   
     //   <DataGrid data={data} data_columns={data_columns} />
-    <Container maxWidth="xl">
-        <div className="statistics-container">
+    <Container maxWidth="x">
+      <div className="statistics-container">
         <StatisticCard
           title="Total Test Cases"
           count={totalTestSuites}
@@ -89,13 +89,13 @@ export default function Testcase() {
         <StatisticCard
           title="Successful Test Cases"
           count={successfulTestSuites}
-          color="#98D7C2"
+          color="#d4ead4"
           icon="check"
         />
         <StatisticCard
           title="Failed Test Cases"
           count={failedTestSuites}
-          color="#FF5C5C"
+          color="#f3d4d1"
           icon="error"
         />
       </div>
