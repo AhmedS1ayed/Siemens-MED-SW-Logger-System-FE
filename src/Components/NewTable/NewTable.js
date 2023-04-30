@@ -38,6 +38,7 @@ export const ExpandableRowTable = (props) => {
   const options = {
     filter: true,
     // toolbar: false,
+    ViewColumns:"ID",
     selectableRows: "multiple",
     filterType: "multiselect",
     responsive: "scroll",

@@ -81,19 +81,19 @@ export default function Testcase() {
     <Container maxWidth="xl">
         <div className="statistics-container">
         <StatisticCard
-          title="Total Test Suites"
+          title="Total Test Cases"
           count={totalTestSuites}
           color="#ffffff"
           icon="equalizer"
         />
         <StatisticCard
-          title="Successful Test Suites"
+          title="Successful Test Cases"
           count={successfulTestSuites}
           color="#98D7C2"
           icon="check"
         />
         <StatisticCard
-          title="Failed Test Suites"
+          title="Failed Test Cases"
           count={failedTestSuites}
           color="#FF5C5C"
           icon="error"
