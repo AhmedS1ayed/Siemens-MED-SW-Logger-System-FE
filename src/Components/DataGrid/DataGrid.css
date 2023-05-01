@@ -1,6 +1,7 @@
 .super-app-theme--header {
-  background-color: rgb(56, 91, 151);
-  color: #fff;
+  width: 100%;
+  background-color: rgb(192, 182, 182);
+  color:  rgb(103, 9, 226);
 }
 
 .row-border {

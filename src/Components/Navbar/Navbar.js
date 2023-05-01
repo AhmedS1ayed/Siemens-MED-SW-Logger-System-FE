@@ -5,14 +5,13 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
 
-
 export default function Navbar() {
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: "#fffff3", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <InsertChartIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+            sx={{ display: { xs: "none", md: "flex" }, mr: 1, color: "#333333", fontWeight: "bold", textShadow: "1px 1px #cccccc" }}
           />
           <Typography
             variant="h6"
@@ -25,8 +24,9 @@ export default function Navbar() {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: "#333333",
               textDecoration: "none",
+              textShadow: "1px 1px #cccccc"
             }}
           >
             LOGGER

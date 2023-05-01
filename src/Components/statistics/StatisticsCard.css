@@ -1,0 +1,41 @@
+.statistics-container {
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.statistics-card {
+  display: flex;
+  align-items: center;
+  width: 400px;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-right: 16px;
+}
+
+.statistics-card:last-child {
+  margin-right: 0;
+}
+
+.statistics-card-icon {
+  font-size: 32px;
+  margin-right: 16px;
+  color: #333333;
+}
+.statistics-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.statistics-card-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.statistics-card-value {
+  font-size: 24px;
+  font-weight: bold;
+}

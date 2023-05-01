@@ -41,7 +41,8 @@ export default function ValidationTag() {
 
   let sad = [];
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="x">
+      
       <ExpandableRowTable
         title="Test Suites"
         Data={data}
@@ -50,6 +51,7 @@ export default function ValidationTag() {
         onRowClickEnabled={true}
         onRowClick={handleRowClick}
       />
+
       <section className="validation_points_section">
         <Box>
           {selectedRow === -1 ? (
@@ -57,9 +59,20 @@ export default function ValidationTag() {
               Click on a row to show validation points
             </h2>
           ) : (
-            <h2 className="validation_points_header">Validation Points</h2>
+            <div>
+            <h2 className="validation_points_header">
+              Validation Points 
+            </h2>
+            <h2 className="validation_points_header">
+            {data[selectedRow]["name"]}
+            </h2>
+          </div>
+            // <h2 className="validation_points_header">Validation Points </h2>
+            // <h2 className="validation_points_header">Validation Points of {data[selectedRow]["name"]}  </h2>
+            // <h3 validation_points_header> {data[selectedRow]["name"]}</h3>
           )}
         </Box>
+
         <Grid
           container
           spacing={{ xs: 2, md: 3 }}
@@ -72,7 +85,10 @@ export default function ValidationTag() {
             data[selectedRow]["validation_points"].map((valid_point, idx) => {
               return (
                 <Grid item xs={12} sm={6} md={4} lg={3}>
+                  
                   <Box className="validation_point scale-up-center">
+                    {/* console.log({valid_point}) */}
+                 
                     <TreeView
                       aria-label="file system navigator"
                       defaultCollapseIcon={<ExpandMoreIcon />}
@@ -88,6 +104,7 @@ export default function ValidationTag() {
                         if (valid_key !== "results") {
                           return (
                             <>
+                  
                               <TreeItem nodeId={valid_key} label={valid_key}>
                                 {Object.keys(valid_point[valid_key]).map(
                                   (valid_data) => {

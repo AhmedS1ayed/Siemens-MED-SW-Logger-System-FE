@@ -8,10 +8,12 @@ import "./MetaDataCard.css";
 import { Grid } from "@mui/material";
 
 export default function MetaDataCard({ keys, values }) {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(Array(keys.length).fill(false));
 
   const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
+    const newExpanded = [...expanded];
+    newExpanded[panel] = isExpanded;
+    setExpanded(newExpanded);
   };
 
   return (

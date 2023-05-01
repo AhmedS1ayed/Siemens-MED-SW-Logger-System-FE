@@ -10,16 +10,20 @@ export default function BasicExampleDataGrid({ data, data_columns }) {
         columns={data_columns}
         rows={data}
         slots={{ toolbar: GridToolbar }}
-        getRowId={(row) => row.ID}
+        getRowId={(row) => row._id}
         getRowClassName={() => "row-border"}
         sx={{
-          boxShadow: 2,
+          flex: 1,
+          boxShadow: "1px 1px 5px 2px #00a3e0",
           paddingLeft: "40px",
           paddingRight: "40px",
           paddingTop: "20px",
           borderColor: "primary.light",
           marginTop: "40px",
           fontWeight: "bold",
+        }}
+        classes={{
+          colCellWrapper: "col-cell-wrapper",
         }}
       />
     </div>
