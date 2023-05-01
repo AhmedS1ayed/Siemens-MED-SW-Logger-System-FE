@@ -10,7 +10,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
 import "./ValidationTag.css";
-import { DialogTitle } from "@mui/material";
 
 export default function ValidationTag() {
   const location = useLocation();
@@ -121,13 +120,11 @@ export default function ValidationTag() {
                       onClose={() => toggleDialog(idx)}
                       open={openDialogs[idx]}
                     >
-                      <DialogTitle>{valid_point["results"]["id"]}</DialogTitle>
                       {valid_point["results"].forEach((result) =>
                         getColumnName(result, sad)
                       )}
                       {console.log("saddassd", sad)}
                       <ExpandableRowTable
-                        title={valid_point["levels"]["mac"]}
                         Data={valid_point["results"]}
                         regularColumns={sad}
                         expandable={false}

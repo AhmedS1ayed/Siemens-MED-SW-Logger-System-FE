@@ -9,7 +9,11 @@
       {
         "levels": {},
         "meta_data": {
-          "description": "Validating Signature Settings for DUT"
+          "description": "Validating Signature Settings for DUT",
+          "desc": "Validating Signature Settings for DUT",
+          "project": "Validating Signature Settings for DUT",
+          "Aim": "Validating Signature Settings for DUT",
+          "fail": "Validating Signature Settings for DUT"
         },
         "results": [
           {
@@ -35,7 +39,11 @@
     "name": "FEC Validation",
     "meta_data": {
       "description": "Validating FEC for each Mac",
-      "executable_path": "/project/path/to/executable"
+      "executable_path": "/project/path/to/executable",
+      "desc": "Validating Signature Settings for DUT",
+      "project": "Validating Signature Settings for DUT",
+      "Aim": "Validating Signature Settings for DUT",
+      "fail": "Validating Signature Settings for DUT"
     },
     "validation_points": [
       {
