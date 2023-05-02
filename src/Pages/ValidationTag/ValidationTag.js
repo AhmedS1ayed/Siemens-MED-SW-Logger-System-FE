@@ -97,8 +97,6 @@ export default function ValidationTag() {
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   
                   <Box className="validation_point scale-up-center">
-                    {/* console.log({valid_point}) */}
-                    <bold> {data[selectedRow]["name"]}</bold>
                     <TreeView
                       aria-label="file system navigator"
                       defaultCollapseIcon={<ExpandMoreIcon />}
@@ -111,10 +109,10 @@ export default function ValidationTag() {
                       }}
                     >
                       {Object.keys(valid_point).map((valid_key) => {
+                        console.log("-=-=-=-=-=-=-=" , valid_point);
                         if (valid_key !== "results") {
                           return (
                             <>
-                  
                               <TreeItem nodeId={valid_key} label={valid_key}>
                                 {Object.keys(valid_point[valid_key]).map(
                                   (valid_data) => {
@@ -147,14 +145,13 @@ export default function ValidationTag() {
                       onClose={() => toggleDialog(idx)}
                       open={openDialogs[idx]}
                     >
-                      <DialogTitle>{valid_point["results"]["id"]}</DialogTitle>
+                      {valid_point["results"].forEach((result) =>
+                        getColumnName(result, sad)
+                      )}
+                      {console.log("saddassd", valid_point)}
                       <ExpandableRowTable
-                        title={valid_point["levelsOrder"]["mac"]}
-                        Data={data}
-                        regularColumns={getColumnName(
-                          valid_point["results"],
-                          sad
-                        )}
+                        Data={valid_point["results"]}
+                        regularColumns={sad}
                         expandable={false}
                         onRowClickEnabled={false}
                       />
