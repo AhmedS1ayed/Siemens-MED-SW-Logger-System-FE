@@ -31,17 +31,13 @@ export default function ValidationPoints() {
     },
   ]);
   
-  // const totalTestSuites = data.length;
-  // const successfulTestSuites = data.filter(
-  //   (item) => item.isSuccessful === true
-  // ).length;
-  // const failedTestSuites = data.filter(
-  //   (item) => item.isSuccessful === false
-  // ).length;
-
-  const totalTestSuites = 0;
-  const successfulTestSuites = 0;
-  const failedTestSuites = 0;
+  const totalTestSuites = data.length;
+  const successfulTestSuites = data.filter(
+    (item) => item.isSuccessful === true
+  ).length;
+  const failedTestSuites = data.filter(
+    (item) => item.isSuccessful === false
+  ).length;
 
   const data_columns = [];
   data.forEach((row) => getColumnName(row, data_columns));

@@ -57,7 +57,7 @@ export default function Testcase() {
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
-        const testcaseId = tableMeta.rowData[0];
+        const testcaseId = tableMeta.rowData[1];
         return (
           <Link
             to={`/validtags?testsuitId=${testsuitId}&testcaseId=${testcaseId}`}
