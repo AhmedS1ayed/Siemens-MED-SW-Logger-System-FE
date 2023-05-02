@@ -13,11 +13,14 @@ import LinkIcon from "@mui/icons-material/Link";
 
 export default function ValidationPoints() {
   useEffect(() => {
-    fetch('http://localhost:8080/ValidationPoints')
+    fetch('http://localhost:8080/validationPoints/?validationTag.id=643f8524f71037820114afe8')
       .then(response => response.json())
       .then(data => {
-        if(data) setData(data);
-        console.log(data);
+        if(data)
+        {
+          setData(data.data);
+        }
+        console.log('data', data.data);
       })
       .catch(error => console.error(error));
   }, []);
@@ -28,13 +31,17 @@ export default function ValidationPoints() {
     },
   ]);
   
-  const totalTestSuites = data.length;
-  const successfulTestSuites = data.filter(
-    (item) => item.isSuccessful === true
-  ).length;
-  const failedTestSuites = data.filter(
-    (item) => item.isSuccessful === false
-  ).length;
+  // const totalTestSuites = data.length;
+  // const successfulTestSuites = data.filter(
+  //   (item) => item.isSuccessful === true
+  // ).length;
+  // const failedTestSuites = data.filter(
+  //   (item) => item.isSuccessful === false
+  // ).length;
+
+  const totalTestSuites = 0;
+  const successfulTestSuites = 0;
+  const failedTestSuites = 0;
 
   const data_columns = [];
   data.forEach((row) => getColumnName(row, data_columns));

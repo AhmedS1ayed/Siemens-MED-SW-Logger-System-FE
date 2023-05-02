@@ -17,7 +17,7 @@ export default function Testsuit() {
       .then(response => response.json())
       .then(data => {
         if(data) setData(data);
-        console.log(data);
+        console.log('data',data);
       })
       .catch(error => console.error(error));
   }, []);
