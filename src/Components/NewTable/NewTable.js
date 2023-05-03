@@ -3,12 +3,11 @@ import MUIDataTable from "mui-datatables";
 import { getColumnName } from "../../Utils/utilities";
 import "./newTable.css";
 import MetaDataCard from "../MetaDataCard/MetaDataCard";
-  
-  
+
+
 export const ExpandableRowTable = (props) => {
   const options = {
     filter: true,
-    // toolbar: false,
     selectableRows: "multiple",
     filterType: "multiselect",
     responsive: "scroll",
@@ -24,7 +23,6 @@ export const ExpandableRowTable = (props) => {
         props.onRowClick(rowMeta.dataIndex);
       }
     },
-
     renderExpandableRow: (rowData, rowMeta) => {
       const dataIndex = rowMeta.dataIndex;
       const rowObject = props.Data[dataIndex];
@@ -39,7 +37,7 @@ export const ExpandableRowTable = (props) => {
       return (
         <React.Fragment>
           <tr>
-            <td colSpan={3}>
+            <td colSpan={props.regularColumns.length}>
               <MetaDataCard keys={keys} values={values} />
             </td>
           </tr>
@@ -47,15 +45,19 @@ export const ExpandableRowTable = (props) => {
       );
     },
     page: 1,
-    // toolbar: false,
   };
+
+  const columns = getColumnName(props.Data[0], props.regularColumns);
+
+  console.log("columns", columns);
+  
 
   return (
     <div className="table-container">
       <MUIDataTable
         title={props.title}
         data={props.Data}
-        columns={props.regularColumns}
+        columns={columns}
         options={options}
       />
     </div>

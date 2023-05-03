@@ -11,17 +11,35 @@ import { useState } from "react";
 import { getColumnName } from "../../Utils/utilities";
 import LinkIcon from "@mui/icons-material/Link";
 
+
+const flattenObject = (obj, prefix = "") => {
+  return Object.keys(obj).reduce((acc, key) => {
+    // const pre = prefix.length ? prefix + "." : "";
+    if (typeof obj[key] === "object" && obj[key] !== null) {
+      Object.assign(acc, flattenObject(obj[key]));
+    } else {
+      acc[key] = obj[key];
+    }
+    return acc;
+  }, {});
+};
+
+let flattenedData  =null;
+let filteredData = null;
+
 export default function Testsuit() {
+ 
   useEffect(() => {
     fetch('http://localhost:8080/TestSuites/')
       .then(response => response.json())
       .then(data => {
         if(data) setData(data);
-        console.log(data);
+        // console.log('data',data);
+        flattenedData = data.map((item) => flattenObject(item));
       })
       .catch(error => console.error(error));
   }, []);
-  
+  // console.log(flattenedData);
   const [data, setData] = useState([
     {
       _id: "none",
@@ -37,7 +55,31 @@ export default function Testsuit() {
   ).length;
 
   const data_columns = [];
-  data.forEach((row) => getColumnName(row, data_columns));
+  data.forEach((row) =>{
+    // console.log('row',row);
+     getColumnName(row, data_columns)
+    //  if(row.metaData === undefined) return;
+    //  else{
+    //   console.log('row.metaData',row.metaData);
+    //   if (row.metaData) {
+    //     console.log('row.metaData.owner', row.metaData.owner);
+    //     for (const key in row.metaData) {
+    //       if (!data_columns.find((column) => column.name === key)) {
+    //         const obj = [];
+    //         obj[key] = row.metaData[key];
+
+    //         getColumnName(obj, data_columns);
+    //       }
+    //     }
+    //   }
+    // };
+    //  console.log('data_columns',data_columns);
+  });
+  // if(data.length === 0) return <div>loading...</div>;
+  // else
+
+  //data.at(0).metaData.forEach((row) => getColumnName(row, data_columns));
+  
 
   let count = 0;
   data_columns.unshift({
@@ -70,10 +112,24 @@ export default function Testsuit() {
       },
     },
   });
-
-
   
-  return (
+  if(flattenedData){
+    if(data_columns){
+      filteredData = flattenedData.map((item) => {
+        const filteredItem = {};
+        Object.keys(item).forEach((key) => {
+          console.log('key',key , 'data_columns',data_columns);
+          if (data_columns.some((column) => column.name.substring(column.name.lastIndexOf(".") + 1) === key)) {
+            // const label = key.substring(key.lastIndexOf(".") + 1);
+            console.log("iteeeeeeeeem" , item[key])
+            filteredItem[key] = item[key];
+          }
+        });
+        return filteredItem;
+      });
+      console.log('filteredData',filteredData);
+  }
+    return (
     <Container maxWidth="x">
       {/* <h1>statistics</h1> */}
       <div className="statistics-container">
@@ -96,9 +152,10 @@ export default function Testsuit() {
           icon="error"
         />
       </div>
+
       <ExpandableRowTable
         title="Test Suites"
-        Data={data}
+        Data={filteredData}
         regularColumns={data_columns}
         expandable={false}
         onRowClickEnabled={false}
@@ -107,4 +164,5 @@ export default function Testsuit() {
       <br />
     </Container>
   );
+  }
 }
