@@ -11,13 +11,16 @@ import { useState } from "react";
 import { getColumnName } from "../../Utils/utilities";
 import LinkIcon from "@mui/icons-material/Link";
 
-export default function Testsuit() {
+export default function ValidationPoints() {
   useEffect(() => {
-    fetch('http://localhost:8080/TestSuites/')
+    fetch('http://localhost:8080/validationPoints/?validationTag.id=643f8524f71037820114afe8')
       .then(response => response.json())
       .then(data => {
-        if(data) setData(data);
-        console.log('data',data);
+        if(data)
+        {
+          setData(data.data);
+        }
+        console.log('data', data.data);
       })
       .catch(error => console.error(error));
   }, []);

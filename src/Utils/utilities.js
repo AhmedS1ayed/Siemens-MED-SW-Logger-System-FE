@@ -2,7 +2,6 @@ import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
 
 export const getColumnName = (data, data_columns) => {
-  console.log(data);
   Object.keys(data).forEach((key) => {
     if (typeof data[key] !== "object") {
       let newColumn = {
