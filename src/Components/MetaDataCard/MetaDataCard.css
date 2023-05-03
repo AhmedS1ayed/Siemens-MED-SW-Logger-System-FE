@@ -1,56 +1,30 @@
-.meta-data-card {
-    max-width: 400px;
-  }
-  
-  .meta-data-card .MuiAccordion-root {
-    border-radius: 8px;
-    box-shadow: none;
-    margin-bottom: 8px;
-  }
-  
-  .meta-data-card .MuiAccordionSummary-root {
-    background-color: #f5f5f5;
-    border-radius: 8px;
-  }
-  
-  .meta-data-card .MuiAccordionSummary-content {
-
-    align-items: center;
-  }
-  
-  .meta-data-card .MuiAccordionSummary-expandIcon {
-    margin-left: auto;
-  }
-  
-  .meta-data-card .MuiTypography-subtitle1 {
-    font-weight: bold;
-  }
-  
-  .meta-data-card .MuiAccordionDetails-root {
-    background-color: #7c0808;
-  }
-
-  .meta-data-card__container {
-    margin: 20px;
+.meta-data-card__container {
   display: flex;
-  flex-wrap: wrap;
-} 
-
- .meta-data-card__accordion {
-  flex-basis: calc(33.33% - 16px);
-  margin-right: 16px;
-  margin-bottom: 16px;
+  flex-direction: column;
 }
 
-@media (max-width: 960px) {
-  .meta-data-card__accordion {
-    flex-basis: calc(50% - 16px);
-  }
+.meta-data-card__accordion {
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: none;
 }
 
-@media (max-width: 600px) {
-  .meta-data-card__accordion {
-    flex-basis: 100%;
-    margin-right: 0;
-  }
+.meta-data-card__accordion-summary {
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ccc;
+}
+
+.meta-data-card__header {
+  font-weight: bold;
+}
+
+.meta-data-card__accordion-details {
+  display: flex;
+  align-items: center;
+}
+
+.meta-data-card__accordion-details > p {
+  margin: 0;
+  padding: 10px;
 }

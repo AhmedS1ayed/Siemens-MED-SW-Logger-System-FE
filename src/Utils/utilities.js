@@ -9,7 +9,7 @@ export const getColumnName = (data, data_columns) => {
         name: key,
         label: key,
         options: {
-          display : (key === "_id" || key === "id" || key === "__v") ? false : true ,
+          display : (key === "_id" || key === "id" ) ? false : true ,
 
           filterOptions: {
             renderValue: (value) => {

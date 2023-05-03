@@ -39,6 +39,21 @@ export default function Testsuit() {
   const data_columns = [];
   data.forEach((row) => getColumnName(row, data_columns));
 
+  let count = 0;
+  data_columns.unshift({
+    name: "INDEX",
+    label: "INDEX",
+    options: {
+      filter: false,
+      sort: true,
+      customBodyRender: () => {
+       if(count === data.length) count = 0; 
+        count++;
+        return (count);
+      },
+    },
+  });
+
   data_columns.push({
     name: "",
     label: "",
@@ -56,20 +71,7 @@ export default function Testsuit() {
     },
   });
 
-  let count = 0;
-  data_columns.push({
-    name: "INDEX",
-    label: "INDEX",
-    options: {
-      filter: false,
-      sort: true,
-      customBodyRender: () => {
-       if(count === data.length) count = 0; 
-        count++;
-        return (count);
-      },
-    },
-  });
+
   
   return (
     <Container maxWidth="x">

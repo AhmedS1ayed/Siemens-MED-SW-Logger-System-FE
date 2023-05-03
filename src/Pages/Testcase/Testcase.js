@@ -70,7 +70,7 @@ export default function Testcase() {
   });
 
   let count = 0;
-  data_columns.push({
+  data_columns.unshift({
     name: "INDEX",
     label: "INDEX",
     options: {
