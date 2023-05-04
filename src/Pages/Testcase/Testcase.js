@@ -25,12 +25,12 @@ export default function Testcase() {
   // ! This is not working backend need to implement a new api
   const testcaseId = searchParams.get("testcaseId");
   useEffect(() => {
-    fetch(`http://localhost:8080/testCases/?testSuite[_id]=${testsuitId}`)
-      .then(response => response.json())
-      .then(data => {if(data) setData(data);})
+    fetch(`http://localhost:8080/testCases/?testSuite[id]=${testsuitId}`)
+    .then(response => response.json())
+    .then(data => {if(data) setData(data); console.log("test cases data " , data);})
+    
       .catch(error => console.error(error));
   }, []);
-   console.log("test cases data " , data);
   const totalTestSuites = data.length;
   const successfulTestSuites = data.filter(
     (item) => item.isSuccessful === true
@@ -57,8 +57,10 @@ export default function Testcase() {
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
+        
         const testcaseId = data[tableMeta.rowIndex].id;
-        console.log("testcaseId", testcaseId);
+      
+        // console.log("testcaseId", testcaseId);
         return (
           <Link
             to={`/validtags?testsuitId=${testsuitId}&testcaseId=${testcaseId}`}
@@ -95,7 +97,7 @@ export default function Testcase() {
     //   </div>
   
     //   <DataGrid data={data} data_columns={data_columns} />
-    <Container maxWidth="x">
+    <Container key={Math.random()} maxWidth="x">
       <div className="statistics-container">
         <StatisticCard
           title="Total Test Cases"

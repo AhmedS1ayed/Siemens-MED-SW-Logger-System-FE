@@ -29,22 +29,23 @@ let filteredData = null;
 
 export default function Testsuit() {
  
+  // window.location.reload();
+  const [data, setData] = useState([
+    {
+      id: "none",
+    },
+  ]);
+  
   useEffect(() => {
     fetch('http://localhost:8080/TestSuites/')
       .then(response => response.json())
       .then(data => {
         if(data) setData(data);
         console.log('data',data);
-        flattenedData = data.map((item) => flattenObject(item));
       })
       .catch(error => console.error(error));
-  }, []);
+  } ,[]);
   // console.log(flattenedData);
-  const [data, setData] = useState([
-    {
-      _id: "none",
-    },
-  ]);
   
   const totalTestSuites = data.length;
   const successfulTestSuites = data.filter(
@@ -103,17 +104,26 @@ export default function Testsuit() {
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
-        const testsuitId = data[tableMeta.rowIndex].id;
+        let testsuitId = null;
+        if(data){
+
+          testsuitId = data[tableMeta.rowIndex].id;
+        }
         console.log('testsuitId',testsuitId);
         return (
-          <Link to={`/testcases?testsuitId=${testsuitId}`}>
-            <LinkIcon />
-          </Link>
+            <Link to={`/testcases?testsuitId=${testsuitId || ''}`}>
+              <LinkIcon />
+            </Link>
         );
       },
     },
   });
-  
+
+  if(data){
+    flattenedData = data.map((item) => flattenObject(item));
+    console.log('flattenedData',flattenedData);
+  }
+
   if(flattenedData){
     if(data_columns){
       filteredData = flattenedData.map((item) => {
@@ -131,7 +141,7 @@ export default function Testsuit() {
       console.log('filteredData',filteredData);
   }
     return (
-    <Container maxWidth="x">
+    <Container key={Math.random()} maxWidth="x">
       {/* <h1>statistics</h1> */}
       <div className="statistics-container">
         <StatisticCard
