@@ -35,12 +35,18 @@ export default function Testsuit() {
       .then(data => {
         if(data) setData(data);
         console.log('data',data);
-        flattenedData = data.map((item) => flattenObject(item));
+        setflattenedData(data.map((item) => flattenObject(item)));
       })
       .catch(error => console.error(error));
   }, []);
   // console.log(flattenedData);
   const [data, setData] = useState([
+    {
+      _id: "none",
+    },
+  ]);
+
+  const [flattenedData, setflattenedData] = useState([
     {
       _id: "none",
     },
