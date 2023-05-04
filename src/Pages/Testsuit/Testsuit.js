@@ -34,7 +34,7 @@ export default function Testsuit() {
       .then(response => response.json())
       .then(data => {
         if(data) setData(data);
-        // console.log('data',data);
+        console.log('data',data);
         flattenedData = data.map((item) => flattenObject(item));
       })
       .catch(error => console.error(error));
@@ -103,7 +103,8 @@ export default function Testsuit() {
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
-        const testsuitId = tableMeta.rowData[0];
+        const testsuitId = data[tableMeta.rowIndex].id;
+        console.log('testsuitId',testsuitId);
         return (
           <Link to={`/testcases?testsuitId=${testsuitId}`}>
             <LinkIcon />
@@ -118,10 +119,10 @@ export default function Testsuit() {
       filteredData = flattenedData.map((item) => {
         const filteredItem = {};
         Object.keys(item).forEach((key) => {
-          console.log('key',key , 'data_columns',data_columns);
+          // console.log('key',key , 'data_columns',data_columns);
           if (data_columns.some((column) => column.name.substring(column.name.lastIndexOf(".") + 1) === key)) {
             // const label = key.substring(key.lastIndexOf(".") + 1);
-            console.log("iteeeeeeeeem" , item[key])
+            // console.log("iteeeeeeeeem" , item[key])
             filteredItem[key] = item[key];
           }
         });

@@ -3,22 +3,34 @@
   border-radius: 16px;
   overflow: hidden;
 }
+.table-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
+table {
+  flex: 1;
+  overflow: auto;
+}
 .even-row {
-  background-color: #f5f4f4;
+  background-color: #f5f4f0;
 }
 
 .odd-row {
   background-color: #ffffff;
 }
 
+.MuiTableHead-root {
+  background-color: #110f0f !important;
+  font-weight: bold;
+}
 .MuiTableCell-root {
   padding: 8px;
 }
-
-.MuiTableHead-root {
-  background-color: #f0f0f0 !important;
-  font-weight: bold;
+.MuiTableHead-root th {
+  border-bottom: 2px solid black;
 }
 
 .MuiTableSortLabel-root {

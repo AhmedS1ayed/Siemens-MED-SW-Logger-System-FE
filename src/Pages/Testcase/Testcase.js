@@ -14,7 +14,7 @@ export default function Testcase() {
   const [data, setData] = useState(
     [
       {
-        _id: "none",
+        id: "none",
       },
     ]);
 
@@ -30,7 +30,7 @@ export default function Testcase() {
       .then(data => {if(data) setData(data);})
       .catch(error => console.error(error));
   }, []);
-
+   console.log("test cases data " , data);
   const totalTestSuites = data.length;
   const successfulTestSuites = data.filter(
     (item) => item.isSuccessful === true
@@ -57,7 +57,7 @@ export default function Testcase() {
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
-        const testcaseId = tableMeta.rowData[1];
+        const testcaseId = data[tableMeta.rowIndex].id;
         return (
           <Link
             to={`/validtags?testsuitId=${testsuitId}&testcaseId=${testcaseId}`}

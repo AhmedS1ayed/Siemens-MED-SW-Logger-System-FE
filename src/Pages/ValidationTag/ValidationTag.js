@@ -22,12 +22,12 @@ export default function ValidationTag() {
   const [openDialogs, setOpenDialogs] = useState([]);
   useEffect(() => {
     fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=${testsuitId}&testCase.id=${testcaseId}`)
-    // fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=643f8524f71037820114afea&testCase.id=643f8524f71037820114afe9`)
+     //fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=643f8524f71037820114afea&testCase.id=643f8524f71037820114afe9`)
       .then(response => response.json())
       .then(data => {
         if(data && data.message != 'Server Error')  
         {
-          setData(data);
+          setData(data.data);
         }
         console.log('data --------- :', data);
       })
@@ -36,7 +36,7 @@ export default function ValidationTag() {
 
   const [data, setData] = useState([
     {
-      _id: "none",
+      id: "none",
     },
   ]);
 

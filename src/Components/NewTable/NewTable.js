@@ -10,7 +10,7 @@ export const ExpandableRowTable = (props) => {
     filter: true,
     selectableRows: "multiple",
     filterType: "multiselect",
-    responsive: "scroll",
+    // responsive: "scroll",
     rowsPerPage: 10,
     setRowProps: (row, rowIndex) => {
       return {
@@ -44,13 +44,13 @@ export const ExpandableRowTable = (props) => {
         </React.Fragment>
       );
     },
-    page: 1,
+    page: 2,
   };
 
   const columns = getColumnName(props.Data[0], props.regularColumns);
 
   console.log("columns", columns);
-  
+
 
   return (
     <div className="table-container">
