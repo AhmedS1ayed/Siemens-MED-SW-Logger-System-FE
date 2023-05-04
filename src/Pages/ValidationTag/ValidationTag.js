@@ -21,18 +21,19 @@ export default function ValidationTag() {
   const [selectedRow, setSelectedRow] = useState(-1);
   const [openDialogs, setOpenDialogs] = useState([]);
   useEffect(() => {
+    //fetch(`http://localhost:8080/validationTags/testSuites/${testsuitId}/testCases/${testcaseId}}`)
     fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=${testsuitId}&testCase.id=${testcaseId}`)
      //fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=643f8524f71037820114afea&testCase.id=643f8524f71037820114afe9`)
       .then(response => response.json())
       .then(data => {
         if(data && data.message != 'Server Error')  
         {
-          setData(data.data);
+          setData(data);
         }
         console.log('data --------- :', data);
       })
       .catch(error => console.error(error));
-  }, []);
+  }, []); 
 
   const [data, setData] = useState([
     {
