@@ -48,10 +48,6 @@ export const ExpandableRowTable = (props) => {
   };
 
   const columns = getColumnName(props.Data[0], props.regularColumns);
-
-  console.log("columns", columns);
-
-
   return (
     <div className="table-container">
       <MUIDataTable

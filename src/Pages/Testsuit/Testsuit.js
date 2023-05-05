@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "@mui/material";
+import { Card, Container , Dialog } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
 import { Link } from "react-router-dom";
@@ -8,13 +8,12 @@ import "../../Components/DataGrid/DataGrid.css";
 import { useEffect, setData } from "react";
 import { useState } from "react";
 // import data from "../../Data/Mock_Data.json";
-import { getColumnName } from "../../Utils/utilities";
+import { getColumnName ,getKeys } from "../../Utils/utilities";
 import LinkIcon from "@mui/icons-material/Link";
+import "./Testsuit.css";
 
-
-const flattenObject = (obj, prefix = "") => {
+let flattenObject = (obj, prefix = "") => {
   return Object.keys(obj).reduce((acc, key) => {
-    // const pre = prefix.length ? prefix + "." : "";
     if (typeof obj[key] === "object" && obj[key] !== null) {
       Object.assign(acc, flattenObject(obj[key]));
     } else {
@@ -24,13 +23,14 @@ const flattenObject = (obj, prefix = "") => {
   }, {});
 };
 
+
 let flattenedData  =null;
 let filteredData = null;
 
 export default function Testsuit() {
  
   // window.location.reload();
-  const [data, setData] = useState([
+  let [data, setData] = useState([
     {
       id: "none",
     },
@@ -41,12 +41,61 @@ export default function Testsuit() {
       .then(response => response.json())
       .then(data => {
         if(data) setData(data);
-        console.log('data',data);
+        // setflattenedData(data.map((item) => flattenObject(item)));
       })
       .catch(error => console.error(error));
-  } ,[]);
-  // console.log(flattenedData);
+  }, []);
+  // const [data, setData] = useState([
+  //   {
+  //     _id: "none",
+  //   },
+  // ]);
+
+  let [flattenedData, setflattenedData] = useState([
+    {
+      _id: "none",
+    },
+  ]);
+  const [openDialogs, setOpenDialogs] = useState([]);
+
+  const [idx , setClickedIdx] = useState(0);
+
+  const [nestedData , setNestedData] = useState('None');
+
+  const [dataKeys,setDataKeys] = useState(['None']);
+  const [isConnectivityMap,setConnectivityMap] = useState(false);
+  const [nestedDatacolumns,setNestedDataColumns] = useState([]);
   
+
+  const toggleDialog = (index) => {
+    const newOpenDialogs = [...openDialogs];
+    newOpenDialogs[index] = !newOpenDialogs[index];
+    setOpenDialogs(newOpenDialogs);
+  };
+
+  let handleRowClicked = (index) => 
+  {
+    setClickedIdx(index);
+    setNestedData(data[index]['metaData']);
+    setDataKeys(getKeys(data[index]['metaData']));
+    setConnectivityMap(false);
+    toggleDialog(index);
+  }
+  const handleKeyClicked = (item) => 
+  {
+    setNestedData(nestedData[item]);
+    let keys = getKeys(nestedData[item]);
+    if(item==='sa_connectivity_map' || item ==='mpg_connectivity_map')
+    {
+      setConnectivityMap(true);
+    }
+    else
+    {
+      setConnectivityMap(false);
+    }
+    setDataKeys(keys);
+  }
+
   const totalTestSuites = data.length;
   const successfulTestSuites = data.filter(
     (item) => item.isSuccessful === true
@@ -56,30 +105,8 @@ export default function Testsuit() {
   ).length;
 
   const data_columns = [];
-  data.forEach((row) =>{
-    // console.log('row',row);
-     getColumnName(row, data_columns)
-    //  if(row.metaData === undefined) return;
-    //  else{
-    //   console.log('row.metaData',row.metaData);
-    //   if (row.metaData) {
-    //     console.log('row.metaData.owner', row.metaData.owner);
-    //     for (const key in row.metaData) {
-    //       if (!data_columns.find((column) => column.name === key)) {
-    //         const obj = [];
-    //         obj[key] = row.metaData[key];
+  data.forEach((row) =>getColumnName(row, data_columns));
 
-    //         getColumnName(obj, data_columns);
-    //       }
-    //     }
-    //   }
-    // };
-    //  console.log('data_columns',data_columns);
-  });
-  // if(data.length === 0) return <div>loading...</div>;
-  // else
-
-  //data.at(0).metaData.forEach((row) => getColumnName(row, data_columns));
   
 
   let count = 0;
@@ -129,16 +156,12 @@ export default function Testsuit() {
       filteredData = flattenedData.map((item) => {
         const filteredItem = {};
         Object.keys(item).forEach((key) => {
-          // console.log('key',key , 'data_columns',data_columns);
           if (data_columns.some((column) => column.name.substring(column.name.lastIndexOf(".") + 1) === key)) {
-            // const label = key.substring(key.lastIndexOf(".") + 1);
-            // console.log("iteeeeeeeeem" , item[key])
             filteredItem[key] = item[key];
           }
         });
         return filteredItem;
       });
-      console.log('filteredData',filteredData);
   }
     return (
     <Container key={Math.random()} maxWidth="x">
@@ -169,9 +192,36 @@ export default function Testsuit() {
         Data={filteredData}
         regularColumns={data_columns}
         expandable={false}
-        onRowClickEnabled={false}
+        onRowClickEnabled = {true}
+        onRowClick={handleRowClicked}
       />
-      {/* <DataGrid data={data} data_columns={data_columns} /> */}
+      <Dialog
+              onClose={() => toggleDialog(idx)}
+              open={openDialogs[idx]}
+            >
+              {dataKeys.map((item) =>{
+                return(
+                <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{item}</button>
+                </div>)})}
+              <div className="display:inline">
+              {Object.keys(nestedData).map((key,value) =>{
+                if(typeof nestedData[key] != "object" && !isConnectivityMap){
+                return(
+                <Card className="card">
+                <div className="header">{key}</div>
+                <div className="header_detail">
+                  <div className="header_detail2" >{nestedData[key]}</div>
+                </div>
+                
+                </Card> 
+                )}
+                else if (typeof nestedData[key] != "object" && isConnectivityMap)
+                {
+                  return(<><h1>HELLOO</h1></>);
+                }
+                })}
+                </div>
+      </Dialog>
       <br />
     </Container>
   );
