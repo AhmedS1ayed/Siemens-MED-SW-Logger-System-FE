@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-// import data from "../../Data/log.json";
 import { getColumnName } from "../../Utils/utilities";
 import { Container, Dialog, Divider, Grid } from "@mui/material";
 import ExpandableRowTable from "../../Components/NewTable/NewTable";
@@ -10,7 +9,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
 import "./ValidationTag.css";
-import { DialogTitle } from "@mui/material";
 
 export default function ValidationTag() {
   const location = useLocation();
@@ -21,9 +19,7 @@ export default function ValidationTag() {
   const [selectedRow, setSelectedRow] = useState(-1);
   const [openDialogs, setOpenDialogs] = useState([]);
   useEffect(() => {
-    //fetch(`http://localhost:8080/validationTags/testSuites/${testsuitId}/testCases/${testcaseId}}`)
     fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=${testsuitId}&testCase.id=${testcaseId}`)
-     //fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=643f8524f71037820114afea&testCase.id=643f8524f71037820114afe9`)
       .then(response => response.json())
       .then(data => {
         if(data && data.length != 0)  

@@ -7,12 +7,11 @@ import ExpandableRowTable from "../../Components/NewTable/NewTable.js";
 import "../../Components/DataGrid/DataGrid.css";
 import { useEffect, setData } from "react";
 import { useState } from "react";
-// import data from "../../Data/Mock_Data.json";
 import { getColumnName ,getKeys } from "../../Utils/utilities";
 import LinkIcon from "@mui/icons-material/Link";
 import "./Testsuit.css";
 
-let flattenObject = (obj, prefix = "") => {
+const flattenObject = (obj, prefix = "") => {
   return Object.keys(obj).reduce((acc, key) => {
     if (typeof obj[key] === "object" && obj[key] !== null) {
       Object.assign(acc, flattenObject(obj[key]));
@@ -30,7 +29,7 @@ let filteredData = null;
 export default function Testsuit() {
  
   // window.location.reload();
-  let [data, setData] = useState([
+  const [data, setData] = useState([
     {
       id: "none",
     },
@@ -41,15 +40,10 @@ export default function Testsuit() {
       .then(response => response.json())
       .then(data => {
         if(data) setData(data);
-        // setflattenedData(data.map((item) => flattenObject(item)));
+        setflattenedData(data.map((item) => flattenObject(item)));
       })
       .catch(error => console.error(error));
   }, []);
-  // const [data, setData] = useState([
-  //   {
-  //     _id: "none",
-  //   },
-  // ]);
 
   let [flattenedData, setflattenedData] = useState([
     {
@@ -73,7 +67,7 @@ export default function Testsuit() {
     setOpenDialogs(newOpenDialogs);
   };
 
-  let handleRowClicked = (index) => 
+  const handleRowClicked = (index) => 
   {
     setClickedIdx(index);
     setNestedData(data[index]['metaData']);
@@ -84,7 +78,7 @@ export default function Testsuit() {
   const handleKeyClicked = (item) => 
   {
     setNestedData(nestedData[item]);
-    let keys = getKeys(nestedData[item]);
+    const keys = getKeys(nestedData[item]);
     if(item==='sa_connectivity_map' || item ==='mpg_connectivity_map')
     {
       setConnectivityMap(true);
