@@ -1,80 +1,29 @@
-.table-container {
-  margin: 16px;
-  border-radius: 16px;
-  overflow: hidden;
+.css-11mde6h-MuiPaper-root {
+  margin: 30px 15px;
+  border-bottom: 2px solid rgba(38, 96, 244, 0.654);
 }
 
-.even-row {
-  background-color: #f5f4f4;
+.tss-1akey0g-MUIDataTableHeadCell-data {
+  font-weight: bold !important;
+  color: #fff;
+}
+
+.MuiTableCell-head {
+  padding-left: 0 !important;
+  background-color: rgb(25, 118, 210) !important;
+}
+
+.MuiButton-root {
+  padding-left: 0 !important;
+}
+
+.MuiFormControl-root {
+  padding-left: 10px !important;
 }
 
 .odd-row {
-  background-color: #ffffff;
+  background-color: #e2e0e0;
 }
-
-.MuiTableCell-root {
-  padding: 8px;
-}
-
-.MuiTableHead-root {
-  background-color: #f0f0f0 !important;
-  font-weight: bold;
-}
-
-.MuiTableSortLabel-root {
-  color: #000000;
-}
-
-.MuiTableSortLabel-active {
-  color: #000000;
-}
-
-.MuiTablePagination-root {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 16px;
-}
-
-.MuiTablePagination-caption {
-  font-size: 14px;
-}
-
-.MuiTablePagination-selectRoot {
-  margin-left: 16px;
-}
-
-.MuiTablePagination-actions {
-  margin-left: 16px;
-}
-
-.MuiTableRow-root.Mui-expanded {
-  background-color: #f5f5f5;
-}
-
-.meta-data-card__container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.meta-data-card__accordion {
-  flex-basis: calc(33.33% - 16px);
-  margin-right: 16px;
-  margin-bottom: 16px;
-}
-
-@media (max-width: 960px) {
-  .meta-data-card__accordion {
-    flex-basis: calc(50% - 16px);
-  }
-}
-
-@media (max-width: 600px) {
-  .meta-data-card__accordion {
-    flex-basis: 100%;
-    margin-right: 0;
-  }
-}
-
 
 .success-class {
   background-color: rgb(210, 235, 211);

@@ -41,10 +41,9 @@ export default function ValidationTag() {
 
   let sad = [];
   return (
-    <Container maxWidth="x">
-      
+    <Container maxWidth="xl">
       <ExpandableRowTable
-        title="Test Suites"
+        title="Validation Tags"
         Data={data}
         regularColumns={data_columns}
         expandable={true}
@@ -60,16 +59,11 @@ export default function ValidationTag() {
             </h2>
           ) : (
             <div>
-            <h2 className="validation_points_header">
-              Validation Points 
-            </h2>
-            <h2 className="validation_points_header">
-            {data[selectedRow]["name"]}
-            </h2>
-          </div>
-            // <h2 className="validation_points_header">Validation Points </h2>
-            // <h2 className="validation_points_header">Validation Points of {data[selectedRow]["name"]}  </h2>
-            // <h3 validation_points_header> {data[selectedRow]["name"]}</h3>
+              <h2 className="validation_points_header">Validation Points</h2>
+              <h2 className="validation_points_header">
+                {data[selectedRow]["name"]}
+              </h2>
+            </div>
           )}
         </Box>
 
@@ -85,10 +79,9 @@ export default function ValidationTag() {
             data[selectedRow]["validation_points"].map((valid_point, idx) => {
               return (
                 <Grid item xs={12} sm={6} md={4} lg={3}>
-                  
                   <Box className="validation_point scale-up-center">
                     {/* console.log({valid_point}) */}
-                 
+
                     <TreeView
                       aria-label="file system navigator"
                       defaultCollapseIcon={<ExpandMoreIcon />}
@@ -104,7 +97,6 @@ export default function ValidationTag() {
                         if (valid_key !== "results") {
                           return (
                             <>
-                  
                               <TreeItem nodeId={valid_key} label={valid_key}>
                                 {Object.keys(valid_point[valid_key]).map(
                                   (valid_data) => {

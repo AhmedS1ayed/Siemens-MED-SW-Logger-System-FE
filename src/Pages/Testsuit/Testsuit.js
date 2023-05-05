@@ -7,27 +7,27 @@ import ExpandableRowTable from "../../Components/NewTable/NewTable.js";
 import "../../Components/DataGrid/DataGrid.css";
 import { useEffect, setData } from "react";
 import { useState } from "react";
-// import data from "../../Data/Mock_Data.json";
+import data from "../../Data/Mock_Data.json";
 import { getColumnName } from "../../Utils/utilities";
 import LinkIcon from "@mui/icons-material/Link";
 
 export default function Testsuit() {
-  useEffect(() => {
-    fetch('http://localhost:8080/TestSuites/')
-      .then(response => response.json())
-      .then(data => {
-        if(data) setData(data);
-        console.log(data);
-      })
-      .catch(error => console.error(error));
-  }, []);
-  
-  const [data, setData] = useState([
-    {
-      _id: "none",
-    },
-  ]);
-  
+  // useEffect(() => {
+  //   fetch("http://localhost:8080/TestSuites/")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       if (data) setData(data);
+  //       console.log(data);
+  //     })
+  //     .catch((error) => console.error(error));
+  // }, []);
+
+  // const [data, setData] = useState([
+  //   {
+  //     _id: "none",
+  //   },
+  // ]);
+
   const totalTestSuites = data.length;
   const successfulTestSuites = data.filter(
     (item) => item.isSuccessful === true
@@ -56,7 +56,7 @@ export default function Testsuit() {
     },
   });
   return (
-    <Container maxWidth="x">
+    <Container maxWidth="xl">
       {/* <h1>statistics</h1> */}
       <div className="statistics-container">
         <StatisticCard

@@ -2,7 +2,7 @@
   {
     "ID": 1,
     "name": "Signature Settings Validation",
-    "metaData": {
+    "meta_data": {
       "description": "Validating Signature Settings for each DUT"
     },
     "validation_points": [
@@ -37,7 +37,7 @@
   {
     "ID": 2,
     "name": "FEC Validation",
-    "metaData": {
+    "meta_data": {
       "description": "Validating FEC for each Mac",
       "executable_path": "/project/path/to/executable",
       "desc": "Validating Signature Settings for DUT",
@@ -50,7 +50,7 @@
         "levels": {
           "mac": "1"
         },
-        "metaData": {
+        "meta_data": {
           "description": "Validating FEC for Mac 1",
           "mac_mii_type": "CGMII-PCS-4x40"
         },
@@ -67,7 +67,7 @@
         "levels": {
           "mac": "2"
         },
-        "metaData": {
+        "meta_data": {
           "description": "Validating FEC for Mac 2",
           "mac_mii_type": "CGMII-PCS-1x40"
         },
@@ -85,7 +85,7 @@
   {
     "ID": 3,
     "name": "Signature Elements Validation",
-    "metaData": {
+    "meta_data": {
       "description": "Validating Signature Element for each Mac in Rx and Tx Direction",
       "executable_path": "/project/path/to/executable"
     },
@@ -95,7 +95,7 @@
           "mac": "1",
           "direction": "Rx"
         },
-        "metaData": {
+        "meta_data": {
           "description": "Validating Signature Element for Mac 1 in Rx Direction",
           "executable_path": "/project/path/to/executable"
         },
@@ -121,7 +121,7 @@
           "mac": "1",
           "direction": "Tx"
         },
-        "metaData": {
+        "meta_data": {
           "description": "Validating Signature Element for Mac 1 in Tx Direction",
           "executable_path": "/project/path/to/executable"
         },

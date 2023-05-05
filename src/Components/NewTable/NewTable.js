@@ -1,45 +1,14 @@
 import React from "react";
 import MUIDataTable from "mui-datatables";
 import { getColumnName } from "../../Utils/utilities";
-import "./NewTable.css";
+
+import "./newTable.css";
 import MetaDataCard from "../MetaDataCard/MetaDataCard";
 
-  // const getColumnsName = (data, columnWidts = {}) => {
-  //   return Object.keys(data)
-  //     .map((field) => {
-  //       if (typeof data[field] !== "object") {
-  //         let columnWidth = columnWidts[field] || 120;
-  //         return {
-  //           field,
-  //           headerName: field,
-  //           headerClassName: "super-app-theme--header",
-  //           renderCell: (params) => {
-  //             if (params.value === true) {
-  //               return (
-  //                 <span className="success-class">
-  //                   <CheckIcon />
-  //                 </span>
-  //               );
-  //             } else if (params.value === false) {
-  //               return (
-  //                 <span className="failed-class">
-  //                   <ClearIcon />
-  //                 </span>
-  //               );
-  //             } else {
-  //               return params.value;
-  //             }
-  //           },
-  //           width: columnWidth,
-  //           flex: 1,
-  //         };
-  
-  
 export const ExpandableRowTable = (props) => {
   const options = {
     filter: true,
-    // toolbar: false,
-    ViewColumns:"ID",
+    toolbar: false,
     selectableRows: "multiple",
     filterType: "multiselect",
     responsive: "scroll",
@@ -61,10 +30,10 @@ export const ExpandableRowTable = (props) => {
       const rowObject = props.Data[dataIndex];
       let keys = [];
       let values = [];
-      if (rowObject["metaData"]) {
-        Object.keys(rowObject["metaData"]).forEach((key) => {
+      if (rowObject["meta_data"]) {
+        Object.keys(rowObject["meta_data"]).forEach((key) => {
           keys.push(key);
-          values.push(rowObject["metaData"][key]);
+          values.push(rowObject["meta_data"][key]);
         });
       }
       return (
@@ -78,7 +47,6 @@ export const ExpandableRowTable = (props) => {
       );
     },
     page: 1,
-    // toolbar: false,
   };
 
   return (
