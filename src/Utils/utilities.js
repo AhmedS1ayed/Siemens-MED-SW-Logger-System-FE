@@ -44,16 +44,16 @@ export const getColumnName = (data, data_columns) => {
       pushColumn(data_columns, key);
     } else if (key === "metaData") {
       const obj = data[key];
-      if (typeof obj !== "object")
-        Object.keys(obj).forEach((objKey) => {
-          if (
-            !data_columns.find((column) => column.name === objKey) &&
-            objKey !== "metaData" &&
-            objKey !== "design_info"
-          ) {
-            pushColumn(data_columns, objKey);
-          }
-        });
+      Object.keys(obj).forEach((objKey) => {
+        if (
+          !data_columns.find((column) => column.name === objKey) &&
+          objKey !== "metaData" &&
+          objKey !== "design_info" &&
+          typeof obj[objKey] !== "object"
+        ) {
+          pushColumn(data_columns, objKey);
+        }
+      });
     }
   });
   return data_columns;
