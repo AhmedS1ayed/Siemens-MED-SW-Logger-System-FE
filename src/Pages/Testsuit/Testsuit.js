@@ -8,7 +8,7 @@ import "../../Components/DataGrid/DataGrid.css";
 import { useEffect, setData } from "react";
 import { useState } from "react";
 // import data from "../../Data/Mock_Data.json";
-import { getColumnName ,getKeys } from "../../Utils/utilities";
+import { getColumnName ,getKeys , isNumber } from "../../Utils/utilities";
 import LinkIcon from "@mui/icons-material/Link";
 import "./Testsuit.css";
 
@@ -55,11 +55,9 @@ export default function Testsuit() {
 
   const [nestedData , setNestedData] = useState('None');
 
-  const [dataKeys,setDataKeys] = useState(['None']);
   const [isConnectivityMap,setConnectivityMap] = useState(false);
-  const [nestedDatacolumns,setNestedDataColumns] = useState([]);
+  const [stack , setStack] =useState(['none']);  
   
-
   const toggleDialog = (index) => {
     const newOpenDialogs = [...openDialogs];
     newOpenDialogs[index] = !newOpenDialogs[index];
@@ -70,13 +68,14 @@ export default function Testsuit() {
   {
     setClickedIdx(index);
     setNestedData(data[index]['metaData']);
-    setDataKeys(getKeys(data[index]['metaData']));
     setConnectivityMap(false);
+    setStack(['none']);
     toggleDialog(index);
   }
   const handleKeyClicked = (item) => 
   {
-    setNestedData(nestedData[item]);
+    setStack([...stack,nestedData]);
+    setNestedData(nestedData[item]);  
     const keys = getKeys(nestedData[item]);
     if(item==='sa_connectivity_map' || item ==='mpg_connectivity_map')
     {
@@ -86,7 +85,15 @@ export default function Testsuit() {
     {
       setConnectivityMap(false);
     }
-    setDataKeys(keys);
+  }
+  const handleBackward = ()=>
+  {
+    console.log('before' , stack);
+    setNestedData(stack[stack.length-1]);
+    stack.pop();
+    //Might need some fixes in the future
+    setConnectivityMap(false);
+    console.log('after' , stack);
   }
 
   const totalTestSuites = data.length;
@@ -182,10 +189,18 @@ export default function Testsuit() {
               onClose={() => toggleDialog(idx)}
               open={openDialogs[idx]}
             >
-              {dataKeys.map((item) =>{
+              {Object.keys(nestedData).map((item) =>{
+                console.log('item' , item);
+                if(typeof nestedData[item] === "object" )
                 return(
                 <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{item}</button>
-                </div>)})}
+                </div>)
+                // else if( typeof nestedData[item] === "object" && isNumber(item))
+                // {
+                //   return (<div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item.id)}}   >{item}</button>
+                //   </div>);
+                // }              
+              })}
               <div className="display:inline">
               {Object.keys(nestedData).map((key,value) =>{
                 if(typeof nestedData[key] != "object" && !isConnectivityMap){
@@ -204,6 +219,7 @@ export default function Testsuit() {
                 }
                 })}
                 </div>
+                {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward}> ← </button>) : <></>}
       </Dialog>
       <br />
     </Container>

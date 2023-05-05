@@ -68,3 +68,12 @@ export const getKeys = (data) => {
   });
   return dataKeys;
 };
+
+export const isNumber = (item) =>{
+  for(let i=0;i<item.length;i++)
+  {
+    if( (item[i] >'a' && item[i] <'z') || (item[i] >'A' && item[i] <'Z') ) 
+      return false;
+  }
+  return true;
+}
