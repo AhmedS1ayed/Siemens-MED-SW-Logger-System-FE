@@ -2,11 +2,11 @@ import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
 
 const pushColumn = (data_columns, inputKey) => {
-   let newColumn = {
+  let newColumn = {
     name: inputKey,
     label: inputKey,
     options: {
-      display : (inputKey === "_id" || inputKey === "id" ) ? false : true ,
+      display: inputKey === "_id" || inputKey === "id" ? false : true,
 
       filterOptions: {
         renderValue: (value) => {
@@ -40,39 +40,31 @@ const pushColumn = (data_columns, inputKey) => {
 
 export const getColumnName = (data, data_columns) => {
   Object.keys(data).forEach((key) => {
-    // console.log("key", key , "data[key]", data[key]);
-
-
     if (typeof data[key] !== "object") {
       pushColumn(data_columns, key);
-    }
-    else if(key === "metaData"){
+    } else if (key === "metaData") {
       const obj = data[key];
-      Object.keys(obj).forEach((objKey) => {
-        if (!data_columns.find((column) => column.name === objKey) && objKey !== "metaData" && objKey !== "design_info") {
-          pushColumn(data_columns, objKey);
-        }
-      });
+      if (typeof obj !== "object")
+        Object.keys(obj).forEach((objKey) => {
+          if (
+            !data_columns.find((column) => column.name === objKey) &&
+            objKey !== "metaData" &&
+            objKey !== "design_info"
+          ) {
+            pushColumn(data_columns, objKey);
+          }
+        });
     }
-    
   });
   return data_columns;
 };
 
-
-export const getKeys = (data) =>
-{
-  let dataKeys=[];
+export const getKeys = (data) => {
+  let dataKeys = [];
   Object.keys(data).forEach((key) => {
-    // console.log("key", key , "data[key]", data[key]);
-    console.log('KEYYYYYYYYYYYY',key);
-
-    if (typeof data[key] === "object")
-    {
+    if (typeof data[key] === "object") {
       dataKeys.push(key);
-      console.log('DataKeys push :  ' , key);
     }
-    
-  })
+  });
   return dataKeys;
-}
+};

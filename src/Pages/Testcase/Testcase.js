@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 // import data from "../../Data/Mock_Test_Case.json";
-import { getColumnName, getColumnsName } from "../../Utils/utilities";
-import { Container } from "@mui/material";
+import { getColumnName, getKeys } from "../../Utils/utilities";
+import { Dialog,Container , Card } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
 import { useEffect, useState } from "react";
@@ -17,6 +17,10 @@ export default function Testcase() {
         id: "none",
       },
     ]);
+  const [openDialogs, setOpenDialogs] = useState([]);
+  const [idx , setClickedIdx] = useState(0);
+  const [nestedData , setNestedData] = useState('None');
+  const [dataKeys,setDataKeys] = useState(['None']);
 
 
   const location = useLocation();
@@ -30,7 +34,7 @@ export default function Testcase() {
       .then(data => {if(data) setData(data);})
       .catch(error => console.error(error));
   }, []);
-   console.log("test cases data " , data);
+
   const totalTestSuites = data.length;
   const successfulTestSuites = data.filter(
     (item) => item.isSuccessful === true
@@ -38,15 +42,27 @@ export default function Testcase() {
   const failedTestSuites = data.filter(
     (item) => item.isSuccessful === false
   ).length;
-  // let data_columns = getColumnsName(data[0], { dateCreated: 250 });
 
-  // data_columns.push({
-  //   field: "link",
-  //   headerName: "Link",
-  //   headerClassName: "super-app-theme--header",
-  //   width: 120,
-  //   renderCell: (params) => {
-  //     let testcaseId = params.id;
+  const toggleDialog = (index) => {
+    const newOpenDialogs = [...openDialogs];
+    newOpenDialogs[index] = !newOpenDialogs[index];
+    setOpenDialogs(newOpenDialogs);
+  };
+
+  const handleRowClicked = (index) => 
+  {
+    setClickedIdx(index);
+    setNestedData(data[index]['metaData']);
+    setDataKeys(getKeys(data[index]['metaData']));
+    toggleDialog(index);
+  }
+  const handleKeyClicked = (item) => 
+  {
+    setNestedData(nestedData[item]);
+    const keys = getKeys(nestedData[item]);
+    setDataKeys(keys);
+  }
+
   let data_columns = [];
   data.forEach((row) => getColumnName(row, data_columns));
 
@@ -58,7 +74,6 @@ export default function Testcase() {
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
         const testcaseId = data[tableMeta.rowIndex].id;
-        console.log("testcaseId", testcaseId);
         return (
           <Link
             to={`/validtags?testsuitId=${testsuitId}&testcaseId=${testcaseId}`}
@@ -120,9 +135,31 @@ export default function Testcase() {
         title="Test Cases"
         Data={data}
         regularColumns={data_columns}
-        onRowClickEnabled={false}
+        onRowClickEnabled={true}
+        onRowClick={handleRowClicked}
       />
-      {/* <DataGrid data={data} data_columns={data_columns} /> */}
+      <Dialog
+              onClose={() => toggleDialog(idx)}
+              open={openDialogs[idx]}
+            >
+              {dataKeys.map((item) =>{
+                return(
+                <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{item}</button>
+                </div>)})}
+              <div className="display:inline">
+              {Object.keys(nestedData).map((key,value) =>{
+                if(typeof nestedData[key] != "object")
+                return(
+                <Card className="card">
+                <div className="header">{key}</div>
+                <div className="header_detail">
+                  <div className="header_detail2" >{nestedData[key]}</div>
+                </div>
+                
+                </Card> 
+                )})}
+                </div>
+      </Dialog>
     </Container>
   );
 }
