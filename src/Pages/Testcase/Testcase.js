@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import data from "../../Data/Mock_Test_Case.json";
-import { getColumnName, getColumnsName } from "../../Utils/utilities";
-import { Container } from "@mui/material";
+// import data from "../../Data/Mock_Test_Case.json";
+import { getColumnName, getKeys } from "../../Utils/utilities";
+import { Dialog,Container , Card } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
 import { useEffect, useState } from "react";
@@ -10,11 +10,17 @@ import ExpandableRowTable from "../../Components/NewTable/NewTable";
 import LinkIcon from "@mui/icons-material/Link";
 
 export default function Testcase() {
-  // const [data, setData] = useState([
-  //   {
-  //     _id: "none",
-  //   },
-  // ]);
+
+  const [data, setData] = useState(
+    [
+      {
+        id: "none",
+      },
+    ]);
+  const [openDialogs, setOpenDialogs] = useState([]);
+  const [idx , setClickedIdx] = useState(0);
+  const [nestedData , setNestedData] = useState('None');
+  const [dataKeys,setDataKeys] = useState(['None']);
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -30,22 +36,34 @@ export default function Testcase() {
   //     .catch((error) => console.error(error));
   // }, []);
 
-  // const totalTestSuites = data.length;
-  // const successfulTestSuites = data.filter(
-  //   (item) => item.isSuccessful === true
-  // ).length;
-  // const failedTestSuites = data.filter(
-  //   (item) => item.isSuccessful === false
-  // ).length;
-  // let data_columns = getColumnsName(data[0], { dateCreated: 250 });
+  const totalTestSuites = data.length;
+  const successfulTestSuites = data.filter(
+    (item) => item.isSuccessful === true
+  ).length;
+  const failedTestSuites = data.filter(
+    (item) => item.isSuccessful === false
+  ).length;
 
-  // data_columns.push({
-  //   field: "link",
-  //   headerName: "Link",
-  //   headerClassName: "super-app-theme--header",
-  //   width: 120,
-  //   renderCell: (params) => {
-  //     let testcaseId = params.id;
+  const toggleDialog = (index) => {
+    const newOpenDialogs = [...openDialogs];
+    newOpenDialogs[index] = !newOpenDialogs[index];
+    setOpenDialogs(newOpenDialogs);
+  };
+
+  const handleRowClicked = (index) => 
+  {
+    setClickedIdx(index);
+    setNestedData(data[index]['metaData']);
+    setDataKeys(getKeys(data[index]['metaData']));
+    toggleDialog(index);
+  }
+  const handleKeyClicked = (item) => 
+  {
+    setNestedData(nestedData[item]);
+    const keys = getKeys(nestedData[item]);
+    setDataKeys(keys);
+  }
+
   let data_columns = [];
   data.forEach((row) => getColumnName(row, data_columns));
 
@@ -56,7 +74,7 @@ export default function Testcase() {
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
-        const testcaseId = tableMeta.rowData[0];
+        const testcaseId = data[tableMeta.rowIndex].id;
         return (
           <Link
             to={`/validtags?testsuitId=${testsuitId}&testcaseId=${testcaseId}`}
@@ -67,6 +85,22 @@ export default function Testcase() {
       },
     },
   });
+
+  let count = 0;
+  data_columns.unshift({
+    name: "INDEX",
+    label: "INDEX",
+    options: {
+      filter: false,
+      sort: true,
+      customBodyRender: () => {
+       if(count === data.length) count = 0; 
+        count++;
+        return (count);
+      },
+    },
+  });
+
 
   return (
     // <Container>
@@ -102,9 +136,31 @@ export default function Testcase() {
         title="Test Cases"
         Data={data}
         regularColumns={data_columns}
-        onRowClickEnabled={false}
+        onRowClickEnabled={true}
+        onRowClick={handleRowClicked}
       />
-      {/* <DataGrid data={data} data_columns={data_columns} /> */}
+      <Dialog
+              onClose={() => toggleDialog(idx)}
+              open={openDialogs[idx]}
+            >
+              {dataKeys.map((item) =>{
+                return(
+                <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{item}</button>
+                </div>)})}
+              <div className="display:inline">
+              {Object.keys(nestedData).map((key,value) =>{
+                if(typeof nestedData[key] != "object")
+                return(
+                <Card className="card">
+                <div className="header">{key}</div>
+                <div className="header_detail">
+                  <div className="header_detail2" >{nestedData[key]}</div>
+                </div>
+                
+                </Card> 
+                )})}
+                </div>
+      </Dialog>
     </Container>
   );
 }

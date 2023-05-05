@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import data from "../../Data/log.json";
+// import data from "../../Data/log.json";
 import { getColumnName } from "../../Utils/utilities";
 import { Container, Dialog, Divider, Grid } from "@mui/material";
 import ExpandableRowTable from "../../Components/NewTable/NewTable";
@@ -19,10 +19,30 @@ export default function ValidationTag() {
 
   const [selectedRow, setSelectedRow] = useState(-1);
   const [openDialogs, setOpenDialogs] = useState([]);
+  useEffect(() => {
+    //fetch(`http://localhost:8080/validationTags/testSuites/${testsuitId}/testCases/${testcaseId}}`)
+    fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=${testsuitId}&testCase.id=${testcaseId}`)
+     //fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=643f8524f71037820114afea&testCase.id=643f8524f71037820114afe9`)
+      .then(response => response.json())
+      .then(data => {
+        if(data && data.length != 0)  
+        {
+          setData(data);
+        }
+        console.log('data --------- :', data);
+      })
+      .catch(error => console.error(error));
+  }, []); 
+
+  const [data, setData] = useState([
+    {
+      id: "none",
+    },
+  ]);
 
   useEffect(() => {
     if (selectedRow !== -1) {
-      setOpenDialogs(data[selectedRow]["validation_points"].map(() => false));
+      setOpenDialogs(data[selectedRow]["validationPoints"].map(() => false));
     }
   }, [data, selectedRow]);
 
@@ -76,12 +96,10 @@ export default function ValidationTag() {
           className="validation_points_container"
         >
           {selectedRow !== -1 &&
-            data[selectedRow]["validation_points"].map((valid_point, idx) => {
+            data[selectedRow]["validationPoints"].map((valid_point, idx) => {
               return (
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <Box className="validation_point scale-up-center">
-                    {/* console.log({valid_point}) */}
-
                     <TreeView
                       aria-label="file system navigator"
                       defaultCollapseIcon={<ExpandMoreIcon />}
@@ -94,6 +112,7 @@ export default function ValidationTag() {
                       }}
                     >
                       {Object.keys(valid_point).map((valid_key) => {
+                        console.log("-=-=-=-=-=-=-=" , valid_point);
                         if (valid_key !== "results") {
                           return (
                             <>
@@ -132,7 +151,7 @@ export default function ValidationTag() {
                       {valid_point["results"].forEach((result) =>
                         getColumnName(result, sad)
                       )}
-                      {console.log("saddassd", sad)}
+                      {console.log("saddassd", valid_point)}
                       <ExpandableRowTable
                         Data={valid_point["results"]}
                         regularColumns={sad}
