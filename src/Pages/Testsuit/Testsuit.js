@@ -122,8 +122,8 @@ export default function Testsuit() {
   if(data){
     flattenedData = data.map((item) => flattenObject(item));
     console.log('flattenedData',flattenedData);
+    
   }
-
   if(flattenedData){
     if(data_columns){
       filteredData = flattenedData.map((item) => {
