@@ -191,15 +191,15 @@ export default function Testsuit() {
             >
               {Object.keys(nestedData).map((item) =>{
                 console.log('item' , item);
-                if(typeof nestedData[item] === "object" )
+                if(typeof nestedData[item] === "object" && !isNumber(item))
                 return(
                 <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{item}</button>
                 </div>)
-                // else if( typeof nestedData[item] === "object" && isNumber(item))
-                // {
-                //   return (<div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item.id)}}   >{item}</button>
-                //   </div>);
-                // }              
+                else if( typeof nestedData[item] === "object" && isNumber(item))
+                {
+                  return (<div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{nestedData[item]['id']}</button>
+                  </div>);
+                }              
               })}
               <div className="display:inline">
               {Object.keys(nestedData).map((key,value) =>{
