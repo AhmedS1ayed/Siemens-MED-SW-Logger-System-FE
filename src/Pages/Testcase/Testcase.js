@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 // import data from "../../Data/Mock_Test_Case.json";
-import { getColumnName, getKeys } from "../../Utils/utilities";
+import { getColumnName, getKeys , isNumber } from "../../Utils/utilities";
 import { Dialog,Container , Card } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
@@ -21,6 +21,8 @@ export default function Testcase() {
   const [idx , setClickedIdx] = useState(0);
   const [nestedData , setNestedData] = useState('None');
   const [dataKeys,setDataKeys] = useState(['None']);
+  const [stack , setStack] =useState(['none']);  
+
   
 
 
@@ -52,16 +54,25 @@ export default function Testcase() {
 
   const handleRowClicked = (index) => 
   {
+    setStack([...stack,nestedData]);
     setClickedIdx(index);
     setNestedData(data[index]['metaData']);
     setDataKeys(getKeys(data[index]['metaData']));
+    setStack(['none']);
     toggleDialog(index);
   }
   const handleKeyClicked = (item) => 
   {
+    setStack([...stack,nestedData]);
     setNestedData(nestedData[item]);
     const keys = getKeys(nestedData[item]);
     setDataKeys(keys);
+  }
+  const handleBackward = ()=>
+  {
+    setNestedData(stack[stack.length-1]);
+    stack.pop();
+    //Might need some fixes in the future
   }
 
   let data_columns = [];
@@ -143,13 +154,31 @@ export default function Testcase() {
               onClose={() => toggleDialog(idx)}
               open={openDialogs[idx]}
             >
-              {dataKeys.map((item) =>{
+              {Object.keys(nestedData).map((item) =>{
+                console.log('item' , item);
+                if(typeof nestedData[item] === "object")
                 return(
                 <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{item}</button>
-                </div>)})}
+                </div>)
+                // else if( typeof nestedData[item] === "object" && isNumber(item))
+                // {
+                //   // let itemIn='';
+                //   // if(nestedData[itemIn]['id'])
+                //   //   itemIn = nestedData[item]['id']
+                  
+                //   // if(nestedData[item]['master_id'])
+                //   //   itemIn = nestedData[item]['master_id']
+                  
+                //   // if(nestedData[item]['slave_ids'] && typeof nestedData[item]['slave_ids'] !=="object" )
+                //   //   itemIn = nestedData[item]['slave_ids']
+
+                //   return (<div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{itemIn}</button>
+                //   </div>);
+                // }              
+              })}
               <div className="display:inline">
               {Object.keys(nestedData).map((key,value) =>{
-                if(typeof nestedData[key] != "object")
+                if(typeof nestedData[key] != "object"){
                 return(
                 <Card className="card">
                 <div className="header">{key}</div>
@@ -158,9 +187,14 @@ export default function Testcase() {
                 </div>
                 
                 </Card> 
-                )
+                )}
+                else if (typeof nestedData[key] != "object")
+                {
+                  return(<><h1>HELLOO</h1></>);
+                }
                 })}
                 </div>
+                {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward}> ← </button>) : <></>}
       </Dialog>
     </Container>
   );
