@@ -194,19 +194,19 @@ export default function Testsuit() {
                 return(
                 <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{item}</button>
                 </div>)})}
-              {dataKeys.length === 0 ? (
               <div className="display:inline">
               {Object.keys(nestedData).map((key,value) =>{
+                if(typeof nestedData[key] != "object")
                 return(
                 <Card className="card">
                 <div className="header">{key}</div>
                 <div className="header_detail">
-                  <div className="header_detail2" >{value}</div>
+                  <div className="header_detail2" >{nestedData[key]}</div>
                 </div>
                 
                 </Card> 
                 )})}
-                </div>) : <></>}
+                </div>
               {/* {nestedDatacolumns.length !=0 ?(<ExpandableRowTable
                 title="Test Suites"
                 Data={nestedData}
