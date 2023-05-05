@@ -56,6 +56,7 @@ export default function Testsuit() {
   const [nestedData , setNestedData] = useState('None');
 
   const [dataKeys,setDataKeys] = useState(['None']);
+  const [isConnectivityMap,setConnectivityMap] = useState(false);
   const [nestedDatacolumns,setNestedDataColumns] = useState([]);
   
 
@@ -70,12 +71,21 @@ export default function Testsuit() {
     setClickedIdx(index);
     setNestedData(data[index]['metaData']);
     setDataKeys(getKeys(data[index]['metaData']));
+    setConnectivityMap(false);
     toggleDialog(index);
   }
   const handleKeyClicked = (item) => 
   {
     setNestedData(nestedData[item]);
     const keys = getKeys(nestedData[item]);
+    if(item==='sa_connectivity_map' || item ==='mpg_connectivity_map')
+    {
+      setConnectivityMap(true);
+    }
+    else
+    {
+      setConnectivityMap(false);
+    }
     setDataKeys(keys);
   }
 
@@ -178,7 +188,7 @@ export default function Testsuit() {
                 </div>)})}
               <div className="display:inline">
               {Object.keys(nestedData).map((key,value) =>{
-                if(typeof nestedData[key] != "object")
+                if(typeof nestedData[key] != "object" && !isConnectivityMap){
                 return(
                 <Card className="card">
                 <div className="header">{key}</div>
@@ -187,7 +197,12 @@ export default function Testsuit() {
                 </div>
                 
                 </Card> 
-                )})}
+                )}
+                else if (typeof nestedData[key] != "object" && isConnectivityMap)
+                {
+                  return(<><h1>HELLOO</h1></>);
+                }
+                })}
                 </div>
       </Dialog>
       <br />
