@@ -42,6 +42,7 @@ export const getColumnName = (data, data_columns) => {
   Object.keys(data).forEach((key) => {
     // console.log("key", key , "data[key]", data[key]);
 
+
     if (typeof data[key] !== "object") {
       pushColumn(data_columns, key);
     }
@@ -53,6 +54,25 @@ export const getColumnName = (data, data_columns) => {
         }
       });
     }
+    
   });
   return data_columns;
 };
+
+
+export const getKeys = (data) =>
+{
+  let dataKeys=[];
+  Object.keys(data).forEach((key) => {
+    // console.log("key", key , "data[key]", data[key]);
+    console.log('KEYYYYYYYYYYYY',key);
+
+    if (typeof data[key] === "object")
+    {
+      dataKeys.push(key);
+      console.log('DataKeys push :  ' , key);
+    }
+    
+  })
+  return dataKeys;
+}
