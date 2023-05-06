@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { getColumnName, getKeys } from "../../Utils/utilities";
-import { Dialog,Container , Card } from "@mui/material";
+import { Dialog, Container, Card } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
 import { useEffect, useState } from "react";
@@ -9,20 +9,16 @@ import ExpandableRowTable from "../../Components/NewTable/NewTable";
 import LinkIcon from "@mui/icons-material/Link";
 
 export default function Testcase() {
-
-  const [data, setData] = useState(
-    [
-      {
-        id: "none",
-      },
-    ]);
+  const [data, setData] = useState([
+    {
+      id: "none",
+    },
+  ]);
 
   const [openDialogs, setOpenDialogs] = useState([]);
-  const [idx , setClickedIdx] = useState(0);
-  const [nestedData , setNestedData] = useState('None');
-  const [dataKeys,setDataKeys] = useState(['None']);
-  
-
+  const [idx, setClickedIdx] = useState(0);
+  const [nestedData, setNestedData] = useState("None");
+  const [dataKeys, setDataKeys] = useState(["None"]);
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -31,12 +27,15 @@ export default function Testcase() {
   const testcaseId = searchParams.get("testcaseId");
   useEffect(() => {
     fetch(`http://localhost:8080/testCases/?testSuite[id]=${testsuitId}`)
-    .then(response => response.json())
-    .then(data => {if(data) setData(data); console.log("test cases data " , data);})
-    
-      .catch(error => console.error(error));
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) setData(data);
+        console.log("test cases data ", data);
+      })
+
+      .catch((error) => console.error(error));
   }, []);
-  const [stack , setStack] =useState(['none']); 
+  const [stack, setStack] = useState(["none"]);
 
   const totalTestSuites = data.length;
   const successfulTestSuites = data.filter(
@@ -52,31 +51,26 @@ export default function Testcase() {
     setOpenDialogs(newOpenDialogs);
   };
 
-  const handleRowClicked = (index) => 
-  {
+  const handleRowClicked = (index) => {
     setClickedIdx(index);
-    setNestedData(data[index]['metaData']);
-    setDataKeys(getKeys(data[index]['metaData']));
+    setNestedData(data[index]["metaData"]);
+    setDataKeys(getKeys(data[index]["metaData"]));
     toggleDialog(index);
-  }
-  const handleKeyClicked = (item) => 
-  {
-    setStack([...stack,nestedData]);
+  };
+  const handleKeyClicked = (item) => {
+    setStack([...stack, nestedData]);
     setNestedData(nestedData[item]);
     const keys = getKeys(nestedData[item]);
     setDataKeys(keys);
-  }
+  };
 
-  const handleBackward = ()=>
-  {
-    console.log('before' , stack);
-    setNestedData(stack[stack.length-1]);
+  const handleBackward = () => {
+    console.log("before", stack);
+    setNestedData(stack[stack.length - 1]);
     stack.pop();
-    
-    
-    console.log('after' , stack);
-  }
 
+    console.log("after", stack);
+  };
 
   let data_columns = [];
   data.forEach((row) => getColumnName(row, data_columns));
@@ -88,7 +82,6 @@ export default function Testcase() {
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
-        
         const testcaseId = data[tableMeta.rowIndex].id;
         return (
           <Link
@@ -109,16 +102,15 @@ export default function Testcase() {
       filter: false,
       sort: true,
       customBodyRender: () => {
-       if(count === data.length) count = 0; 
+        if (count === data.length) count = 0;
         count++;
-        return (count);
+        return count;
       },
     },
   });
 
-
   return (
-    <Container key={Math.random()} maxWidth="x">
+    <Container key={Math.random()} maxWidth="xl">
       <div className="statistics-container">
         <StatisticCard
           title="Total Test Cases"
@@ -138,7 +130,7 @@ export default function Testcase() {
           color="#ffffff"
           icon="error"
         />
-      </div> */}
+      </div>{" "}
       <ExpandableRowTable
         title="Test Cases"
         Data={data}
@@ -146,29 +138,49 @@ export default function Testcase() {
         onRowClickEnabled={true}
         onRowClick={handleRowClicked}
       />
-      <Dialog
-              onClose={() => toggleDialog(idx)}
-              open={openDialogs[idx]}
-            >
-              {dataKeys.map((item) =>{
-                return(
-                <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{item}</button>
-                </div>)})}
-              <div className="display:inline">
-              {Object.keys(nestedData).map((key,value) =>{
-                if(typeof nestedData[key] != "object")
-                return(
+      <Dialog onClose={() => toggleDialog(idx)} open={openDialogs[idx]}>
+        {dataKeys.map((item) => {
+          return (
+            <div className="display: inline">
+              <button
+                className="results_btn"
+                key={item}
+                label={item}
+                onClick={() => {
+                  handleKeyClicked(item);
+                }}
+              >
+                {item}
+              </button>
+            </div>
+          );
+        })}
+        <div className="display:inline">
+          {Object.keys(nestedData).map((key, value) => {
+            if (typeof nestedData[key] != "object")
+              return (
                 <Card className="card">
-                <div className="header">{key}</div>
-                <div className="header_detail">
-                  <div className="header_detail2" >{nestedData[key]}</div>
-                </div>
-                
-                </Card> 
-                )
-                })}
-                </div>
-                {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward}> ← </button>) : <></>}
+                  <div className="header">{key}</div>
+                  <div className="header_detail">
+                    <div className="header_detail2">{nestedData[key]}</div>
+                  </div>
+                </Card>
+              );
+          })}
+        </div>
+        {stack.length > 1 ? (
+          <button
+            className="results_btn"
+            key="back"
+            label="back"
+            onClick={handleBackward}
+          >
+            {" "}
+            ←{" "}
+          </button>
+        ) : (
+          <></>
+        )}
       </Dialog>
     </Container>
   );

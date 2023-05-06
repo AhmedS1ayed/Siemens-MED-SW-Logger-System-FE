@@ -19,6 +19,7 @@ const pushColumn = (data_columns, inputKey) => {
         },
       },
       customBodyRender: (value) => {
+        console.log("value: ", value);
         if (typeof value === "boolean")
           return value ? (
             <CheckIcon className="success-class" />
@@ -69,16 +70,13 @@ export const getKeys = (data) => {
   return dataKeys;
 };
 
-export const isNumber = (item) =>{
-  for(let i=0;i<item.length;i++)
-  {
-    if( (item[i] >'a' && item[i] <'z') || (item[i] >'A' && item[i] <'Z') ) 
+export const isNumber = (item) => {
+  for (let i = 0; i < item.length; i++) {
+    if ((item[i] > "a" && item[i] < "z") || (item[i] > "A" && item[i] < "Z"))
       return false;
   }
   return true;
-}
-
-
+};
 
 export const flattenObject = (obj) => {
   return Object.keys(obj).reduce((acc, key) => {
@@ -93,16 +91,20 @@ export const flattenObject = (obj) => {
 
 export const getFilteredData = (data, data_columns) => {
   let filteredData = [];
-  if( typeof data !== 'undefined' && data !== null && data.length > 0){
-    
-  filteredData = data.map((item) => {
-    const filteredItem = {};
-    Object.keys(item).forEach((key) => {
-      if (data_columns.some((column) => column.name.substring(column.name.lastIndexOf(".") + 1) === key)) {
-        filteredItem[key] = item[key];
-      }
+  if (typeof data !== "undefined" && data !== null && data.length > 0) {
+    filteredData = data.map((item) => {
+      const filteredItem = {};
+      Object.keys(item).forEach((key) => {
+        if (
+          data_columns.some(
+            (column) =>
+              column.name.substring(column.name.lastIndexOf(".") + 1) === key
+          )
+        ) {
+          filteredItem[key] = item[key];
+        }
+      });
+      return filteredItem;
     });
-    return filteredItem;
-  });
-} 
+  }
 };
