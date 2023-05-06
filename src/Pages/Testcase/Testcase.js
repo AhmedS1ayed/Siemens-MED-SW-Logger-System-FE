@@ -17,6 +17,7 @@ export default function Testcase() {
         id: "none",
       },
     ]);
+
   const [openDialogs, setOpenDialogs] = useState([]);
   const [idx , setClickedIdx] = useState(0);
   const [nestedData , setNestedData] = useState('None');
@@ -31,9 +32,10 @@ export default function Testcase() {
   // ! This is not working backend need to implement a new api
   const testcaseId = searchParams.get("testcaseId");
   useEffect(() => {
-    fetch(`http://localhost:8080/testCases/?testSuite[_id]=${testsuitId}`)
-      .then(response => response.json())
-      .then(data => {if(data) setData(data);})
+    fetch(`http://localhost:8080/testCases/?testSuite[id]=${testsuitId}`)
+    .then(response => response.json())
+    .then(data => {if(data) setData(data); console.log("test cases data " , data);})
+    
       .catch(error => console.error(error));
   }, []);
 
@@ -81,6 +83,7 @@ export default function Testcase() {
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
+        
         const testcaseId = data[tableMeta.rowIndex].id;
         return (
           <Link
@@ -110,15 +113,7 @@ export default function Testcase() {
 
 
   return (
-    // <Container>
-    //     <div className="statistics-container">
-    //     <StatisticCard title="Total Test Cases" count={totalTestCases} color="#00a3e0" />
-    //     <StatisticCard title="Successful Test Cases" count={successfulTestCases} color="#00b894" />
-    //     <StatisticCard title="Failed Test Cases" count={failedTestCases} color="#e74c3c" />
-    //   </div>
-  
-    //   <DataGrid data={data} data_columns={data_columns} />
-    <Container maxWidth="x">
+    <Container key={Math.random()} maxWidth="x">
       <div className="statistics-container">
         <StatisticCard
           title="Total Test Cases"
@@ -184,10 +179,6 @@ export default function Testcase() {
                 
                 </Card> 
                 )}
-                else if (typeof nestedData[key] != "object")
-                {
-                  return(<><h1>HELLOO</h1></>);
-                }
                 })}
                 </div>
                 {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward}> ← </button>) : <></>}

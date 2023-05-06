@@ -77,3 +77,32 @@ export const isNumber = (item) =>{
   }
   return true;
 }
+
+
+
+export const flattenObject = (obj) => {
+  return Object.keys(obj).reduce((acc, key) => {
+    if (typeof obj[key] === "object" && obj[key] !== null) {
+      Object.assign(acc, flattenObject(obj[key]));
+    } else {
+      acc[key] = obj[key];
+    }
+    return acc;
+  }, {});
+};
+
+export const getFilteredData = (data, data_columns) => {
+  let filteredData = [];
+  if( typeof data !== 'undefined' && data !== null && data.length > 0){
+    
+  filteredData = data.map((item) => {
+    const filteredItem = {};
+    Object.keys(item).forEach((key) => {
+      if (data_columns.some((column) => column.name.substring(column.name.lastIndexOf(".") + 1) === key)) {
+        filteredItem[key] = item[key];
+      }
+    });
+    return filteredItem;
+  });
+} 
+};
