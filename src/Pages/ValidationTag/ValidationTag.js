@@ -25,7 +25,7 @@ export default function ValidationTag() {
      //fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=643f8524f71037820114afea&testCase.id=643f8524f71037820114afe9`)
       .then(response => response.json())
       .then(data => {
-        if(data && data.length != 0)  
+        if(data && data.length !== 0)  
         {
           setData(data);
         }

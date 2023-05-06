@@ -1,10 +1,18 @@
-import React from 'react';
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import './MetaDataCard.css';
+import React from "react";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Typography,
+} from "@material-ui/core";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import "./MetaDataCard.css";
+import { Grid } from "@mui/material";
 
 export default function MetaDataCard({ keys, values }) {
-  const [expanded, setExpanded] = React.useState(Array(keys.length).fill(false));
+  const [expanded, setExpanded] = React.useState(
+    Array(keys.length).fill(false)
+  );
 
   const handleChange = (panel) => (event, isExpanded) => {
     const newExpanded = [...expanded];
