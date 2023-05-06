@@ -20,7 +20,6 @@ export default function Testcase() {
   const [openDialogs, setOpenDialogs] = useState([]);
   const [idx , setClickedIdx] = useState(0);
   const [nestedData , setNestedData] = useState('None');
-  const [dataKeys,setDataKeys] = useState(['None']);
   const [stack , setStack] =useState(['none']);  
 
   
@@ -57,7 +56,6 @@ export default function Testcase() {
     setStack([...stack,nestedData]);
     setClickedIdx(index);
     setNestedData(data[index]['metaData']);
-    setDataKeys(getKeys(data[index]['metaData']));
     setStack(['none']);
     toggleDialog(index);
   }
@@ -65,8 +63,6 @@ export default function Testcase() {
   {
     setStack([...stack,nestedData]);
     setNestedData(nestedData[item]);
-    const keys = getKeys(nestedData[item]);
-    setDataKeys(keys);
   }
   const handleBackward = ()=>
   {
