@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-// import data from "../../Data/Mock_Test_Case.json";
 import { getColumnName, getKeys } from "../../Utils/utilities";
 import { Dialog,Container , Card } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
@@ -17,24 +16,27 @@ export default function Testcase() {
         id: "none",
       },
     ]);
+
   const [openDialogs, setOpenDialogs] = useState([]);
   const [idx , setClickedIdx] = useState(0);
   const [nestedData , setNestedData] = useState('None');
   const [dataKeys,setDataKeys] = useState(['None']);
+  
+
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const testsuitId = searchParams.get("testsuitId");
   // ! This is not working backend need to implement a new api
   const testcaseId = searchParams.get("testcaseId");
-  // useEffect(() => {
-  //   fetch(`http://localhost:8080/testCases/?testSuite[_id]=${testsuitId}`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data) setData(data);
-  //     })
-  //     .catch((error) => console.error(error));
-  // }, []);
+  useEffect(() => {
+    fetch(`http://localhost:8080/testCases/?testSuite[id]=${testsuitId}`)
+    .then(response => response.json())
+    .then(data => {if(data) setData(data); console.log("test cases data " , data);})
+    
+      .catch(error => console.error(error));
+  }, []);
+  const [stack , setStack] =useState(['none']); 
 
   const totalTestSuites = data.length;
   const successfulTestSuites = data.filter(
@@ -59,10 +61,22 @@ export default function Testcase() {
   }
   const handleKeyClicked = (item) => 
   {
+    setStack([...stack,nestedData]);
     setNestedData(nestedData[item]);
     const keys = getKeys(nestedData[item]);
     setDataKeys(keys);
   }
+
+  const handleBackward = ()=>
+  {
+    console.log('before' , stack);
+    setNestedData(stack[stack.length-1]);
+    stack.pop();
+    
+    
+    console.log('after' , stack);
+  }
+
 
   let data_columns = [];
   data.forEach((row) => getColumnName(row, data_columns));
@@ -74,6 +88,7 @@ export default function Testcase() {
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
+        
         const testcaseId = data[tableMeta.rowIndex].id;
         return (
           <Link
@@ -103,16 +118,8 @@ export default function Testcase() {
 
 
   return (
-    // <Container>
-    //     <div className="statistics-container">
-    //     <StatisticCard title="Total Test Cases" count={totalTestCases} color="#00a3e0" />
-    //     <StatisticCard title="Successful Test Cases" count={successfulTestCases} color="#00b894" />
-    //     <StatisticCard title="Failed Test Cases" count={failedTestCases} color="#e74c3c" />
-    //   </div>
-
-    //   <DataGrid data={data} data_columns={data_columns} />
-    <Container maxWidth="xl">
-      {/* <div className="statistics-container">
+    <Container key={Math.random()} maxWidth="x">
+      <div className="statistics-container">
         <StatisticCard
           title="Total Test Cases"
           count={totalTestSuites}
@@ -158,8 +165,10 @@ export default function Testcase() {
                 </div>
                 
                 </Card> 
-                )})}
+                )
+                })}
                 </div>
+                {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward}> ← </button>) : <></>}
       </Dialog>
     </Container>
   );

@@ -7,57 +7,52 @@ import ExpandableRowTable from "../../Components/NewTable/NewTable.js";
 import "../../Components/DataGrid/DataGrid.css";
 import { useEffect, setData } from "react";
 import { useState } from "react";
-// import data from "../../Data/Mock_Data.json";
-import { getColumnName ,getKeys } from "../../Utils/utilities";
+import { getColumnName ,getKeys , isNumber } from "../../Utils/utilities";
 import LinkIcon from "@mui/icons-material/Link";
 import "./Testsuit.css";
-
-const flattenObject = (obj, prefix = "") => {
-  return Object.keys(obj).reduce((acc, key) => {
-    if (typeof obj[key] === "object" && obj[key] !== null) {
-      Object.assign(acc, flattenObject(obj[key]));
-    } else {
-      acc[key] = obj[key];
-    }
-    return acc;
-  }, {});
-};
-
+import BasicFlow from "../../Components/ConnectivityMap/ConnectivityMap";
+import { random } from "@mui/x-data-grid-generator";
+import { flattenObject } from "../../Utils/utilities";
 
 let flattenedData  =null;
 let filteredData = null;
 
 export default function Testsuit() {
  
+  // window.location.reload();
+  const [data, setData] = useState([
+    {
+      id: "none",
+    },
+  ]);
+  
   useEffect(() => {
     fetch('http://localhost:8080/TestSuites/')
       .then(response => response.json())
       .then(data => {
         if(data) setData(data);
-        setflattenedData(data.map((item) => flattenObject(item)));
+        console.log("test suites data " , data);
+        //setflattenedData(data.map((item) => flattenObject(item)));
       })
       .catch(error => console.error(error));
   }, []);
-  const [data, setData] = useState([
-    {
-      _id: "none",
-    },
-  ]);
 
-  const [flattenedData, setflattenedData] = useState([
+  let [flattenedData, setflattenedData] = useState([
     {
       _id: "none",
     },
   ]);
   const [openDialogs, setOpenDialogs] = useState([]);
-
   const [idx , setClickedIdx] = useState(0);
-
   const [nestedData , setNestedData] = useState('None');
+  const [isConnectivityMap,setConnectivityMap] = useState(false);
+  const [stack , setStack] =useState(['none']);  
+  // const [ConnectivityNodes , setConnectivityNodes] = useState([]);
+  // const [ConnectivityLinks , setConnectivityLinks] = useState([]);
 
-  const [dataKeys,setDataKeys] = useState(['None']);
-  const [nestedDatacolumns,setNestedDataColumns] = useState([]);
-  
+  let ConnectivityLinks = [];
+  let ConnectivityNodes = [];
+
 
   const toggleDialog = (index) => {
     const newOpenDialogs = [...openDialogs];
@@ -68,15 +63,34 @@ export default function Testsuit() {
   const handleRowClicked = (index) => 
   {
     setClickedIdx(index);
-    setNestedData(data[index]['metaData']);
-    setDataKeys(getKeys(data[index]['metaData']));
+    setNestedData(data[index]['metaData']['design_info']);
+    setConnectivityMap(false);
+    setStack(['none']);
     toggleDialog(index);
   }
+
   const handleKeyClicked = (item) => 
-  {
-    setNestedData(nestedData[item]);
+  { 
+    setStack([...stack,nestedData]);
+    setNestedData(nestedData[item]);  
     const keys = getKeys(nestedData[item]);
-    setDataKeys(keys);
+    if(item==='sa_connectivity_map' || item ==='mpg_connectivity_map')
+    {
+      setConnectivityMap(true);
+    }
+    else
+    {
+      setConnectivityMap(false);
+    }
+  }
+  const handleBackward = ()=>
+  {
+    console.log('before' , stack);
+    setNestedData(stack[stack.length-1]);
+    stack.pop();
+    //Might need some fixes in the future
+    setConnectivityMap(false);
+    console.log('after' , stack);
   }
 
   const totalTestSuites = data.length;
@@ -114,16 +128,26 @@ export default function Testsuit() {
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
-        const testsuitId = data[tableMeta.rowIndex].id;
+        let testsuitId = null;
+        if(data){
+
+          testsuitId = data[tableMeta.rowIndex].id;
+        }
+        console.log('testsuitId',testsuitId);
         return (
-          <Link to={`/testcases?testsuitId=${testsuitId}`}>
-            <LinkIcon />
-          </Link>
+            <Link to={`/testcases?testsuitId=${testsuitId || ''}`}>
+              <LinkIcon />
+            </Link>
         );
       },
     },
   });
-  
+
+  if(data){
+    flattenedData = data.map((item) => flattenObject(item));
+    console.log('flattenedData',flattenedData);
+    
+  }
   if(flattenedData){
     if(data_columns){
       filteredData = flattenedData.map((item) => {
@@ -137,7 +161,7 @@ export default function Testsuit() {
       });
   }
     return (
-    <Container maxWidth="x">
+    <Container key={Math.random()} maxWidth="x">
       {/* <h1>statistics</h1> */}
       <div className="statistics-container">
         <StatisticCard
@@ -172,13 +196,21 @@ export default function Testsuit() {
               onClose={() => toggleDialog(idx)}
               open={openDialogs[idx]}
             >
-              {dataKeys.map((item) =>{
+              {Object.keys(nestedData).map((item) =>{
+                console.log('item' , item);
+                if(typeof nestedData[item] === "object" && !isNumber(item))
                 return(
                 <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{item}</button>
-                </div>)})}
+                </div>)
+                else if( typeof nestedData[item] === "object" && isNumber(item))
+                {
+                  return (<div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{nestedData[item]['id']}</button>
+                  </div>);
+                }              
+              })}
               <div className="display:inline">
               {Object.keys(nestedData).map((key,value) =>{
-                if(typeof nestedData[key] != "object")
+                if(typeof nestedData[key] != "object" && !isConnectivityMap){
                 return(
                 <Card className="card">
                 <div className="header">{key}</div>
@@ -187,8 +219,20 @@ export default function Testsuit() {
                 </div>
                 
                 </Card> 
-                )})}
+                )}
+                else if (typeof nestedData[key] != "object" && isConnectivityMap)
+                {
+                  console.log('key ', key ,'nestedData[key]',nestedData[key]);
+                 ConnectivityNodes.push({id: key , position: { x: 0 + 70 * key, y: 0 + 100 * key   },data: {label: key } });
+                  if(key != nestedData[key])
+                  ConnectivityLinks.push({id:'e_'+key,source: key, target: nestedData[key] , arrowHeadType: 'arrow',animated: true, label: 'connectivity' });
+           
+                }
+                })}
                 </div>
+               
+                {isConnectivityMap ? <BasicFlow nodes={ConnectivityNodes} links={ConnectivityLinks} /> : <></>}
+                {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward}> ← </button>) : <></>}
       </Dialog>
       <br />
     </Container>
