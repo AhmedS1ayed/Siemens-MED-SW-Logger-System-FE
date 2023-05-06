@@ -9,7 +9,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
 import "./ValidationTag.css";
-import { flattenObject, getFilteredData } from "../../Utils/utilities";
 
 let filteredData = null;
 export default function ValidationTag() {
@@ -22,11 +21,9 @@ export default function ValidationTag() {
   const [openDialogs, setOpenDialogs] = useState([]);
 
   const [data, setData] = useState([]);
-  const fetchData = async () => {};
   useEffect(() => {
-    // fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=${testsuitId}&testCase.id=${testcaseId}`)
     fetch(
-      `http://localhost:8080/validationTags/testCases?testSuite.id=6455d8c15e327f493cceaf5c&testCase.id=6455d8c15e327f493cceaf5e`
+      `http://localhost:8080/validationTags/testCases?testSuite.id=${testsuitId}&testCase.id=${testcaseId}`
     )
       .then((response) => response.json())
       .then((data) => {
