@@ -90,6 +90,7 @@ export default function Testsuit() {
     stack.pop();
     //Might need some fixes in the future
     setConnectivityMap(false);
+    console.log('after' , stack);
   }
 
   const totalTestSuites = data.length;
