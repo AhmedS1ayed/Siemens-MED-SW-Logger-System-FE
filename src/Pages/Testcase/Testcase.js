@@ -36,6 +36,8 @@ export default function Testcase() {
     
       .catch(error => console.error(error));
   }, []);
+  const [stack , setStack] =useState(['none']); 
+
   const totalTestSuites = data.length;
   const successfulTestSuites = data.filter(
     (item) => item.isSuccessful === true
@@ -59,10 +61,22 @@ export default function Testcase() {
   }
   const handleKeyClicked = (item) => 
   {
+    setStack([...stack,nestedData]);
     setNestedData(nestedData[item]);
     const keys = getKeys(nestedData[item]);
     setDataKeys(keys);
   }
+
+  const handleBackward = ()=>
+  {
+    console.log('before' , stack);
+    setNestedData(stack[stack.length-1]);
+    stack.pop();
+    
+    
+    console.log('after' , stack);
+  }
+
 
   let data_columns = [];
   data.forEach((row) => getColumnName(row, data_columns));
@@ -154,6 +168,7 @@ export default function Testcase() {
                 )
                 })}
                 </div>
+                {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward}> ← </button>) : <></>}
       </Dialog>
     </Container>
   );
