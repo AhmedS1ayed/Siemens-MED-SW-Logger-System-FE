@@ -30,6 +30,7 @@ export default function ValidationTag() {
         {
           setData(data);
         }
+        console.log("validation taga: ",data);
       })
       .catch(error => console.error(error));
   }, []); 
