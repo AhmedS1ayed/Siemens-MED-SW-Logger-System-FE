@@ -92,8 +92,8 @@
 
 
 .success-class {
-  background-color: rgb(210, 235, 211);
-  color: rgb(2, 0, 0);
+  background-color: rgb(255, 255, 255);
+  color: rgb(1, 13, 26);
   border-radius: 50px;
   padding: 10px 0px 10px 0px;
   font-size: 3em !important;
@@ -106,3 +106,4 @@
   padding: 10px 0px 10px 0px;
   font-size: 3em !important;
 }
+
