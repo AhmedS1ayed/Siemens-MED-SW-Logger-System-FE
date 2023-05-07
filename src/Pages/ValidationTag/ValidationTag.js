@@ -11,7 +11,9 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
 import "./ValidationTag.css";
 import { DialogTitle } from "@mui/material";
+import { flattenObject, getFilteredData } from "../../Utils/utilities";
 
+let filteredData = null;
 export default function ValidationTag() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -34,6 +36,12 @@ export default function ValidationTag() {
       })
       .catch(error => console.error(error));
   }, []); 
+
+  let [flattenedData, setflattenedData] = useState([
+    {
+      _id: "none",
+    },
+  ]);
 
   const [data, setData] = useState([
     {
@@ -61,12 +69,57 @@ export default function ValidationTag() {
   };
 
   let sad = [];
+  let meta = [];
+  let combinedData = [];
+
+  if(typeof data[0] !== 'undefined' && typeof data[0]['validationPoints'] !== 'undefined'){
+    // console.log('data > mete',data[0]['metaData']);
+    // loop over the data and get metadata only 
+    //flattenedData = data.map((item) => flattenObject(item));  
+
+     for(let i = 0 ; i < data.length ; i++){
+      meta.push(data[i]['metaData']);
+     }  
+      console.log('meta',meta);
+
+  }
+  if(meta){
+    console.log('flattenedData  ',flattenedData);
+    if(data_columns){
+
+
+        filteredData = data.map((item) => {
+          const filteredItem = {};
+          Object.keys(item).forEach((key) => {
+            if (data_columns.some((column) => column.name.substring(column.name.lastIndexOf(".") + 1) === key)) {
+              filteredItem[key] = item[key];
+            }
+          });
+          return filteredItem;
+        });
+
+        let metaFiltered = meta.map((item) => {
+          const filteredItem = {};
+          Object.keys(item).forEach((key) => {
+            if (data_columns.some((column) => column.name.substring(column.name.lastIndexOf(".") + 1) === key)) {
+              filteredItem[key] = item[key];
+            }
+          });
+          return filteredItem;
+        });
+
+        combinedData = filteredData.map((item, index) => {
+          return { ...item, ...metaFiltered[index] };
+        });
+
+    }
+  console.log('filteredData',filteredData);
   return (
     <Container maxWidth="x">
       
       <ExpandableRowTable
         title="Validation Tags"
-        Data={data}
+        Data={combinedData}
         regularColumns={data_columns}
         expandable={false}
         onRowClickEnabled={true}
@@ -173,4 +226,5 @@ export default function ValidationTag() {
       </section>
     </Container>
   );
+          }
 }
