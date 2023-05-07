@@ -4,7 +4,6 @@ import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
 import { Link } from "react-router-dom";
 import ExpandableRowTable from "../../Components/NewTable/NewTable.js";
-import "../../Components/DataGrid/DataGrid.css";
 import { useEffect, setData } from "react";
 import { useState } from "react";
 // import data from "../../Data/Mock_Data.json";
@@ -13,7 +12,7 @@ import LinkIcon from "@mui/icons-material/Link";
 
 export default function ValidationPoints() {
   useEffect(() => {
-    fetch('http://localhost:8080/validationPoints/?validationTag.id=643f8524f71037820114afe8')
+    fetch('http://localhost:8080/validationPoints')
       .then(response => response.json())
       .then(data => {
         if(data)
