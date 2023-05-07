@@ -156,6 +156,7 @@ export default function Testcase() {
                   if(nestedData[item]["id"] != undefined) itemN = nestedData[item]["id"];
                   if(nestedData[item]["master_id"] != undefined) itemN = nestedData[item]["master_id"];
                   if(nestedData[item]["slave_id"] != undefined) itemN = nestedData[item]["slave_id"];
+                  if(nestedData[item]["Port Offset"] != undefined) itemN = nestedData[item]["Port Offset"];
                   return (<div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{itemN}</button>
                   </div>);
                 }         
