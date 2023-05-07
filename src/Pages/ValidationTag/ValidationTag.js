@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+// import data from "../../Data/log.json";
 import { getColumnName } from "../../Utils/utilities";
 import { Container, Dialog, Divider, Grid } from "@mui/material";
 import ExpandableRowTable from "../../Components/NewTable/NewTable";
@@ -9,9 +10,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
 import "./ValidationTag.css";
-import { flattenObject, getFilteredData } from "../../Utils/utilities";
+import { DialogTitle } from "@mui/material";
 
-let filteredData = null;
 export default function ValidationTag() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -21,15 +21,16 @@ export default function ValidationTag() {
   const [selectedRow, setSelectedRow] = useState(-1);
   const [openDialogs, setOpenDialogs] = useState([]);
   useEffect(() => {
-    // fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=${testsuitId}&testCase.id=${testcaseId}`)
-    fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=6453eccec2b61ea30de5f09c&testCase.id=6453ecd1c2b61ea30de5f0c2`)
+    //fetch(`http://localhost:8080/validationTags/testSuites/${testsuitId}/testCases/${testcaseId}}`)
+    fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=${testsuitId}&testCase.id=${testcaseId}`)
+     //fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=643f8524f71037820114afea&testCase.id=643f8524f71037820114afe9`)
       .then(response => response.json())
       .then(data => {
         if(data && data.length != 0)  
         {
           setData(data);
         }
-        console.log('data --------- :', data);
+        console.log("validation taga: ",data);
       })
       .catch(error => console.error(error));
   }, []); 
@@ -39,13 +40,6 @@ export default function ValidationTag() {
       id: "none",
     },
   ]);
-
-  let [flattenedData, setflattenedData] = useState([
-    {
-      _id: "none",
-    },
-  ]);
-
 
   useEffect(() => {
     if (selectedRow !== -1) {
@@ -67,57 +61,12 @@ export default function ValidationTag() {
   };
 
   let sad = [];
-  let meta = [];
-  let combinedData = [];
-  
-  if(data){
-    console.log('data > mete',data[0]['metaData']);
-    // loop over the data and get metadata only 
-    //flattenedData = data.map((item) => flattenObject(item));  
-
-     for(let i = 0 ; i < data.length ; i++){
-      meta.push(data[i]['metaData']);
-     }  
-      console.log('meta',meta);
-
-  }
-  if(meta){
-    console.log('flattenedData  ',flattenedData);
-    if(data_columns){
-      
-    
-        filteredData = data.map((item) => {
-          const filteredItem = {};
-          Object.keys(item).forEach((key) => {
-            if (data_columns.some((column) => column.name.substring(column.name.lastIndexOf(".") + 1) === key)) {
-              filteredItem[key] = item[key];
-            }
-          });
-          return filteredItem;
-        });
-      
-        let metaFiltered = meta.map((item) => {
-          const filteredItem = {};
-          Object.keys(item).forEach((key) => {
-            if (data_columns.some((column) => column.name.substring(column.name.lastIndexOf(".") + 1) === key)) {
-              filteredItem[key] = item[key];
-            }
-          });
-          return filteredItem;
-        });
-
-        combinedData = filteredData.map((item, index) => {
-          return { ...item, ...metaFiltered[index] };
-        });
-      
-    }
-  console.log('filteredData',filteredData);
   return (
     <Container maxWidth="x">
       
       <ExpandableRowTable
         title="Validation Tags"
-        Data={combinedData}
+        Data={data}
         regularColumns={data_columns}
         expandable={false}
         onRowClickEnabled={true}
@@ -171,7 +120,6 @@ export default function ValidationTag() {
                       }}
                     >
                       {Object.keys(valid_point).map((valid_key) => {
-                        console.log("-=-=-=-=-=-=-=" , valid_point);
                         if (valid_key !== "results") {
                           return (
                             <>
@@ -210,7 +158,6 @@ export default function ValidationTag() {
                       {valid_point["results"].forEach((result) =>
                         getColumnName(result, sad)
                       )}
-                      {console.log("saddassd", valid_point)}
                       <ExpandableRowTable
                         Data={valid_point["results"]}
                         regularColumns={sad}
@@ -226,5 +173,4 @@ export default function ValidationTag() {
       </section>
     </Container>
   );
-          }
 }

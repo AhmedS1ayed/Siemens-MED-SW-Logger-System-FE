@@ -1,0 +1,27 @@
+.welcome {
+    background-color: #f8f8f8;
+    padding: 2em;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .welcome h1 {
+    font-size: 3em;
+    color: #333;
+    margin-bottom: 0.5em;
+  }
+  
+  .welcome p {
+    font-size: 1.5em;
+    color: #666;
+    margin-top: 0;
+  }
+  .custom-link-welcome {
+    color: #0077cc;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .custom-link-welcome:hover {
+    text-decoration: underline;
+  }
