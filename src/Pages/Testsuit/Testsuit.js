@@ -31,7 +31,6 @@ export default function Testsuit() {
       .then(response => response.json())
       .then(data => {
         if(data) setData(data);
-        console.log("test suites data " , data);
         //setflattenedData(data.map((item) => flattenObject(item)));
       })
       .catch(error => console.error(error));
@@ -85,12 +84,10 @@ export default function Testsuit() {
   }
   const handleBackward = ()=>
   {
-    console.log('before' , stack);
     setNestedData(stack[stack.length-1]);
     stack.pop();
     //Might need some fixes in the future
     setConnectivityMap(false);
-    console.log('after' , stack);
   }
 
   const totalTestSuites = data.length;
@@ -133,7 +130,6 @@ export default function Testsuit() {
 
           testsuitId = data[tableMeta.rowIndex].id;
         }
-        console.log('testsuitId',testsuitId);
         return (
             <Link  to={`/testcases?testsuitId=${testsuitId || ''}`}>
               <LinkIcon className ="custom-link" style={{ color: 'black' }}/>
@@ -145,7 +141,6 @@ export default function Testsuit() {
 
   if(data){
     flattenedData = data.map((item) => flattenObject(item));
-    console.log('flattenedData',flattenedData);
     
   }
   if(flattenedData){
@@ -197,12 +192,11 @@ export default function Testsuit() {
               open={openDialogs[idx]}
             >
               {Object.keys(nestedData).map((item) =>{
-                console.log('item' , item);
-                if(typeof nestedData[item] === "object" && !isNumber(item))
+                if(typeof nestedData[item] === "object" && !Array.isArray(nestedData))
                 return(
                 <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{item}</button>
                 </div>)
-                else if( typeof nestedData[item] === "object" && isNumber(item))
+                else if( typeof nestedData[item] === "object" && Array.isArray(nestedData))
                 {
                   return (<div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{nestedData[item]['id']}</button>
                   </div>);
@@ -222,11 +216,9 @@ export default function Testsuit() {
                 )}
                 else if (typeof nestedData[key] != "object" && isConnectivityMap)
                 {
-                  console.log('key ', key ,'nestedData[key]',nestedData[key]);
-                 ConnectivityNodes.push({id: key , position: { x: 0 + 70 * key, y: 0 + 100 * key   },data: {label: key } });
+                  ConnectivityNodes.push({id: key , position: { x: 0 + 70 * key, y: 0 + 100 * key   },data: {label: key } });
                   if(key != nestedData[key])
                   ConnectivityLinks.push({id:'e_'+key,source: key, target: nestedData[key] , arrowHeadType: 'arrow',animated: true, label: 'connectivity' });
-           
                 }
                 })}
                 </div>

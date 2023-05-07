@@ -34,7 +34,7 @@ export default function Testcase() {
   useEffect(() => {
     fetch(`http://localhost:8080/testCases/?testSuite[id]=${testsuitId}`)
     .then(response => response.json())
-    .then(data => {if(data) setData(data); console.log("test cases data " , data);})
+    .then(data => {if(data) setData(data);})
     
       .catch(error => console.error(error));
   }, []);
@@ -146,26 +146,19 @@ export default function Testcase() {
               open={openDialogs[idx]}
             >
               {Object.keys(nestedData).map((item) =>{
-                console.log('item' , item);
-                if(typeof nestedData[item] === "object")
+                if(typeof nestedData[item] === "object" && !Array.isArray(nestedData))
                 return(
                 <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{item}</button>
                 </div>)
-                // else if( typeof nestedData[item] === "object" && isNumber(item))
-                // {
-                //   // let itemIn='';
-                //   // if(nestedData[itemIn]['id'])
-                //   //   itemIn = nestedData[item]['id']
-                  
-                //   // if(nestedData[item]['master_id'])
-                //   //   itemIn = nestedData[item]['master_id']
-                  
-                //   // if(nestedData[item]['slave_ids'] && typeof nestedData[item]['slave_ids'] !=="object" )
-                //   //   itemIn = nestedData[item]['slave_ids']
-
-                //   return (<div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{itemIn}</button>
-                //   </div>);
-                // }              
+                else if( typeof nestedData[item] === "object" && Array.isArray(nestedData))
+                {
+                  let itemN='Not Found';
+                  if(nestedData[item]["id"] != undefined) itemN = nestedData[item]["id"];
+                  if(nestedData[item]["master_id"] != undefined) itemN = nestedData[item]["master_id"];
+                  if(nestedData[item]["slave_id"] != undefined) itemN = nestedData[item]["slave_id"];
+                  return (<div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{itemN}</button>
+                  </div>);
+                }         
               })}
               <div className="display:inline">
               {Object.keys(nestedData).map((key,value) =>{

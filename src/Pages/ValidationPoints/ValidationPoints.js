@@ -20,7 +20,6 @@ export default function ValidationPoints() {
         {
           setData(data.data);
         }
-        console.log('data', data.data);
       })
       .catch(error => console.error(error));
   }, []);

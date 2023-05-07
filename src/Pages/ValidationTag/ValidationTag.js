@@ -30,7 +30,6 @@ export default function ValidationTag() {
         {
           setData(data);
         }
-        console.log('data --------- :', data);
       })
       .catch(error => console.error(error));
   }, []); 
@@ -120,7 +119,6 @@ export default function ValidationTag() {
                       }}
                     >
                       {Object.keys(valid_point).map((valid_key) => {
-                        console.log("-=-=-=-=-=-=-=" , valid_point);
                         if (valid_key !== "results") {
                           return (
                             <>
@@ -159,7 +157,6 @@ export default function ValidationTag() {
                       {valid_point["results"].forEach((result) =>
                         getColumnName(result, sad)
                       )}
-                      {console.log("saddassd", valid_point)}
                       <ExpandableRowTable
                         Data={valid_point["results"]}
                         regularColumns={sad}
