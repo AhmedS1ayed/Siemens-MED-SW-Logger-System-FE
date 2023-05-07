@@ -12,6 +12,7 @@ export default function Navbar() {
         <Toolbar disableGutters>
           <InsertChartIcon
             sx={{ display: { xs: "none", md: "flex" }, mr: 1, color: "#333333", fontWeight: "bold", textShadow: "1px 1px #cccccc" }}
+            style={{ color: 'black' ,fontSize: 50}}
           />
           <Typography
             variant="h6"

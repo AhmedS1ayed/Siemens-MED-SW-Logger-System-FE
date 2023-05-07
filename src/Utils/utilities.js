@@ -6,7 +6,7 @@ const pushColumn = (data_columns, inputKey) => {
     name: inputKey,
     label: inputKey,
     options: {
-      display: inputKey === "_id" || inputKey === "id" ? false : true,
+      display: inputKey === "_id" || inputKey === "id" || inputKey === "__v" ? false : true,
 
       filterOptions: {
         renderValue: (value) => {

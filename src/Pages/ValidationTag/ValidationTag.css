@@ -22,13 +22,13 @@
 }
 
 .validation_point:hover {
-  box-shadow: 0px 20px 20px 0px rgb(12 0 46 / 20%);
+  box-shadow: 0px 20px 20px 0px rgba(68, 0, 255, 0.2);
 }
 
 .validation_point .results_btn {
   margin: auto;
   padding: 13px 23px;
-  background-color: rgb(21, 101, 192);
+  background-color: rgb(3, 16, 31);
   border: none;
   outline: none;
   border-radius: 5px;

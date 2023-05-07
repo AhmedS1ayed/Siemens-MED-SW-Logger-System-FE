@@ -7,8 +7,13 @@ import MetaDataCard from "../MetaDataCard/MetaDataCard";
 
 export const ExpandableRowTable = (props) => {
   const options = {
+    tableHeaderStyles: {
+      backgroundColor: '#de0707',
+      fontWeight: 'bold',
+      borderBottom: '1px solid #ddd',
+    },
     filter: true,
-    selectableRows: "multiple",
+    selectableRows: false,
     filterType: "multiselect",
     // responsive: "scroll",
     rowsPerPage: 10,
@@ -17,7 +22,7 @@ export const ExpandableRowTable = (props) => {
         className: rowIndex % 2 === 0 ? "even-row" : "odd-row",
       };
     },
-    expandableRows: true,
+    expandableRows: false,
     onRowClick: (rowData, rowMeta) => {
       if (props.onRowClickEnabled) {
         props.onRowClick(rowMeta.dataIndex);

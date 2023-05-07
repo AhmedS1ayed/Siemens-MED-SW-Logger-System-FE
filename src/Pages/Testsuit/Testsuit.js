@@ -135,8 +135,8 @@ export default function Testsuit() {
         }
         console.log('testsuitId',testsuitId);
         return (
-            <Link to={`/testcases?testsuitId=${testsuitId || ''}`}>
-              <LinkIcon />
+            <Link  to={`/testcases?testsuitId=${testsuitId || ''}`}>
+              <LinkIcon className ="custom-link" style={{ color: 'black' }}/>
             </Link>
         );
       },
@@ -167,19 +167,19 @@ export default function Testsuit() {
         <StatisticCard
           title="Total Test Suites"
           count={totalTestSuites}
-          color="#ffffff"
+          // color="#ffffff"
           icon="equalizer"
         />
         <StatisticCard
           title="Successful Test Suites"
           count={successfulTestSuites}
-          color="#fffff0"
+          // color="#d4ead4"
           icon="check"
         />
         <StatisticCard
           title="Failed Test Suites"
           count={failedTestSuites}
-          color="#ffffff"
+          // color="#f3d4d1"
           icon="error"
         />
       </div>
@@ -208,7 +208,7 @@ export default function Testsuit() {
                   </div>);
                 }              
               })}
-              <div className="display:inline">
+              <div className="display:inline;">
               {Object.keys(nestedData).map((key,value) =>{
                 if(typeof nestedData[key] != "object" && !isConnectivityMap){
                 return(

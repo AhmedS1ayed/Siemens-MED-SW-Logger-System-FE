@@ -1,4 +1,4 @@
-.results_btn {
+/* .results_btn {
     display: block;
     margin: auto;
     margin-top: 10px;
@@ -12,6 +12,28 @@
     font-size: large;
     cursor: pointer;
     transition: all ease-in 0.2s;
+  } */
+  .results_btn:hover {
+    box-shadow: 0px 20px 20px 0px rgba(68, 0, 255, 0.2);
+  }
+  .results_btn {
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+    padding: 13px 23px;
+    background-color: rgb(3, 16, 31);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    font-size: large;
+    cursor: pointer;
+    transition: all ease-in 0.2s;
+  }
+  
+  .results_btn:hover {
+    background-color: rgb(15, 81, 157);
   }
 
   ._header {
@@ -22,17 +44,17 @@
   .card {
     display:inline-block;
     margin: auto;
-    margin-left: 10px;
+    margin-left: 27px;
     width: 300px;
     padding: 10px;
     background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.233);
     /* border-radius: 10px; */
     overflow: hidden;
   }
 
   .header {
-    background-color: #333;
+    background-color: #161616;
     color: #fff;
     padding: 10px;
     text-align: center;
@@ -50,4 +72,16 @@
     text-align: center;
     margin: auto;
     font-size: 20px;
+  }
+
+  .custom-link {
+    display: inline;
+    align-items: center;
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 2px solid #ccc;
+  }
+  
+  .custom-link:hover {
+    border-bottom: 2px solid #c21a1a;
   }

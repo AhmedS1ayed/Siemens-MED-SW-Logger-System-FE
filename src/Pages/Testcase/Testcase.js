@@ -89,7 +89,7 @@ export default function Testcase() {
           <Link
             to={`/validtags?testsuitId=${testsuitId}&testcaseId=${testcaseId}`}
           >
-            <LinkIcon />
+            <LinkIcon className ="custom-link" style={{ color: 'black' }}/>
           </Link>
         );
       },
@@ -116,21 +116,21 @@ export default function Testcase() {
     <Container key={Math.random()} maxWidth="x">
       <div className="statistics-container">
         <StatisticCard
-          title="Total Test Cases"
+          title="Total Test Suites"
           count={totalTestSuites}
-          color="#ffffff"
+          // color="#ffffff"
           icon="equalizer"
         />
         <StatisticCard
-          title="Successful Test Cases"
+          title="Successful Test Suites"
           count={successfulTestSuites}
-          color="#fffff0"
+          // color="#d4ead4"
           icon="check"
         />
         <StatisticCard
-          title="Failed Test Cases"
+          title="Failed Test Suites"
           count={failedTestSuites}
-          color="#ffffff"
+          // color="#f3d4d1"
           icon="error"
         />
       </div>
