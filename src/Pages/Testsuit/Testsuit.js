@@ -11,6 +11,7 @@ import LinkIcon from "@mui/icons-material/Link";
 import "./Testsuit.css";
 import BasicFlow from "../../Components/ConnectivityMap/ConnectivityMap";
 import { flattenObject } from "../../Utils/utilities";
+import { InsertDriveFile } from "@material-ui/icons";
 
 let flattenedData  =null;
 let filteredData = null;
@@ -137,6 +138,7 @@ export default function Testsuit() {
     },
   });
 
+
   if(data){
     flattenedData = data.map((item) => flattenObject(item));
     
@@ -188,7 +190,11 @@ export default function Testsuit() {
       <Dialog
               onClose={() => toggleDialog(idx)}
               open={openDialogs[idx]}
+              maxWidth={isConnectivityMap ? undefined : 'md'}
+              maxHeight={isConnectivityMap ? undefined : false}
+              style={{ borderRadius: '50px' }} 
             >
+              <div style={{padding: '26px'}} > 
               {Object.keys(nestedData).map((item) =>{
                 if(typeof nestedData[item] === "object" && !Array.isArray(nestedData))
                 return(
@@ -200,7 +206,7 @@ export default function Testsuit() {
                   </div>);
                 }              
               })}
-              <div className="display:inline;">
+              <div  className="display:inline;"  >
               {Object.keys(nestedData).map((key,value) =>{
                 if(typeof nestedData[key] != "object" && !isConnectivityMap){
                 return(
@@ -214,15 +220,18 @@ export default function Testsuit() {
                 )}
                 else if (typeof nestedData[key] != "object" && isConnectivityMap)
                 {
-                  ConnectivityNodes.push({id: key , position: { x: 0 + 70 * key, y: 0 + 100 * key   },data: {label: key } });
+                  // let random = Math.floor(Math.random() * 100);
+                    
+                  ConnectivityNodes.push({id: key , position: { x: 150 + 70 * key, y: 20 + 100 * key   },data: {label: key } });
                   if(key != nestedData[key])
-                  ConnectivityLinks.push({id:'e_'+key,source: key, target: nestedData[key] , arrowHeadType: 'arrow',animated: true, label: 'connectivity' });
+                  ConnectivityLinks.push({id:'e_'+key,source: key, target: nestedData[key],  type: 'start-end' ,animated: true, });
                 }
                 })}
                 </div>
                
                 {isConnectivityMap ? <BasicFlow nodes={ConnectivityNodes} links={ConnectivityLinks} /> : <></>}
                 {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward}> ← </button>) : <></>}
+                </div>  
       </Dialog>
       <br />
     </Container>

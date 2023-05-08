@@ -8,7 +8,7 @@ import InsertChartIcon from "@mui/icons-material/InsertChart";
 export default function Navbar() {
   return (
     <AppBar position="static" sx={{ backgroundColor: "#fffff3", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)" }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="x">
         <Toolbar disableGutters>
           <InsertChartIcon
             sx={{ display: { xs: "none", md: "flex" }, mr: 1, color: "#333333", fontWeight: "bold", textShadow: "1px 1px #cccccc" }}

@@ -15,25 +15,27 @@
 .MuiTableCell-root {
   padding: 8px;
   margin: auto;
+    border-bottom: 2px solid #000000; 
   /* border-radius: 5px; */
 }
 
-/* .MuiTableHead-root {
-  background-color: #f0f0f0 !important;
-  font-weight: bold;
-  font-size: 50px;
-} */
 .tss-1akey0g-MUIDataTableHeadCell-data {
   font-family:'Segoe UI';
   font-size: larger;
   font-weight: bold !important;
-  color: #fff;
+  color: #ffff;
 }
-
+.MuiTableHead-root {
+  background-color: #f0f0f0 !important;
+  font-weight: bold;
+  font-size: 50px;
+  border-bottom: 2px solid #000000; /* add a 2px solid black border to the bottom of the header */
+}
 .MuiTableCell-head {
   /* padding-left: 20px !important; */
   margin:auto;
-  background-color: rgb(1, 13, 26) !important;
+  border-bottom: 2px solid #000000; 
+  background-color: #0A2342 !important;
 }
 
 .MuiTableSortLabel-root {
