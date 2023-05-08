@@ -9,7 +9,7 @@ import Testcase from "./Pages/Testcase/Testcase";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ValidationTag from "./Pages/ValidationTag/ValidationTag";
 import ValidationPoints from "./Pages/ValidationPoints/ValidationPoints";
-import BasicFlow from "./Components/ConnectivityMap/ConnectivityMap";
+
 
 function App() {
   return (
