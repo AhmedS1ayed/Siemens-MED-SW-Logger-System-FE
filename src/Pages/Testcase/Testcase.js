@@ -144,7 +144,10 @@ export default function Testcase() {
       <Dialog
               onClose={() => toggleDialog(idx)}
               open={openDialogs[idx]}
+              maxWidth='md'
+              maxHeight={false}
             >
+               <div style={{padding: '26px'}} > 
               {Object.keys(nestedData).map((item) =>{
                 if(typeof nestedData[item] === "object" && !Array.isArray(nestedData))
                 return(
@@ -176,6 +179,7 @@ export default function Testcase() {
                 })}
                 </div>
                 {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward}> ← </button>) : <></>}
+                </div>
       </Dialog>
     </Container>
   );

@@ -1,56 +1,47 @@
 import React from "react";
-import { Card, Container , Dialog } from "@mui/material";
+import { Card, Container, Dialog } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
 import { Link } from "react-router-dom";
 import ExpandableRowTable from "../../Components/NewTable/NewTable.js";
-import { useEffect, setData } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
-import { getColumnName ,getKeys , isNumber } from "../../Utils/utilities";
+import { getColumnName, getKeys } from "../../Utils/utilities";
 import LinkIcon from "@mui/icons-material/Link";
 import "./Testsuit.css";
 import BasicFlow from "../../Components/ConnectivityMap/ConnectivityMap";
 import { flattenObject } from "../../Utils/utilities";
 import { InsertDriveFile } from "@material-ui/icons";
 
-let flattenedData  =null;
 let filteredData = null;
 
 export default function Testsuit() {
- 
-  // window.location.reload();
+  let flattenedData = [];
+  let ConnectivityLinks = [];
+  let ConnectivityNodes = [];
+
   const [data, setData] = useState([
     {
       id: "none",
     },
   ]);
-  
+
   useEffect(() => {
-    fetch('http://localhost:8080/TestSuites/')
-      .then(response => response.json())
-      .then(data => {
-        if(data) setData(data);
-        //setflattenedData(data.map((item) => flattenObject(item)));
+    fetch("http://localhost:8080/TestSuites/")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) setData(data);
       })
-      .catch(error => console.error(error));
+      .catch((error) => console.error(error));
   }, []);
 
-  let [flattenedData, setflattenedData] = useState([
-    {
-      _id: "none",
-    },
-  ]);
   const [openDialogs, setOpenDialogs] = useState([]);
-  const [idx , setClickedIdx] = useState(0);
-  const [nestedData , setNestedData] = useState('None');
-  const [isConnectivityMap,setConnectivityMap] = useState(false);
-  const [stack , setStack] =useState(['none']);  
+  const [idx, setClickedIdx] = useState(0);
+  const [nestedData, setNestedData] = useState("None");
+  const [isConnectivityMap, setConnectivityMap] = useState(false);
+  const [stack, setStack] = useState(["none"]);
   // const [ConnectivityNodes , setConnectivityNodes] = useState([]);
   // const [ConnectivityLinks , setConnectivityLinks] = useState([]);
-
-  let ConnectivityLinks = [];
-  let ConnectivityNodes = [];
-
 
   const toggleDialog = (index) => {
     const newOpenDialogs = [...openDialogs];
@@ -58,36 +49,30 @@ export default function Testsuit() {
     setOpenDialogs(newOpenDialogs);
   };
 
-  const handleRowClicked = (index) => 
-  {
+  const handleRowClicked = (index) => {
     setClickedIdx(index);
-    setNestedData(data[index]['metaData']['design_info']);
+    setNestedData(data[index]["metaData"]["design_info"]);
     setConnectivityMap(false);
-    setStack(['none']);
+    setStack(["none"]);
     toggleDialog(index);
-  }
+  };
 
-  const handleKeyClicked = (item) => 
-  { 
-    setStack([...stack,nestedData]);
-    setNestedData(nestedData[item]);  
+  const handleKeyClicked = (item) => {
+    setStack([...stack, nestedData]);
+    setNestedData(nestedData[item]);
     const keys = getKeys(nestedData[item]);
-    if(item==='sa_connectivity_map' || item ==='mpg_connectivity_map')
-    {
+    if (item === "sa_connectivity_map" || item === "mpg_connectivity_map") {
       setConnectivityMap(true);
-    }
-    else
-    {
+    } else {
       setConnectivityMap(false);
     }
-  }
-  const handleBackward = ()=>
-  {
-    setNestedData(stack[stack.length-1]);
+  };
+  const handleBackward = () => {
+    setNestedData(stack[stack.length - 1]);
     stack.pop();
     //Might need some fixes in the future
     setConnectivityMap(false);
-  }
+  };
 
   const totalTestSuites = data.length;
   const successfulTestSuites = data.filter(
@@ -98,9 +83,7 @@ export default function Testsuit() {
   ).length;
 
   const data_columns = [];
-  data.forEach((row) =>getColumnName(row, data_columns));
-
-  
+  data.forEach((row) => getColumnName(row, data_columns));
 
   let count = 0;
   data_columns.unshift({
@@ -110,9 +93,9 @@ export default function Testsuit() {
       filter: false,
       sort: true,
       customBodyRender: () => {
-       if(count === data.length) count = 0; 
+        if (count === data.length) count = 0;
         count++;
-        return (count);
+        return count;
       },
     },
   });
@@ -125,14 +108,13 @@ export default function Testsuit() {
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
         let testsuitId = null;
-        if(data){
-
+        if (data) {
           testsuitId = data[tableMeta.rowIndex].id;
         }
         return (
-            <Link  to={`/testcases?testsuitId=${testsuitId || ''}`}>
-              <LinkIcon className ="custom-link" style={{ color: 'black' }}/>
-            </Link>
+          <Link to={`/testcases?testsuitId=${testsuitId || ""}`}>
+            <LinkIcon className="custom-link" style={{ color: "black" }} />
+          </Link>
         );
       },
     },
@@ -141,43 +123,47 @@ export default function Testsuit() {
 
   if(data){
     flattenedData = data.map((item) => flattenObject(item));
-    
   }
-  if(flattenedData){
-    if(data_columns){
+  if (flattenedData) {
+    if (data_columns) {
       filteredData = flattenedData.map((item) => {
         const filteredItem = {};
         Object.keys(item).forEach((key) => {
-          if (data_columns.some((column) => column.name.substring(column.name.lastIndexOf(".") + 1) === key)) {
+          if (
+            data_columns.some(
+              (column) =>
+                column.name.substring(column.name.lastIndexOf(".") + 1) === key
+            )
+          ) {
             filteredItem[key] = item[key];
           }
         });
         return filteredItem;
       });
-  }
+    }
     return (
-    <Container key={Math.random()} maxWidth="x">
-      {/* <h1>statistics</h1> */}
-      <div className="statistics-container">
-        <StatisticCard
-          title="Total Test Suites"
-          count={totalTestSuites}
-          // color="#ffffff"
-          icon="equalizer"
-        />
-        <StatisticCard
-          title="Successful Test Suites"
-          count={successfulTestSuites}
-          // color="#d4ead4"
-          icon="check"
-        />
-        <StatisticCard
-          title="Failed Test Suites"
-          count={failedTestSuites}
-          // color="#f3d4d1"
-          icon="error"
-        />
-      </div>
+      <Container key={Math.random()} maxWidth="x">
+        {/* <h1>statistics</h1> */}
+        <div className="statistics-container">
+          <StatisticCard
+            title="Total Test Suites"
+            count={totalTestSuites}
+            // color="#ffffff"
+            icon="equalizer"
+          />
+          <StatisticCard
+            title="Successful Test Suites"
+            count={successfulTestSuites}
+            // color="#d4ead4"
+            icon="check"
+          />
+          <StatisticCard
+            title="Failed Test Suites"
+            count={failedTestSuites}
+            // color="#f3d4d1"
+            icon="error"
+          />
+        </div>
 
       <ExpandableRowTable
         title="Test Suites"
