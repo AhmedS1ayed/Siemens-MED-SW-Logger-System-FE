@@ -5,19 +5,28 @@ import { getColumnName } from "../../Utils/utilities";
 import "./newTable.css";
 import MetaDataCard from "../MetaDataCard/MetaDataCard";
 
-
 export const ExpandableRowTable = (props) => {
   const options = {
     filter: true,
+    setCellProps: () => {
+      return {
+        className: "tableCell",
+      };
+    },
     selectableRows: "multiple",
     filterType: "multiselect",
-    // responsive: "scroll",
+    responsive: "scroll",
     rowsPerPage: 10,
+    draggableColumns: {
+      enabled: true,
+    },
     setRowProps: (row, rowIndex) => {
       return {
         className: rowIndex % 2 === 0 ? "even-row" : "odd-row",
+        style: { cursor: "pointer" },
       };
     },
+
     expandableRows: props.expandable,
     onRowClick: (rowData, rowMeta) => {
       if (props.onRowClickEnabled) {

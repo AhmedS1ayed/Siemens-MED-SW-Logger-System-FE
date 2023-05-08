@@ -2,6 +2,15 @@
   margin: 30px 15px;
   border-bottom: 2px solid rgba(38, 96, 244, 0.654);
 }
+.table-container .tableHeadCell button {
+  text-transform: capitalize;
+}
+.table-container .tableCell {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #737373;
+  padding-left: 0px;
+}
 
 .tss-1akey0g-MUIDataTableHeadCell-data {
   font-weight: bold !important;
@@ -22,7 +31,7 @@
 }
 
 .odd-row {
-  background-color: #e2e0e0;
+  background-color: #efefef;
 }
 
 .success-class {
@@ -39,4 +48,5 @@
   border-radius: 50px;
   padding: 10px 0px 10px 0px;
   font-size: 3em !important;
+  margin-left: 30px;
 }

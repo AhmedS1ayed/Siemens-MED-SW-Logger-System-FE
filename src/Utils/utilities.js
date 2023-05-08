@@ -2,12 +2,25 @@ import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
 
 const pushColumn = (data_columns, inputKey) => {
+  let modifiedKey = inputKey.split("_");
   let newColumn = {
     name: inputKey,
-    label: inputKey,
+    label: modifiedKey.join(" "),
     options: {
-      display: inputKey === "_id" || inputKey === "id" ? false : true,
-
+      display:
+        inputKey === "_id" || inputKey === "id" || inputKey === "__v"
+          ? "excluded"
+          : true,
+      setCellHeaderProps: () => {
+        return {
+          className: "tableHeadCell",
+        };
+      },
+      setCellProps: () => {
+        return {
+          className: "tableCell",
+        };
+      },
       filterOptions: {
         renderValue: (value) => {
           if (value === "" || value === null || value === undefined) {
@@ -19,7 +32,6 @@ const pushColumn = (data_columns, inputKey) => {
         },
       },
       customBodyRender: (value) => {
-        console.log("value: ", value);
         if (typeof value === "boolean")
           return value ? (
             <CheckIcon className="success-class" />

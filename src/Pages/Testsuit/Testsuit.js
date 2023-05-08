@@ -5,16 +5,14 @@ import "../../Components/statistics/StatisticsCard.css";
 import { Link } from "react-router-dom";
 import ExpandableRowTable from "../../Components/NewTable/NewTable.js";
 import "../../Components/DataGrid/DataGrid.css";
-import { useEffect, setData } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { getColumnName, getKeys, isNumber } from "../../Utils/utilities";
 import LinkIcon from "@mui/icons-material/Link";
 import "./Testsuit.css";
 import BasicFlow from "../../Components/ConnectivityMap/ConnectivityMap";
-import { random } from "@mui/x-data-grid-generator";
 import { flattenObject } from "../../Utils/utilities";
 
-let flattenedData = null;
 let filteredData = null;
 
 export default function Testsuit() {
@@ -46,8 +44,6 @@ export default function Testsuit() {
   const [nestedData, setNestedData] = useState("None");
   const [isConnectivityMap, setConnectivityMap] = useState(false);
   const [stack, setStack] = useState(["none"]);
-  // const [ConnectivityNodes , setConnectivityNodes] = useState([]);
-  // const [ConnectivityLinks , setConnectivityLinks] = useState([]);
 
   let ConnectivityLinks = [];
   let ConnectivityNodes = [];
@@ -117,6 +113,7 @@ export default function Testsuit() {
     options: {
       filter: false,
       sort: false,
+      viewColumns: false,
       customBodyRender: (value, tableMeta, updateValue) => {
         let testsuitId = null;
         if (data) {
