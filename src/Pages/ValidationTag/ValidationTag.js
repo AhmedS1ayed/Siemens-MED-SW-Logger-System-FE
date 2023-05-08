@@ -10,8 +10,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
 import "./ValidationTag.css";
-import { DialogTitle } from "@mui/material";
-import { flattenObject, getFilteredData } from "../../Utils/utilities";
 
 let filteredData = null;
 export default function ValidationTag() {

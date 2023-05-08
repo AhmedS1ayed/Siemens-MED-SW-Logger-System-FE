@@ -102,9 +102,8 @@ export const flattenObject = (obj) => {
 };
 
 export const getFilteredData = (data, data_columns) => {
-  let filteredData = [];
   if (typeof data !== "undefined" && data !== null && data.length > 0) {
-    filteredData = data.map((item) => {
+    data.map((item) => {
       const filteredItem = {};
       Object.keys(item).forEach((key) => {
         if (
