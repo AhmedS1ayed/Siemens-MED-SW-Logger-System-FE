@@ -10,7 +10,7 @@ import { getColumnName, getKeys } from "../../Utils/utilities";
 import LinkIcon from "@mui/icons-material/Link";
 import "./Testsuit.css";
 import BasicFlow from "../../Components/ConnectivityMap/ConnectivityMap";
-import { flattenObject } from "../../Utils/utilities";
+import { flattenObject ,cleanData} from "../../Utils/utilities";
 import { InsertDriveFile } from "@material-ui/icons";
 
 let filteredData = null;
@@ -154,13 +154,13 @@ export default function Testsuit() {
           <StatisticCard
             title="Successful Test Suites"
             count={successfulTestSuites}
-            // color="#d4ead4"
+            color="#d4ead4"
             icon="check"
           />
           <StatisticCard
             title="Failed Test Suites"
             count={failedTestSuites}
-            // color="#f3d4d1"
+            color="#f3d4d1"
             icon="error"
           />
         </div>
@@ -178,13 +178,13 @@ export default function Testsuit() {
               open={openDialogs[idx]}
               maxWidth={isConnectivityMap ? undefined : 'md'}
               maxHeight={isConnectivityMap ? undefined : false}
-              style={{ borderRadius: '50px' }} 
+              style={{ borderRadius: '50px'}}
             >
               <div style={{padding: '26px'}} > 
               {Object.keys(nestedData).map((item) =>{
                 if(typeof nestedData[item] === "object" && !Array.isArray(nestedData))
                 return(
-                <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{item}</button>
+                <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{cleanData(item)}</button>
                 </div>)
                 else if( typeof nestedData[item] === "object" && Array.isArray(nestedData))
                 {
@@ -197,7 +197,7 @@ export default function Testsuit() {
                 if(typeof nestedData[key] != "object" && !isConnectivityMap){
                 return(
                 <Card className="card">
-                <div className="header">{key}</div>
+                <div className="header">{cleanData(key)}</div>
                 <div className="header_detail">
                   <div className="header_detail2" >{nestedData[key]}</div>
                 </div>

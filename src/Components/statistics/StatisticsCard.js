@@ -8,10 +8,10 @@ const StatisticCard = ({ color, title, count, icon }) => {
   let iconComponent;
   switch (icon) {
     case 'check':
-      iconComponent = <CheckIcon className="statistics-card-icon" />;
+      iconComponent = <CheckIcon style={{color:'green'}} className="statistics-card-icon" />;
       break;
     case 'error':
-      iconComponent = <ErrorIcon className="statistics-card-icon" />;
+      iconComponent = <ErrorIcon style={{color:'red'}} className="statistics-card-icon" />;
       break;
     case 'equalizer':
       iconComponent = <EqualizerIcon className="statistics-card-icon" />;

@@ -119,3 +119,11 @@ export const getFilteredData = (data, data_columns) => {
     });
   }
 };
+
+export const cleanData = (str) => {
+  str = str.slice().replaceAll('_' , ' ');
+  str = str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
+    return word.toUpperCase();
+  }).replace(/\s+/g, ' ');
+  return str;
+}
