@@ -124,13 +124,13 @@ export default function Testcase() {
         <StatisticCard
           title="Successful Test Suites"
           count={successfulTestSuites}
-          // color="#d4ead4"
+          color="#d4ead4"
           icon="check"
         />
         <StatisticCard
           title="Failed Test Suites"
           count={failedTestSuites}
-          // color="#f3d4d1"
+          color="#f3d4d1"
           icon="error"
         />
       </div>
