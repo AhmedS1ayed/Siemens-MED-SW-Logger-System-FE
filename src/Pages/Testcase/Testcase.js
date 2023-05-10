@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 // import data from "../../Data/Mock_Test_Case.json";
-import { getColumnName, getKeys , isNumber } from "../../Utils/utilities";
+import { getColumnName, getKeys , isNumber , cleanData } from "../../Utils/utilities";
 import { Dialog,Container , Card } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
@@ -151,7 +151,7 @@ export default function Testcase() {
               {Object.keys(nestedData).map((item) =>{
                 if(typeof nestedData[item] === "object" && !Array.isArray(nestedData))
                 return(
-                <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{item}</button>
+                <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{cleanData(item)}</button>
                 </div>)
                 else if( typeof nestedData[item] === "object" && Array.isArray(nestedData))
                 {
@@ -169,7 +169,7 @@ export default function Testcase() {
                 if(typeof nestedData[key] != "object"){
                 return(
                 <Card className="card">
-                <div className="header">{key}</div>
+                <div className="header">{cleanData(key)}</div>
                 <div className="header_detail">
                   <div className="header_detail2" >{nestedData[key]}</div>
                 </div>

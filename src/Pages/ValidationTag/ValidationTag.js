@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 // import data from "../../Data/log.json";
-import { getColumnName } from "../../Utils/utilities";
+import { getColumnName,cleanData } from "../../Utils/utilities";
 import { Container, Dialog, Divider, Grid } from "@mui/material";
 import ExpandableRowTable from "../../Components/NewTable/NewTable";
 import { Box } from "@mui/material";
@@ -181,7 +181,7 @@ export default function ValidationTag() {
                                       <TreeItem
                                         nodeId={valid_data}
                                         label={
-                                          valid_data +
+                                          cleanData(valid_data) +
                                           ": " +
                                           valid_point[valid_key][valid_data]
                                         }
