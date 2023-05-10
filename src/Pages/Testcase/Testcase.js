@@ -34,7 +34,7 @@ export default function Testcase() {
   useEffect(() => {
     fetch(`http://localhost:8080/testCases/?testSuite[id]=${testsuitId}`)
     .then(response => response.json())
-    .then(data => {if(data) setData(data);})
+    .then(data => {if(data) setData(data); console.log(data);})
     
       .catch(error => console.error(error));
   }, []);
@@ -111,7 +111,7 @@ export default function Testcase() {
     },
   });
 
-
+  if(typeof nestedData === "object" && !Array.isArray(nestedData)){
   return (
     <Container key={Math.random()} maxWidth="x">
       <div className="statistics-container">
@@ -183,4 +183,5 @@ export default function Testcase() {
       </Dialog>
     </Container>
   );
+              }
 }
