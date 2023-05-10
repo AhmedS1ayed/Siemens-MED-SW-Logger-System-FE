@@ -178,7 +178,7 @@ export default function Testsuit() {
               open={openDialogs[idx]}
               maxWidth={isConnectivityMap ? undefined : 'md'}
               maxHeight={isConnectivityMap ? undefined : false}
-              style={{ borderRadius: '50px' }} 
+              style={{ borderRadius: '50px'}}
             >
               <div style={{padding: '26px'}} > 
               {Object.keys(nestedData).map((item) =>{
