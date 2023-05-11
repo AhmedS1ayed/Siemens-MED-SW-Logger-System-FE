@@ -23,18 +23,20 @@
 
 ._header {
   text-align: center;
+  
 }
 
 .card {
   display: inline-block;
+  overflow: hidden;
   margin: auto;
   margin-left: 27px;
   width: 300px;
   padding: 10px;
-  background-color: #fff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.233);
+  /* background-color: #ffff; */
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.233); */
   /* border-radius: 10px; */
-  overflow: hidden;
+ 
 }
 
 .header {
@@ -43,12 +45,15 @@
   padding: 10px;
   text-align: center;
   font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
 }
 
 .header_detail {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  border-radius: 20px;
 }
 
 .header_detail2 {

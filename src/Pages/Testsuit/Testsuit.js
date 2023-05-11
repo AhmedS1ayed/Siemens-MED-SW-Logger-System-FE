@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Card, Container, Dialog } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
@@ -11,15 +11,15 @@ import LinkIcon from "@mui/icons-material/Link";
 import "./Testsuit.css";
 import BasicFlow from "../../Components/ConnectivityMap/ConnectivityMap";
 import { flattenObject ,cleanData} from "../../Utils/utilities";
-import { InsertDriveFile } from "@material-ui/icons";
+import { DateRange, InsertDriveFile } from "@material-ui/icons";
 
 let filteredData = null;
-
 export default function Testsuit() {
   let flattenedData = [];
   let ConnectivityLinks = [];
   let ConnectivityNodes = [];
 
+  
   const [data, setData] = useState([
     {
       id: "none",
@@ -31,6 +31,7 @@ export default function Testsuit() {
       .then((response) => response.json())
       .then((data) => {
         if (data) setData(data);
+        console.log(data);
       })
       .catch((error) => console.error(error));
   }, []);
@@ -40,8 +41,9 @@ export default function Testsuit() {
   const [nestedData, setNestedData] = useState("None");
   const [isConnectivityMap, setConnectivityMap] = useState(false);
   const [stack, setStack] = useState(["none"]);
-  // const [ConnectivityNodes , setConnectivityNodes] = useState([]);
-  // const [ConnectivityLinks , setConnectivityLinks] = useState([]);
+  const [path,setPath] = useState(["Configurations"]);
+  const [expanded, setExpanded] = useState(false);
+  const [expandedIndex, setExpandedIndex] = useState(-1);
 
   const toggleDialog = (index) => {
     const newOpenDialogs = [...openDialogs];
@@ -65,13 +67,15 @@ export default function Testsuit() {
       setConnectivityMap(true);
     } else {
       setConnectivityMap(false);
-    }
+  }
+  setPath([...path, cleanData(item)]); // add user's selection to path
   };
   const handleBackward = () => {
     setNestedData(stack[stack.length - 1]);
     stack.pop();
     //Might need some fixes in the future
     setConnectivityMap(false);
+    setPath(path.slice(0, path.length - 1));
   };
 
   const totalTestSuites = data.length;
@@ -120,7 +124,7 @@ export default function Testsuit() {
     },
   });
 
-
+  console.log("path", path);
   if(data){
     flattenedData = data.map((item) => flattenObject(item));
   }
@@ -174,50 +178,61 @@ export default function Testsuit() {
         onRowClick={handleRowClicked}
       />
       <Dialog
-              onClose={() => toggleDialog(idx)}
+              onClose={() => {toggleDialog(idx); setNestedData("None"); setStack(["none"]); setPath(["Configurations"]);}}
               open={openDialogs[idx]}
-              maxWidth={isConnectivityMap ? undefined : 'md'}
-              maxHeight={isConnectivityMap ? undefined : false}
+              maxWidth={isConnectivityMap ? undefined : 'xl'}
+              // maxHeight={isConnectivityMap ? undefined : false}
               style={{ borderRadius: '50px'}}
             >
-              <div style={{padding: '26px'}} > 
-              {Object.keys(nestedData).map((item) =>{
-                if(typeof nestedData[item] === "object" && !Array.isArray(nestedData))
-                return(
-                <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{cleanData(item)}</button>
-                </div>)
-                else if( typeof nestedData[item] === "object" && Array.isArray(nestedData))
-                {
-                  return (<div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{nestedData[item]['id']}</button>
-                  </div>);
-                }              
-              })}
-              <div  className="display:inline;"  >
-              {Object.keys(nestedData).map((key,value) =>{
-                if(typeof nestedData[key] != "object" && !isConnectivityMap){
-                return(
-                <Card className="card">
-                <div className="header">{cleanData(key)}</div>
-                <div className="header_detail">
-                  <div className="header_detail2" >{nestedData[key]}</div>
-                </div>
+              {/* // display path */}
+              <div style={{ padding: "10px", fontWeight: "bold", fontSize: "16px" }}>
+                {/* what to put instead of the id ? */}
+                {data[idx]['id']}: {path.join(" > ")}
+              </div>
+              <div style={{ display:"flex"}} > 
+                  {Object.keys(nestedData).map((item) =>{
+                    if(typeof nestedData[item] === "object" && !Array.isArray(nestedData))
+                    return(
+                    <div className="display: inline" style={{margin:"10px"}}><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{cleanData(item)}</button>
+                    </div>)
+                    else if( typeof nestedData[item] === "object" && Array.isArray(nestedData))
+                    {
+                      return (<div className="display: inline" style={{margin:"10px"}}><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{nestedData[item]['id']}</button>
+                      </div>);
+                    }              
+                  })}
+                  <div  className="display:flex;"  >
+                    {Object.keys(nestedData).map((key,value) =>{
+                      if(typeof nestedData[key] != "object" && !isConnectivityMap){
+                      return(
+                        // TODO: the card should expand and show the value of the key
+                      <Card className="card" style={{border_raduis:"10px"}}  onClick={() => setExpandedIndex(expandedIndex === value ? -1 : value)} >
+                         <div className="header">{cleanData(key)}</div>
+                         <div className={`header_detail ${expandedIndex === value ? "expanded" : ""}`}>
+                              <div className="header_detail2">{nestedData[key]}</div>
+                            </div>
+                      </Card> 
+                      )}
+                      else if (typeof nestedData[key] != "object" && isConnectivityMap)
+                      {
+                      
+                        // ? show all nodes or just the ones that are connected ? 
+                        // and check if it is not already in the connectivity nodes
+                        if(key != nestedData[key] && ConnectivityNodes.filter((item) => item.id === key).length === 0 ){
+                          console.log(">>>>>> key != nestedData[key] ",key,nestedData[key]);
+                        ConnectivityNodes.push({id: key , position: { x: 20+60 * ConnectivityNodes.length  , y:50+ 100 * ConnectivityNodes.length   },data: {label: key } });
+                        ConnectivityLinks.push({id:'e_'+key,source: key, target: nestedData[key],  type: 'start-end' ,animated: true, });
+                        }
+                  
+                      }
+                      })}
+                    </div>
                 
-                </Card> 
-                )}
-                else if (typeof nestedData[key] != "object" && isConnectivityMap)
-                {
-                  // let random = Math.floor(Math.random() * 100);
-                    
-                  ConnectivityNodes.push({id: key , position: { x: 150 + 70 * key, y: 20 + 100 * key   },data: {label: key } });
-                  if(key != nestedData[key])
-                  ConnectivityLinks.push({id:'e_'+key,source: key, target: nestedData[key],  type: 'start-end' ,animated: true, });
-                }
-                })}
-                </div>
-               
-                {isConnectivityMap ? <BasicFlow nodes={ConnectivityNodes} links={ConnectivityLinks} /> : <></>}
-                {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward}> ← </button>) : <></>}
+                  {isConnectivityMap ? <BasicFlow nodes={ConnectivityNodes} links={ConnectivityLinks} /> : <></>}
                 </div>  
+                <div style={{padding:"10px"}}  >
+                {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward} style={{margin:'10'}}> ← </button>) : <></>}
+                </div>
       </Dialog>
       <br />
     </Container>

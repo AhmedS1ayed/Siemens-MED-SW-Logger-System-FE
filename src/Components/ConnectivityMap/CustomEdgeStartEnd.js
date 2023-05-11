@@ -29,15 +29,45 @@ const CustomEdge = ({
   sourcePosition,
   targetPosition,
   data,
+  type,
 }) => {
-  const [edgePath] = getBezierPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
+  let edgePath;
+
+  if (type === 'step') {
+    const xDiff = Math.abs(targetX - sourceX);
+    const yDiff = Math.abs(targetY - sourceY);
+    const xStep = xDiff / 2;
+    const yStep = yDiff / 2;
+
+    if (targetX > sourceX) {
+      edgePath = `M ${sourceX},${sourceY} H ${sourceX + xStep} V ${targetY - yStep} H ${targetX}`;
+    } else {
+      edgePath = `M ${sourceX},${sourceY} H ${sourceX - xStep} V ${targetY - yStep} H ${targetX}`;
+    }
+  }else if( type == 'smoothstep'){
+    const xDiff = Math.abs(targetX - sourceX);
+    const yDiff = Math.abs(targetY - sourceY);
+    const xStep = xDiff / 2;
+    const yStep = yDiff / 2;
+    const curveFactor = 0.5; // adjust this to control the curvature of the path
+  
+    if (targetX > sourceX) {
+      edgePath = `M ${sourceX},${sourceY} H ${sourceX + xStep} Q ${sourceX + xStep + xDiff * curveFactor},${sourceY} ${sourceX + xStep},${targetY - yStep} V ${targetY} H ${targetX}`;
+    } else {
+      edgePath = `M ${sourceX},${sourceY} H ${sourceX - xStep} Q ${sourceX - xStep - xDiff * curveFactor},${sourceY} ${sourceX - xStep},${targetY - yStep} V ${targetY} H ${targetX}`;
+    }
+  }
+   else {
+    [edgePath] = getBezierPath({
+      sourceX,
+      sourceY,
+      sourcePosition,
+      targetX,
+      targetY,
+      targetPosition,
+    });
+  }
+
 
   return (
     <>

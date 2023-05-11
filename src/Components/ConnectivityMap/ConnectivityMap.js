@@ -21,7 +21,7 @@ import CustomEdgeStartEnd from './CustomEdgeStartEnd';
     const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
   
     return (
-      <div style={{ width: '100%', height: '48vh' }}>
+      <div style={{ width: '100%', height: '40vh' }}>
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -29,8 +29,6 @@ import CustomEdgeStartEnd from './CustomEdgeStartEnd';
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           edgeTypes={edgeTypes}
-          noFooter= {true}
-          // fitView= {true}  
         >
         <Controls />
         <MiniMap />
