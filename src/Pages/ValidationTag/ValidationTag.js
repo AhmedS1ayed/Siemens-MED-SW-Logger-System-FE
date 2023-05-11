@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 // import data from "../../Data/log.json";
 import { getColumnName } from "../../Utils/utilities";
-import { Container, Dialog, Divider, Grid } from "@mui/material";
+import { CardContent, Container, Dialog, Divider, Grid } from "@mui/material";
 import ExpandableRowTable from "../../Components/NewTable/NewTable";
 import { Box } from "@mui/material";
 import TreeView from "@mui/lab/TreeView";
@@ -10,6 +10,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
 import "./ValidationTag.css";
+import {Card, CardHeader} from "@mui/material";
 
 
 let filteredData = null;
@@ -19,12 +20,11 @@ export default function ValidationTag() {
   const testsuitId = searchParams.get("testsuitId");
   const testcaseId = searchParams.get("testcaseId");
 
+  const defaultExpanded = ["levels"]
   const [selectedRow, setSelectedRow] = useState(-1);
   const [openDialogs, setOpenDialogs] = useState([]);
   useEffect(() => {
-    //fetch(`http://localhost:8080/validationTags/testSuites/${testsuitId}/testCases/${testcaseId}}`)
     fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=${testsuitId}&testCase.id=${testcaseId}`)
-     //fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=643f8524f71037820114afea&testCase.id=643f8524f71037820114afe9`)
       .then(response => response.json())
       .then(data => {
         if(data && data.length != 0)  
@@ -54,6 +54,10 @@ export default function ValidationTag() {
     }
   }, [data, selectedRow]);
 
+  // const handleToggle = (event, nodeIds) => {
+  //   setExpanded(nodeIds);
+  // };
+
   const toggleDialog = (index) => {
     const newOpenDialogs = [...openDialogs];
     newOpenDialogs[index] = !newOpenDialogs[index];
@@ -70,7 +74,8 @@ export default function ValidationTag() {
   const renderTree = (data) => {
     return (
       Object.keys(data).map((sub_data) => {
-        if(sub_data !== 'results'){
+        console.log("sub: ", sub_data)
+        if(sub_data !== 'results' && sub_data !== 'isSuccessful' && sub_data !== 'parent' && sub_data !== 'id'){
           if(typeof data[sub_data] === 'object'){
             return(
               <>
@@ -82,7 +87,7 @@ export default function ValidationTag() {
             )
           }else {
             return(
-              <TreeItem key={sub_data} nodeId={sub_data} label={sub_data + ": " + data[sub_data]}/>
+              <TreeItem className="tree_item" key={sub_data} nodeId={sub_data} label={<div className="tree_item_content"><div className="tree_item_key">{sub_data}</div><div className="tree_item_value">{data[sub_data]}</div></div>}/>
             )
           }
        }
@@ -169,17 +174,22 @@ export default function ValidationTag() {
             
             data[selectedRow]["validationPoints"].map((valid_point, idx) => {
               return (
-                <Grid item xs={12} sm={12} md={6} lg={6}>
-                  
-                  <Box className="validation_point scale-up-center">
+                <Grid item xs={12} sm={6} md={4} lg={4}>
+                  <Card className="validation_point scale-up-center">
+                    <CardHeader className={`valid_point_header_${valid_point['isSuccessful']}`} title={
+                      data[selectedRow]['metaData']['name'] + Object.keys(valid_point['levels']).map((level_key) => {
+                      return `-${level_key} ${valid_point['levels'][level_key]}`
+                    })} />
+                    <CardContent>
                     <TreeView
                       aria-label="file system navigator"
                       defaultCollapseIcon={<ExpandMoreIcon />}
                       defaultExpandIcon={<ChevronRightIcon />}
+                      defaultExpanded={defaultExpanded}
                       sx={{
                         height: 300,
                         flexGrow: 1,
-                        maxWidth: "97%",
+                        maxWidth: "95%",
                         overflowY: "auto",
                       }}
                     >
@@ -205,7 +215,49 @@ export default function ValidationTag() {
                         onRowClickEnabled={false}
                       />
                     </Dialog>
-                  </Box>
+                    </CardContent>
+                    
+                  </Card>
+                  {/* <Box className="validation_point scale-up-center">
+                    {console.log("valid: ", valid_point)}
+                    <h6 className={`valid_point_header_${valid_point['isSuccessful']}`}>{
+                      data[selectedRow]['metaData']['name'] + Object.keys(valid_point['levels']).map((level_key) => {
+                      return `-${level_key} ${valid_point['levels'][level_key]}`
+                    })}</h6>
+                    <TreeView
+                      aria-label="file system navigator"
+                      defaultCollapseIcon={<ExpandMoreIcon />}
+                      defaultExpandIcon={<ChevronRightIcon />}
+                      sx={{
+                        height: 300,
+                        flexGrow: 1,
+                        maxWidth: "95%",
+                        overflowY: "auto",
+                      }}
+                    >
+                      {renderTree(valid_point)}
+                    </TreeView>
+                    <button
+                      className="results_btn"
+                      onClick={() => toggleDialog(idx)}
+                    >
+                      Results
+                    </button>
+                    <Dialog
+                      onClose={() => toggleDialog(idx)}
+                      open={openDialogs[idx]}
+                    >
+                      {valid_point["results"].forEach((result) =>
+                        getColumnName(result, sad)
+                      )}
+                      <ExpandableRowTable
+                        Data={valid_point["results"]}
+                        regularColumns={sad}
+                        expandable={false}
+                        onRowClickEnabled={false}
+                      />
+                    </Dialog>
+                  </Box> */}
                 </Grid>
               );
             })}
