@@ -2,104 +2,38 @@ import React from "react";
 import { Container, Dialog } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
-import { Link } from "react-router-dom";
 import ExpandableRowTable from "../../Components/NewTable/NewTable.js";
-import { useEffect } from "react";
-import { useState } from "react";
-import { getColumnName, getKeys } from "../../Utils/utilities";
-import LinkIcon from "@mui/icons-material/Link";
 import "./Testsuit.css";
-import { flattenObject, cleanData } from "../../Utils/utilities";
 import { BackButton } from "../../Components/DialogContent/BackButton.js";
 import { DialogContent } from "../../Components/DialogContent/DialogContent.js";
 import { DialogPath } from "../../Components/DialogContent/DialogPath.js";
-import { useNestedData } from "../../CustomHooks/useNestedData.js";
-import { dataRepresentation } from "../../Utils/dataRepresentation";
+import TestSuiteHook from "../../Hook/test-suite-hook";
 
 export default function Testsuit() {
-  let ConnectivityLinks = [];
-  let ConnectivityNodes = [];
-
-  const [data, setData] = useState([
-    {
-      id: "none",
-    },
-  ]);
-  useEffect(() => {
-    fetch("http://localhost:8080/TestSuites/")
-      .then((response) => response.json())
-      .then((data) => {
-        if (data) {
-          setData(data);
-          setFilteredData(dataRepresentation(data));
-        }
-        console.log(data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
-
-  const {
-    openDialogs,
-    setOpenDialogs,
-    idx,
-    setClickedIdx,
-    nestedData,
+  const [
+    totalTestSuites,
+    successfulTestSuites,
+    failedTestSuites,
+    filteredData,
+    data_columns,
+    handleRowClicked,
+    toggleDialog,
     setNestedData,
-    isConnectivityMap,
-    setConnectivityMap,
-    stack,
     setStack,
-    path,
     setPath,
-    expanded,
-    setExpanded,
-    expandedIndex,
+    idx,
+    openDialogs,
+    isConnectivityMap,
+    path,
+    nestedData,
     setExpandedIndex,
-  } = useNestedData();
-
-  const toggleDialog = (index) => {
-    const newOpenDialogs = [...openDialogs];
-    newOpenDialogs[index] = !newOpenDialogs[index];
-    setOpenDialogs(newOpenDialogs);
-  };
-
-  const handleRowClicked = (index) => {
-    setClickedIdx(index);
-    setNestedData(data[index]["metaData"]["design_info"]);
-    setConnectivityMap(false);
-    setStack(["none"]);
-    toggleDialog(index);
-  };
-
-  const handleKeyClicked = (item) => {
-    setStack([...stack, nestedData]);
-    setNestedData(nestedData[item]);
-    const keys = getKeys(nestedData[item]);
-    if (item === "sa_connectivity_map" || item === "mpg_connectivity_map") {
-      setConnectivityMap(true);
-    } else {
-      setConnectivityMap(false);
-    }
-    setPath([...path, cleanData(item)]);
-  };
-  const handleBackward = () => {
-    setNestedData(stack[stack.length - 1]);
-    stack.pop();
-    setConnectivityMap(false);
-    setPath(path.slice(0, path.length - 1));
-  };
-
-  const totalTestSuites = data.length;
-  const successfulTestSuites = data.filter(
-    (item) => item.isSuccessful === true
-  ).length;
-  const failedTestSuites = data.filter(
-    (item) => item.isSuccessful === false
-  ).length;
-
-  const [{ filteredData, data_columns }, setFilteredData] = useState(
-    dataRepresentation(data)
-  );
+    handleKeyClicked,
+    expandedIndex,
+    ConnectivityLinks,
+    ConnectivityNodes,
+    stack,
+    handleBackward
+  ] = TestSuiteHook();
   return (
     <Container key={Math.random()} maxWidth="x">
       {/* <h1>statistics</h1> */}

@@ -58,6 +58,5 @@ export const dataRepresentation = (data,data_columns=[],filteredData=[],flattene
           return filteredItem;
         });
       }}
-      console.log('FD :',filteredData);
   return { filteredData, data_columns };
 };

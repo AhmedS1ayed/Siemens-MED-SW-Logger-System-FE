@@ -6,7 +6,6 @@ export const dataRepresentationTC = (
 ) => {
     if(data)
     data.forEach((row) => getColumnName(row, data_columns));
-    // console.log('data  : ', data);
     data_columns.push({
       name: "",
       label: "",
@@ -41,7 +40,5 @@ export const dataRepresentationTC = (
         },
       },
     });
-    // console.log('filtered  : ', data);
-    // console.log('columns  : ', dataColumns);
   return { filteredData : data, data_columns };
 };
