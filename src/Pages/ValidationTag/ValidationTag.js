@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-// import data from "../../Data/log.json";
 import { getColumnName } from "../../Utils/utilities";
 import { CardContent, Container, Dialog, Divider, Grid } from "@mui/material";
 import ExpandableRowTable from "../../Components/NewTable/NewTable";
@@ -19,10 +18,10 @@ export default function ValidationTag() {
   const searchParams = new URLSearchParams(location.search);
   const testsuitId = searchParams.get("testsuitId");
   const testcaseId = searchParams.get("testcaseId");
-
   const defaultExpanded = ["levels"]
   const [selectedRow, setSelectedRow] = useState(-1);
   const [openDialogs, setOpenDialogs] = useState([]);
+  
   useEffect(() => {
     fetch(`http://localhost:8080/validationTags/testCases?testSuite.id=${testsuitId}&testCase.id=${testcaseId}`)
       .then(response => response.json())
@@ -53,10 +52,6 @@ export default function ValidationTag() {
       setOpenDialogs(data[selectedRow]["validationPoints"].map(() => false));
     }
   }, [data, selectedRow]);
-
-  // const handleToggle = (event, nodeIds) => {
-  //   setExpanded(nodeIds);
-  // };
 
   const toggleDialog = (index) => {
     const newOpenDialogs = [...openDialogs];
@@ -187,7 +182,7 @@ export default function ValidationTag() {
                       defaultExpandIcon={<ChevronRightIcon />}
                       defaultExpanded={defaultExpanded}
                       sx={{
-                        height: 300,
+                        height: 400,
                         flexGrow: 1,
                         maxWidth: "95%",
                         overflowY: "auto",
