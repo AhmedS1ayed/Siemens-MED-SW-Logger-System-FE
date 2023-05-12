@@ -113,7 +113,7 @@ export default function Testcase() {
 
 
   return (
-    <Container key={Math.random()} maxWidth="x">
+    <Container key={Math.random()} maxWidth="lg">
       <div className="statistics-container">
         <StatisticCard
           title="Total Test Suites"

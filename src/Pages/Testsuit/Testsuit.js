@@ -142,7 +142,7 @@ export default function Testsuit() {
       });
     }
     return (
-      <Container key={Math.random()} maxWidth="x">
+      <Container key={Math.random()} maxWidth="xl">
         {/* <h1>statistics</h1> */}
         <div className="statistics-container">
           <StatisticCard
