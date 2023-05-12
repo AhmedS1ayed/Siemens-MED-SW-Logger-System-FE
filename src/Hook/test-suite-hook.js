@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { dataRepresentation } from "../Utils/dataRepresentation";
-import { cleanData, getKeys } from "../Utils/utilities";
+import { useEffect, useState } from "react";
+import { dataRepresentation } from "../Utils/dataRepresentationTS";
+import { cleanData } from "../Utils/utilities";
 import { useNestedData } from "./useNestedData";
 
 function TestSuiteHook() {
@@ -60,7 +60,6 @@ function TestSuiteHook() {
   const handleKeyClicked = (item) => {
     setStack([...stack, nestedData]);
     setNestedData(nestedData[item]);
-    const keys = getKeys(nestedData[item]);
     if (item === "sa_connectivity_map" || item === "mpg_connectivity_map") {
       setConnectivityMap(true);
     } else {
