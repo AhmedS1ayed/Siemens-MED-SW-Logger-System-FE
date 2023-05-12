@@ -10,8 +10,11 @@ import { getColumnName, getKeys } from "../../Utils/utilities";
 import LinkIcon from "@mui/icons-material/Link";
 import "./Testsuit.css";
 import BasicFlow from "../../Components/ConnectivityMap/ConnectivityMap";
-import { flattenObject ,cleanData} from "../../Utils/utilities";
+import { flattenObject, cleanData } from "../../Utils/utilities";
 import { DateRange, InsertDriveFile } from "@material-ui/icons";
+import { BackButton } from "../../Components/DialogContent/BackButton.js";
+import { DialogContent } from "../../Components/DialogContent/DialogContent.js";
+import { DialogPath } from "../../Components/DialogContent/DialogPath.js";
 
 let filteredData = null;
 export default function Testsuit() {
@@ -19,7 +22,6 @@ export default function Testsuit() {
   let ConnectivityLinks = [];
   let ConnectivityNodes = [];
 
-  
   const [data, setData] = useState([
     {
       id: "none",
@@ -41,7 +43,7 @@ export default function Testsuit() {
   const [nestedData, setNestedData] = useState("None");
   const [isConnectivityMap, setConnectivityMap] = useState(false);
   const [stack, setStack] = useState(["none"]);
-  const [path,setPath] = useState(["Configurations"]);
+  const [path, setPath] = useState(["Configurations"]);
   const [expanded, setExpanded] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState(-1);
 
@@ -67,8 +69,8 @@ export default function Testsuit() {
       setConnectivityMap(true);
     } else {
       setConnectivityMap(false);
-  }
-  setPath([...path, cleanData(item)]); // add user's selection to path
+    }
+    setPath([...path, cleanData(item)]); // add user's selection to path
   };
   const handleBackward = () => {
     setNestedData(stack[stack.length - 1]);
@@ -125,7 +127,7 @@ export default function Testsuit() {
   });
 
   console.log("path", path);
-  if(data){
+  if (data) {
     flattenedData = data.map((item) => flattenObject(item));
   }
   if (flattenedData) {
@@ -169,74 +171,50 @@ export default function Testsuit() {
           />
         </div>
 
-      <ExpandableRowTable
-        title="Test Suites"
-        Data={filteredData}
-        regularColumns={data_columns}
-        expandable={false}
-        onRowClickEnabled = {true}
-        onRowClick={handleRowClicked}
-      />
-      <Dialog
-              onClose={() => {toggleDialog(idx); setNestedData("None"); setStack(["none"]); setPath(["Configurations"]);}}
-              open={openDialogs[idx]}
-              maxWidth={isConnectivityMap ? undefined : 'xl'}
-              // maxHeight={isConnectivityMap ? undefined : false}
-              style={{ borderRadius: '50px'}}
-            >
-              {/* // display path */}
-              <div style={{ padding: "10px", fontWeight: "bold", fontSize: "16px" }}>
-                {/* what to put instead of the id ? */}
-                {path.join(" > ")}
-              </div>
-              <div style={{ display:"flex" , alignItems:"center" ,justifyContent: "center"}} > 
-                
-                  {Object.keys(nestedData).map((item) =>{
-                    if(typeof nestedData[item] === "object" && !Array.isArray(nestedData))
-                    return(
-                    <div className="display: inline" style={{margin:"10px"}}><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{cleanData(item)}</button>
-                    </div>)
-                    else if( typeof nestedData[item] === "object" && Array.isArray(nestedData))
-                    {
-                      return (<div className="display: inline" style={{margin:"10px"}}><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{nestedData[item]['id']}</button>
-                      </div>);
-                    }              
-                  })}
-                  <div  className="display:flex;"  >
-                    {Object.keys(nestedData).map((key,value) =>{
-                      if(typeof nestedData[key] != "object" && !isConnectivityMap){
-                      return(
-                        // TODO: the card should expand and show the value of the key
-                      <Card className="card" style={{border_raduis:"10px"}}  onClick={() => setExpandedIndex(expandedIndex === value ? -1 : value)} >
-                         <div className="header">{cleanData(key)}</div>
-                         <div className={`header_detail ${expandedIndex === value ? "expanded" : ""}`}>
-                              <div className="header_detail2">{nestedData[key]}</div>
-                            </div>
-                      </Card> 
-                      )}
-                      else if (typeof nestedData[key] != "object" && isConnectivityMap)
-                      {
-                      
-                        // ? show all nodes or just the ones that are connected ? 
-                        // and check if it is not already in the connectivity nodes
-                        if(key != nestedData[key] && ConnectivityNodes.filter((item) => item.id === key).length === 0 ){
-                          console.log(">>>>>> key != nestedData[key] ",key,nestedData[key]);
-                        ConnectivityNodes.push({id: key , position: { x: 20+60 * ConnectivityNodes.length  , y:50+ 100 * ConnectivityNodes.length   },data: {label: key } });
-                        ConnectivityLinks.push({id:'e_'+key,source: key, target: nestedData[key],  type: 'start-end' ,animated: true, });
-                        }
-                  
-                      }
-                      })}
-                    </div>
-                
-                  {isConnectivityMap ? <BasicFlow nodes={ConnectivityNodes} links={ConnectivityLinks} /> : <></>}
-                </div>  
-                <div style={{paddingBottom:"10px"}}  >
-                {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward} style={{margin:'10'}}> ← </button>) : <></>}
-                </div>
-      </Dialog>
-      <br />
-    </Container>
-  );
+        <ExpandableRowTable
+          title="Test Suites"
+          Data={filteredData}
+          regularColumns={data_columns}
+          expandable={false}
+          onRowClickEnabled={true}
+          onRowClick={handleRowClicked}
+        />
+        <Dialog
+          onClose={() => {
+            toggleDialog(idx);
+            setNestedData("None");
+            setStack(["none"]);
+            setPath(["Configurations"]);
+          }}
+          open={openDialogs[idx]}
+          maxWidth={isConnectivityMap ? undefined : "xl"}
+          // maxHeight={isConnectivityMap ? undefined : false}
+          style={{ borderRadius: "50px" }}
+        >
+          <DialogPath
+            style={{ padding: "10px", fontWeight: "bold", fontSize: "16px" }}
+            path={path}
+          ></DialogPath>
+          <DialogContent
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            nestedData={nestedData}
+            setExpandedIndex={setExpandedIndex}
+            handleKeyClicked={handleKeyClicked}
+            expandedIndex={expandedIndex}
+            isConnectivityMap={isConnectivityMap}
+            ConnectivityLinks={ConnectivityLinks}
+            ConnectivityNodes={ConnectivityNodes}
+          ></DialogContent>
+          <BackButton
+            stack={stack}
+            handleBackward={handleBackward}
+          ></BackButton>
+        </Dialog>
+      </Container>
+    );
   }
 }

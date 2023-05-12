@@ -8,6 +8,9 @@ import "../../Components/statistics/StatisticsCard.css";
 import { useEffect, useState } from "react";
 import ExpandableRowTable from "../../Components/NewTable/NewTable";
 import LinkIcon from "@mui/icons-material/Link";
+import { BackButton } from "../../Components/DialogContent/BackButton.js";
+import { DialogContent } from "../../Components/DialogContent/DialogContent.js";
+import { DialogPath } from "../../Components/DialogContent/DialogPath.js";
 
 export default function Testcase() {
 
@@ -22,6 +25,8 @@ export default function Testcase() {
   const [idx , setClickedIdx] = useState(0);
   const [nestedData , setNestedData] = useState('None');
   const [stack , setStack] =useState(['none']);  
+  const [path, setPath] = useState(["Configurations"]);
+
 
   
 
@@ -65,11 +70,13 @@ export default function Testcase() {
   {
     setStack([...stack,nestedData]);
     setNestedData(nestedData[item]);
+    setPath([...path, cleanData(item)]); // add user's selection to path
   }
   const handleBackward = ()=>
   {
     setNestedData(stack[stack.length-1]);
     stack.pop();
+    setPath(path.slice(0, path.length - 1));
     //Might need some fixes in the future
   }
 
@@ -141,7 +148,7 @@ export default function Testcase() {
         onRowClickEnabled={true}
         onRowClick={handleRowClicked}
       />
-      <Dialog
+      {/* <Dialog
               onClose={() => toggleDialog(idx)}
               open={openDialogs[idx]}
               maxWidth='md'
@@ -180,7 +187,36 @@ export default function Testcase() {
                 </div>
                 {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward}> ← </button>) : <></>}
                 </div>
-      </Dialog>
+      </Dialog> */}
+      <Dialog
+          onClose={() => {
+            toggleDialog(idx);
+            setNestedData("None");
+            setStack(["none"]);
+            setPath(["Configurations"]);
+          }}
+          open={openDialogs[idx]}
+          maxWidth={"xl"}
+          style={{ borderRadius: "50px" }}
+        >
+          <DialogPath
+            style={{ padding: "10px", fontWeight: "bold", fontSize: "16px" }}
+            path={path}
+          ></DialogPath>
+          <DialogContent
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            nestedData={nestedData}
+            handleKeyClicked={handleKeyClicked}
+          ></DialogContent>
+          <BackButton
+            stack={stack}
+            handleBackward={handleBackward}
+          ></BackButton>
+        </Dialog>
     </Container>
   );
 }
