@@ -43,7 +43,7 @@ const pushColumn = (data_columns, inputKey) => {
     },
   };
   if (
-    !data_columns.find((column) => {
+    data_columns && !data_columns.find((column) => {
       return JSON.stringify(column) === JSON.stringify(newColumn);
     })
   ) {
@@ -59,7 +59,7 @@ export const getColumnName = (data, data_columns) => {
       const obj = data[key];
       Object.keys(obj).forEach((objKey) => {
         if (
-          !data_columns.find((column) => column.name === objKey) &&
+          data_columns && !data_columns.find((column) => column.name === objKey) &&
           objKey !== "metaData" &&
           objKey !== "design_info" &&
           typeof obj[objKey] !== "object"

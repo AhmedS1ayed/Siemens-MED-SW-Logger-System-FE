@@ -1,5 +1,5 @@
 import React from "react";
-import {  Container, Dialog } from "@mui/material";
+import { Container, Dialog } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
 import { Link } from "react-router-dom";
@@ -13,7 +13,7 @@ import { flattenObject, cleanData } from "../../Utils/utilities";
 import { BackButton } from "../../Components/DialogContent/BackButton.js";
 import { DialogContent } from "../../Components/DialogContent/DialogContent.js";
 import { DialogPath } from "../../Components/DialogContent/DialogPath.js";
-import  {useNestedData}  from "../../CustomHooks/useNestedData.js";
+import { useNestedData } from "../../CustomHooks/useNestedData.js";
 import { dataRepresentation } from "../../Utils/dataRepresentation";
 
 export default function Testsuit() {
@@ -29,8 +29,7 @@ export default function Testsuit() {
     fetch("http://localhost:8080/TestSuites/")
       .then((response) => response.json())
       .then((data) => {
-        if (data)
-        {
+        if (data) {
           setData(data);
           setFilteredData(dataRepresentation(data));
         }
@@ -39,7 +38,7 @@ export default function Testsuit() {
       .catch((error) => console.error(error));
   }, []);
 
-  const{
+  const {
     openDialogs,
     setOpenDialogs,
     idx,
@@ -52,10 +51,10 @@ export default function Testsuit() {
     setStack,
     path,
     setPath,
-    expanded, 
+    expanded,
     setExpanded,
     expandedIndex,
-    setExpandedIndex
+    setExpandedIndex,
   } = useNestedData();
 
   const toggleDialog = (index) => {
@@ -81,7 +80,7 @@ export default function Testsuit() {
     } else {
       setConnectivityMap(false);
     }
-    setPath([...path, cleanData(item)]); 
+    setPath([...path, cleanData(item)]);
   };
   const handleBackward = () => {
     setNestedData(stack[stack.length - 1]);
@@ -98,73 +97,72 @@ export default function Testsuit() {
     (item) => item.isSuccessful === false
   ).length;
 
-  const [{filteredData,data_columns},setFilteredData] = useState(dataRepresentation(data));
-    return (
-      <Container key={Math.random()} maxWidth="x">
-        {/* <h1>statistics</h1> */}
-        <div className="statistics-container">
-          <StatisticCard
-            title="Total Test Suites"
-            count={totalTestSuites}
-            // color="#ffffff"
-            icon="equalizer"
-          />
-          <StatisticCard
-            title="Successful Test Suites"
-            count={successfulTestSuites}
-            color="#d4ead4"
-            icon="check"
-          />
-          <StatisticCard
-            title="Failed Test Suites"
-            count={failedTestSuites}
-            color="#f3d4d1"
-            icon="error"
-          />
-        </div>
-
-        <ExpandableRowTable
-          title="Test Suites"
-          Data={filteredData}
-          regularColumns={data_columns}
-          expandable={false}
-          onRowClickEnabled={true}
-          onRowClick={handleRowClicked}
+  const [{ filteredData, data_columns }, setFilteredData] = useState(
+    dataRepresentation(data)
+  );
+  return (
+    <Container key={Math.random()} maxWidth="x">
+      {/* <h1>statistics</h1> */}
+      <div className="statistics-container">
+        <StatisticCard
+          title="Total Test Suites"
+          count={totalTestSuites}
+          // color="#ffffff"
+          icon="equalizer"
         />
-        <Dialog
-          onClose={() => {
-            toggleDialog(idx);
-            setNestedData("None");
-            setStack(["none"]);
-            setPath(["Configurations"]);
+        <StatisticCard
+          title="Successful Test Suites"
+          count={successfulTestSuites}
+          color="#d4ead4"
+          icon="check"
+        />
+        <StatisticCard
+          title="Failed Test Suites"
+          count={failedTestSuites}
+          color="#f3d4d1"
+          icon="error"
+        />
+      </div>
+
+      <ExpandableRowTable
+        title="Test Suites"
+        Data={filteredData}
+        regularColumns={data_columns}
+        expandable={false}
+        onRowClickEnabled={true}
+        onRowClick={handleRowClicked}
+      />
+      <Dialog
+        onClose={() => {
+          toggleDialog(idx);
+          setNestedData("None");
+          setStack(["none"]);
+          setPath(["Configurations"]);
+        }}
+        open={openDialogs[idx]}
+        maxWidth={isConnectivityMap ? undefined : "xl"}
+        style={{ borderRadius: "50px" }}
+      >
+        <DialogPath
+          style={{ padding: "10px", fontWeight: "bold", fontSize: "16px" }}
+          path={path}
+        ></DialogPath>
+        <DialogContent
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
-          open={openDialogs[idx]}
-          maxWidth={isConnectivityMap ? undefined : "xl"}
-          style={{ borderRadius: "50px" }}
-        >
-          <DialogPath
-            style={{ padding: "10px", fontWeight: "bold", fontSize: "16px" }}
-            path={path}
-          ></DialogPath>
-          <DialogContent
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            nestedData={nestedData}
-            setExpandedIndex={setExpandedIndex}
-            handleKeyClicked={handleKeyClicked}
-            expandedIndex={expandedIndex}
-            isConnectivityMap={isConnectivityMap}
-            ConnectivityLinks={ConnectivityLinks}
-            ConnectivityNodes={ConnectivityNodes}
-          ></DialogContent>
-          <BackButton
-            stack={stack}
-            handleBackward={handleBackward}
-          ></BackButton>
-        </Dialog>
-      </Container>
-    );
-  }
+          nestedData={nestedData}
+          setExpandedIndex={setExpandedIndex}
+          handleKeyClicked={handleKeyClicked}
+          expandedIndex={expandedIndex}
+          isConnectivityMap={isConnectivityMap}
+          ConnectivityLinks={ConnectivityLinks}
+          ConnectivityNodes={ConnectivityNodes}
+        ></DialogContent>
+        <BackButton stack={stack} handleBackward={handleBackward}></BackButton>
+      </Dialog>
+    </Container>
+  );
+}

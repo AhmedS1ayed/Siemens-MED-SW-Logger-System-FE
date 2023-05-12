@@ -1,9 +1,14 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 // import data from "../../Data/Mock_Test_Case.json";
-import { getColumnName, getKeys , isNumber , cleanData } from "../../Utils/utilities";
-import { dataRepresentation } from "../../Utils/dataRepresentation";
-import { Dialog,Container , Card } from "@mui/material";
+import {
+  getColumnName,
+  getKeys,
+  isNumber,
+  cleanData,
+} from "../../Utils/utilities";
+import { dataRepresentationTC } from "../../Utils/dataRepresentationTC";
+import { Dialog, Container, Card } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
 import { useEffect, useState } from "react";
@@ -15,15 +20,16 @@ import { DialogPath } from "../../Components/DialogContent/DialogPath.js";
 import { useNestedData } from "../../CustomHooks/useNestedData";
 
 export default function Testcase() {
+  const [data, setData] = useState([
+    {
+      id: "none",
+    },
+  ]);
+  const [{ filteredData, data_columns }, setFilteredData] = useState(
+    dataRepresentationTC(data, "sdas155sad")
+  );
 
-  const [data, setData] = useState(
-    [
-      {
-        id: "none",
-      },
-    ]);
-
-  const{
+  const {
     openDialogs,
     setOpenDialogs,
     idx,
@@ -36,13 +42,11 @@ export default function Testcase() {
     setStack,
     path,
     setPath,
-    expanded, 
+    expanded,
     setExpanded,
     expandedIndex,
-    setExpandedIndex
+    setExpandedIndex,
   } = useNestedData();
-  
-
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -51,14 +55,16 @@ export default function Testcase() {
   const testcaseId = searchParams.get("testcaseId");
   useEffect(() => {
     fetch(`http://localhost:8080/testCases/?testSuite[id]=${testsuitId}`)
-    .then(response => response.json())
-    .then(data => {if(data)
-       {
-        setData(data);
-        setFilteredData(dataRepresentation(data));
-      }})
-    
-      .catch(error => console.error(error));
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) {
+          setData(data);
+          setFilteredData(dataRepresentationTC(data, testsuitId));
+          console.log('filtered Data 1 : ',data);
+        }
+      })
+
+      .catch((error) => console.error(error));
   }, []);
 
   const totalTestSuites = data.length;
@@ -75,29 +81,23 @@ export default function Testcase() {
     setOpenDialogs(newOpenDialogs);
   };
 
-  const handleRowClicked = (index) => 
-  {
-    setStack([...stack,nestedData]);
+  const handleRowClicked = (index) => {
+    setStack([...stack, nestedData]);
     setClickedIdx(index);
-    setNestedData(data[index]['metaData']);
-    setStack(['none']);
+    setNestedData(data[index]["metaData"]);
+    setStack(["none"]);
     toggleDialog(index);
-  }
-  const handleKeyClicked = (item) => 
-  {
-    setStack([...stack,nestedData]);
+  };
+  const handleKeyClicked = (item) => {
+    setStack([...stack, nestedData]);
     setNestedData(nestedData[item]);
     setPath([...path, cleanData(item)]); // add user's selection to path
-  }
-  const handleBackward = ()=>
-  {
-    setNestedData(stack[stack.length-1]);
+  };
+  const handleBackward = () => {
+    setNestedData(stack[stack.length - 1]);
     stack.pop();
     setPath(path.slice(0, path.length - 1));
-    //Might need some fixes in the future
-  }
-  
-  const [{filteredData,data_columns},setFilteredData] = useState(dataRepresentation(data));
+  };
   return (
     <Container key={Math.random()} maxWidth="x">
       <div className="statistics-container">
@@ -122,40 +122,37 @@ export default function Testcase() {
       </div>
       <ExpandableRowTable
         title="Test Cases"
-        Data={data}
+        Data={filteredData}
         regularColumns={data_columns}
         onRowClickEnabled={true}
         onRowClick={handleRowClicked}
       />
       <Dialog
-          onClose={() => {
-            toggleDialog(idx);
-            setNestedData("None");
-            setStack(["none"]);
-            setPath(["Configurations"]);
+        onClose={() => {
+          toggleDialog(idx);
+          setNestedData("None");
+          setStack(["none"]);
+          setPath(["Configurations"]);
+        }}
+        open={openDialogs[idx]}
+        maxWidth={"xl"}
+        style={{ borderRadius: "50px" }}
+      >
+        <DialogPath
+          style={{ padding: "10px", fontWeight: "bold", fontSize: "16px" }}
+          path={path}
+        ></DialogPath>
+        <DialogContent
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
-          open={openDialogs[idx]}
-          maxWidth={"xl"}
-          style={{ borderRadius: "50px" }}
-        >
-          <DialogPath
-            style={{ padding: "10px", fontWeight: "bold", fontSize: "16px" }}
-            path={path}
-          ></DialogPath>
-          <DialogContent
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            nestedData={nestedData}
-            handleKeyClicked={handleKeyClicked}
-          ></DialogContent>
-          <BackButton
-            stack={stack}
-            handleBackward={handleBackward}
-          ></BackButton>
-        </Dialog>
+          nestedData={nestedData}
+          handleKeyClicked={handleKeyClicked}
+        ></DialogContent>
+        <BackButton stack={stack} handleBackward={handleBackward}></BackButton>
+      </Dialog>
     </Container>
   );
 }
