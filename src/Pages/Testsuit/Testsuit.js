@@ -187,9 +187,10 @@ export default function Testsuit() {
               {/* // display path */}
               <div style={{ padding: "10px", fontWeight: "bold", fontSize: "16px" }}>
                 {/* what to put instead of the id ? */}
-                {data[idx]['id']}: {path.join(" > ")}
+                {path.join(" > ")}
               </div>
-              <div style={{ display:"flex"}} > 
+              <div style={{ display:"flex" , alignItems:"center" ,justifyContent: "center"}} > 
+                
                   {Object.keys(nestedData).map((item) =>{
                     if(typeof nestedData[item] === "object" && !Array.isArray(nestedData))
                     return(
@@ -230,7 +231,7 @@ export default function Testsuit() {
                 
                   {isConnectivityMap ? <BasicFlow nodes={ConnectivityNodes} links={ConnectivityLinks} /> : <></>}
                 </div>  
-                <div style={{padding:"10px"}}  >
+                <div style={{paddingBottom:"10px"}}  >
                 {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward} style={{margin:'10'}}> ← </button>) : <></>}
                 </div>
       </Dialog>
