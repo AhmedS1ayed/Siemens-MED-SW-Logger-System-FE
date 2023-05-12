@@ -4,19 +4,22 @@ import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
 import { Link } from "react-router-dom";
 import ExpandableRowTable from "../../Components/NewTable/NewTable.js";
-import "../../Components/DataGrid/DataGrid.css";
 import { useEffect } from "react";
 import { useState } from "react";
-import { getColumnName, getKeys, isNumber } from "../../Utils/utilities";
+import { getColumnName, getKeys } from "../../Utils/utilities";
 import LinkIcon from "@mui/icons-material/Link";
 import "./Testsuit.css";
 import BasicFlow from "../../Components/ConnectivityMap/ConnectivityMap";
 import { flattenObject } from "../../Utils/utilities";
+import { InsertDriveFile } from "@material-ui/icons";
 
 let filteredData = null;
 
 export default function Testsuit() {
-  // window.location.reload();
+  let flattenedData = [];
+  let ConnectivityLinks = [];
+  let ConnectivityNodes = [];
+
   const [data, setData] = useState([
     {
       id: "none",
@@ -28,25 +31,17 @@ export default function Testsuit() {
       .then((response) => response.json())
       .then((data) => {
         if (data) setData(data);
-        console.log("test suites data ", data);
-        //setflattenedData(data.map((item) => flattenObject(item)));
       })
       .catch((error) => console.error(error));
   }, []);
 
-  let [flattenedData, setflattenedData] = useState([
-    {
-      _id: "none",
-    },
-  ]);
   const [openDialogs, setOpenDialogs] = useState([]);
   const [idx, setClickedIdx] = useState(0);
   const [nestedData, setNestedData] = useState("None");
   const [isConnectivityMap, setConnectivityMap] = useState(false);
   const [stack, setStack] = useState(["none"]);
-
-  let ConnectivityLinks = [];
-  let ConnectivityNodes = [];
+  // const [ConnectivityNodes , setConnectivityNodes] = useState([]);
+  // const [ConnectivityLinks , setConnectivityLinks] = useState([]);
 
   const toggleDialog = (index) => {
     const newOpenDialogs = [...openDialogs];
@@ -73,12 +68,10 @@ export default function Testsuit() {
     }
   };
   const handleBackward = () => {
-    console.log("before", stack);
     setNestedData(stack[stack.length - 1]);
     stack.pop();
     //Might need some fixes in the future
     setConnectivityMap(false);
-    console.log("after", stack);
   };
 
   const totalTestSuites = data.length;
@@ -119,19 +112,18 @@ export default function Testsuit() {
         if (data) {
           testsuitId = data[tableMeta.rowIndex].id;
         }
-        console.log("testsuitId", testsuitId);
         return (
           <Link to={`/testcases?testsuitId=${testsuitId || ""}`}>
-            <LinkIcon />
+            <LinkIcon className="custom-link" style={{ color: "black" }} />
           </Link>
         );
       },
     },
   });
 
-  if (data) {
+
+  if(data){
     flattenedData = data.map((item) => flattenObject(item));
-    console.log("flattenedData", flattenedData);
   }
   if (flattenedData) {
     if (data_columns) {
@@ -157,121 +149,79 @@ export default function Testsuit() {
           <StatisticCard
             title="Total Test Suites"
             count={totalTestSuites}
-            color="#ffffff"
+            // color="#ffffff"
             icon="equalizer"
           />
           <StatisticCard
             title="Successful Test Suites"
             count={successfulTestSuites}
-            color="#fffff0"
+            // color="#d4ead4"
             icon="check"
           />
           <StatisticCard
             title="Failed Test Suites"
             count={failedTestSuites}
-            color="#ffffff"
+            // color="#f3d4d1"
             icon="error"
           />
         </div>
 
-        <ExpandableRowTable
-          title="Test Suites"
-          Data={filteredData}
-          regularColumns={data_columns}
-          expandable={false}
-          onRowClickEnabled={true}
-          onRowClick={handleRowClicked}
-        />
-        <Dialog onClose={() => toggleDialog(idx)} open={openDialogs[idx]}>
-          {Object.keys(nestedData).map((item) => {
-            console.log("item", item);
-            if (typeof nestedData[item] === "object" && !isNumber(item))
-              return (
-                <div className="display: inline">
-                  <button
-                    className="results_btn"
-                    key={item}
-                    label={item}
-                    onClick={() => {
-                      handleKeyClicked(item);
-                    }}
-                  >
-                    {item}
-                  </button>
-                </div>
-              );
-            else if (typeof nestedData[item] === "object" && isNumber(item)) {
-              return (
-                <div className="display: inline">
-                  <button
-                    className="results_btn"
-                    key={item}
-                    label={item}
-                    onClick={() => {
-                      handleKeyClicked(item);
-                    }}
-                  >
-                    {nestedData[item]["id"]}
-                  </button>
-                </div>
-              );
-            }
-          })}
-          <div className="display:inline">
-            {Object.keys(nestedData).map((key, value) => {
-              if (typeof nestedData[key] != "object" && !isConnectivityMap) {
-                return (
-                  <Card className="card">
-                    <div className="header">{key}</div>
-                    <div className="header_detail">
-                      <div className="header_detail2">{nestedData[key]}</div>
-                    </div>
-                  </Card>
-                );
-              } else if (
-                typeof nestedData[key] != "object" &&
-                isConnectivityMap
-              ) {
-                console.log("key ", key, "nestedData[key]", nestedData[key]);
-                ConnectivityNodes.push({
-                  id: key,
-                  position: { x: 0 + 70 * key, y: 0 + 100 * key },
-                  data: { label: key },
-                });
-                if (key != nestedData[key])
-                  ConnectivityLinks.push({
-                    id: "e_" + key,
-                    source: key,
-                    target: nestedData[key],
-                    arrowHeadType: "arrow",
-                    animated: true,
-                    label: "connectivity",
-                  });
-              }
-            })}
-          </div>
-
-          {isConnectivityMap ? (
-            <BasicFlow nodes={ConnectivityNodes} links={ConnectivityLinks} />
-          ) : (
-            <></>
-          )}
-          {stack.length > 1 ? (
-            <button
-              className="results_btn"
-              key="back"
-              label="back"
-              onClick={handleBackward}
+      <ExpandableRowTable
+        title="Test Suites"
+        Data={filteredData}
+        regularColumns={data_columns}
+        expandable={false}
+        onRowClickEnabled = {true}
+        onRowClick={handleRowClicked}
+      />
+      <Dialog
+              onClose={() => toggleDialog(idx)}
+              open={openDialogs[idx]}
+              maxWidth={isConnectivityMap ? undefined : 'md'}
+              maxHeight={isConnectivityMap ? undefined : false}
+              style={{ borderRadius: '50px' }} 
             >
-              {" "}
-              ←{" "}
-            </button>
-          ) : (
-            <></>
-          )}
-        </Dialog>
-        <br />
-      </Container>
-    );
+              <div style={{padding: '26px'}} > 
+              {Object.keys(nestedData).map((item) =>{
+                if(typeof nestedData[item] === "object" && !Array.isArray(nestedData))
+                return(
+                <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{item}</button>
+                </div>)
+                else if( typeof nestedData[item] === "object" && Array.isArray(nestedData))
+                {
+                  return (<div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{nestedData[item]['id']}</button>
+                  </div>);
+                }              
+              })}
+              <div  className="display:inline;"  >
+              {Object.keys(nestedData).map((key,value) =>{
+                if(typeof nestedData[key] != "object" && !isConnectivityMap){
+                return(
+                <Card className="card">
+                <div className="header">{key}</div>
+                <div className="header_detail">
+                  <div className="header_detail2" >{nestedData[key]}</div>
+                </div>
+                
+                </Card> 
+                )}
+                else if (typeof nestedData[key] != "object" && isConnectivityMap)
+                {
+                  // let random = Math.floor(Math.random() * 100);
+                    
+                  ConnectivityNodes.push({id: key , position: { x: 150 + 70 * key, y: 20 + 100 * key   },data: {label: key } });
+                  if(key != nestedData[key])
+                  ConnectivityLinks.push({id:'e_'+key,source: key, target: nestedData[key],  type: 'start-end' ,animated: true, });
+                }
+                })}
+                </div>
+               
+                {isConnectivityMap ? <BasicFlow nodes={ConnectivityNodes} links={ConnectivityLinks} /> : <></>}
+                {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward}> ← </button>) : <></>}
+                </div>  
+      </Dialog>
+      <br />
+    </Container>
+  );
   }
 }

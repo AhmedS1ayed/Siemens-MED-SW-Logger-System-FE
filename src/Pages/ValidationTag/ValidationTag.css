@@ -14,21 +14,22 @@
 
 .validation_point {
   position: relative;
-  padding: 20px;
   border-radius: 10px;
   background-color: rgb(255, 255, 255);
   margin-bottom: 30px;
   transition: all ease-in-out 0.3s;
+  
 }
 
 .validation_point:hover {
-  box-shadow: 0px 20px 20px 0px rgb(12 0 46 / 20%);
+  /* box-shadow: 0px 20px 20px 0px rgba(207, 207, 208, 0.2); */
+  transform: rotateY(90deg);
 }
 
 .validation_point .results_btn {
   margin: auto;
   padding: 13px 23px;
-  background-color: rgb(21, 101, 192);
+  background-color: rgb(0, 109, 142);
   border: none;
   outline: none;
   border-radius: 5px;
@@ -42,6 +43,19 @@
   background-color: rgb(15, 81, 157);
 }
 
+.valid_point_header_false{
+  background-color: rgb(185, 0, 0);
+}
+
+.valid_point_header_true{
+  background-color: rgb(47,124,22);
+}
+.valid_point_header_false, .valid_point_header_true{
+  min-height: 130px;
+  padding: 5px;
+  color: #fff;
+  text-align: center;
+}
 .divider {
   margin: 10px 0px !important;
 }
@@ -52,10 +66,35 @@
   width: 1000px !important;
 }
 
+.tree_item_content{
+  display: flex;
+  background-color: rgb(211, 211, 211);
+  margin-bottom: 10px;
+
+}
+
+.tree_item_key{
+  background-color: rgb(0, 109, 142) ;
+  color: #fff;
+  margin-right: 20px;
+  width: 100px;
+  text-align: center;
+  padding: 10px 5px;
+}
+
+.tree_item_value{
+  padding: 10px 0px;
+}
+
 .MuiTreeItem-label {
   color: black;
   font-size: 18px !important;
 }
+
+.tree_item:hover{
+  background-color: transparent !important;
+}
+
 
 .scale-up-center {
   -webkit-animation: scale-up-center 0.4s ease-in-out both;

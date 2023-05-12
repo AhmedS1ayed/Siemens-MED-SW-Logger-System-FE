@@ -1,7 +1,8 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getColumnName, getKeys } from "../../Utils/utilities";
-import { Dialog, Container, Card } from "@mui/material";
+// import data from "../../Data/Mock_Test_Case.json";
+import { getColumnName, getKeys , isNumber } from "../../Utils/utilities";
+import { Dialog,Container , Card } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
 import { useEffect, useState } from "react";
@@ -16,9 +17,12 @@ export default function Testcase() {
   ]);
 
   const [openDialogs, setOpenDialogs] = useState([]);
-  const [idx, setClickedIdx] = useState(0);
-  const [nestedData, setNestedData] = useState("None");
-  const [dataKeys, setDataKeys] = useState(["None"]);
+  const [idx , setClickedIdx] = useState(0);
+  const [nestedData , setNestedData] = useState('None');
+  const [stack , setStack] =useState(['none']);  
+
+  
+
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -27,15 +31,11 @@ export default function Testcase() {
   const testcaseId = searchParams.get("testcaseId");
   useEffect(() => {
     fetch(`http://localhost:8080/testCases/?testSuite[id]=${testsuitId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data) setData(data);
-        console.log("test cases data ", data);
-      })
-
-      .catch((error) => console.error(error));
+    .then(response => response.json())
+    .then(data => {if(data) setData(data);})
+    
+      .catch(error => console.error(error));
   }, []);
-  const [stack, setStack] = useState(["none"]);
 
   const totalTestSuites = data.length;
   const successfulTestSuites = data.filter(
@@ -51,26 +51,24 @@ export default function Testcase() {
     setOpenDialogs(newOpenDialogs);
   };
 
-  const handleRowClicked = (index) => {
+  const handleRowClicked = (index) => 
+  {
+    setStack([...stack,nestedData]);
     setClickedIdx(index);
-    setNestedData(data[index]["metaData"]);
-    setDataKeys(getKeys(data[index]["metaData"]));
+    setNestedData(data[index]['metaData']);
+    setStack(['none']);
     toggleDialog(index);
   };
   const handleKeyClicked = (item) => {
     setStack([...stack, nestedData]);
     setNestedData(nestedData[item]);
-    const keys = getKeys(nestedData[item]);
-    setDataKeys(keys);
-  };
-
-  const handleBackward = () => {
-    console.log("before", stack);
-    setNestedData(stack[stack.length - 1]);
+  }
+  const handleBackward = ()=>
+  {
+    setNestedData(stack[stack.length-1]);
     stack.pop();
-
-    console.log("after", stack);
-  };
+    //Might need some fixes in the future
+  }
 
   let data_columns = [];
   data.forEach((row) => getColumnName(row, data_columns));
@@ -87,7 +85,7 @@ export default function Testcase() {
           <Link
             to={`/validtags?testsuitId=${testsuitId}&testcaseId=${testcaseId}`}
           >
-            <LinkIcon />
+            <LinkIcon className ="custom-link" style={{ color: 'black' }}/>
           </Link>
         );
       },
@@ -110,24 +108,24 @@ export default function Testcase() {
   });
 
   return (
-    <Container key={Math.random()} maxWidth="xl">
+    <Container key={Math.random()} maxWidth="lg">
       <div className="statistics-container">
         <StatisticCard
-          title="Total Test Cases"
+          title="Total Test Suites"
           count={totalTestSuites}
-          color="#ffffff"
+          // color="#ffffff"
           icon="equalizer"
         />
         <StatisticCard
-          title="Successful Test Cases"
+          title="Successful Test Suites"
           count={successfulTestSuites}
-          color="#fffff0"
+          // color="#d4ead4"
           icon="check"
         />
         <StatisticCard
-          title="Failed Test Cases"
+          title="Failed Test Suites"
           count={failedTestSuites}
-          color="#ffffff"
+          // color="#f3d4d1"
           icon="error"
         />
       </div>{" "}
@@ -138,49 +136,45 @@ export default function Testcase() {
         onRowClickEnabled={true}
         onRowClick={handleRowClicked}
       />
-      <Dialog onClose={() => toggleDialog(idx)} open={openDialogs[idx]}>
-        {dataKeys.map((item) => {
-          return (
-            <div className="display: inline">
-              <button
-                className="results_btn"
-                key={item}
-                label={item}
-                onClick={() => {
-                  handleKeyClicked(item);
-                }}
-              >
-                {item}
-              </button>
-            </div>
-          );
-        })}
-        <div className="display:inline">
-          {Object.keys(nestedData).map((key, value) => {
-            if (typeof nestedData[key] != "object")
-              return (
+      <Dialog
+              onClose={() => toggleDialog(idx)}
+              open={openDialogs[idx]}
+              maxWidth='md'
+              maxHeight={false}
+            >
+               <div style={{padding: '26px'}} > 
+              {Object.keys(nestedData).map((item) =>{
+                if(typeof nestedData[item] === "object" && !Array.isArray(nestedData))
+                return(
+                <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{item}</button>
+                </div>)
+                else if( typeof nestedData[item] === "object" && Array.isArray(nestedData))
+                {
+                  let itemN='Not Found';
+                  if(nestedData[item]["id"] != undefined) itemN = nestedData[item]["id"];
+                  if(nestedData[item]["master_id"] != undefined) itemN = nestedData[item]["master_id"];
+                  if(nestedData[item]["slave_id"] != undefined) itemN = nestedData[item]["slave_id"];
+                  if(nestedData[item]["Port Offset"] != undefined) itemN = nestedData[item]["Port Offset"];
+                  return (<div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{itemN}</button>
+                  </div>);
+                }         
+              })}
+              <div className="display:inline">
+              {Object.keys(nestedData).map((key,value) =>{
+                if(typeof nestedData[key] != "object"){
+                return(
                 <Card className="card">
-                  <div className="header">{key}</div>
-                  <div className="header_detail">
-                    <div className="header_detail2">{nestedData[key]}</div>
-                  </div>
-                </Card>
-              );
-          })}
-        </div>
-        {stack.length > 1 ? (
-          <button
-            className="results_btn"
-            key="back"
-            label="back"
-            onClick={handleBackward}
-          >
-            {" "}
-            ←{" "}
-          </button>
-        ) : (
-          <></>
-        )}
+                <div className="header">{key}</div>
+                <div className="header_detail">
+                  <div className="header_detail2" >{nestedData[key]}</div>
+                </div>
+                
+                </Card> 
+                )}
+                })}
+                </div>
+                {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward}> ← </button>) : <></>}
+                </div>
       </Dialog>
     </Container>
   );
