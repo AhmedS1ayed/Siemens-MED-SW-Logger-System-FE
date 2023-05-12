@@ -53,7 +53,6 @@ export const ExpandableRowTable = (props) => {
         </React.Fragment>
       );
     },
-    page: 2,
   };
 
   const columns = getColumnName(props.Data[0], props.regularColumns);

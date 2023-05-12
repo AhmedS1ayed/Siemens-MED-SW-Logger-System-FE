@@ -55,12 +55,14 @@ export const DialogContent = (props) => {
         {Object.keys(nestedData).map((key, value) => {
           if (typeof nestedData[key] != "object" && !isConnectivityMap) {
             return (
+              <div style={{display:"inline-flex" , paddingLeft:"5px"}}>
               <NestCard
                 keyV={key}
                 valueV={value}
                 expandedIndex={expandedIndex}
                 nestedData={nestedData}
               ></NestCard>
+              </div>
             );
           } else if (typeof nestedData[key] != "object" && isConnectivityMap) {
             if (

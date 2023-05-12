@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { Card, Container, Dialog } from "@mui/material";
+import React from "react";
+import {  Container, Dialog } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
 import { Link } from "react-router-dom";
@@ -9,12 +9,11 @@ import { useState } from "react";
 import { getColumnName, getKeys } from "../../Utils/utilities";
 import LinkIcon from "@mui/icons-material/Link";
 import "./Testsuit.css";
-import BasicFlow from "../../Components/ConnectivityMap/ConnectivityMap";
 import { flattenObject, cleanData } from "../../Utils/utilities";
-import { DateRange, InsertDriveFile } from "@material-ui/icons";
 import { BackButton } from "../../Components/DialogContent/BackButton.js";
 import { DialogContent } from "../../Components/DialogContent/DialogContent.js";
 import { DialogPath } from "../../Components/DialogContent/DialogPath.js";
+import  {useNestedData}  from "../../CustomHooks/useNestedData.js";
 
 let filteredData = null;
 export default function Testsuit() {
@@ -27,7 +26,6 @@ export default function Testsuit() {
       id: "none",
     },
   ]);
-
   useEffect(() => {
     fetch("http://localhost:8080/TestSuites/")
       .then((response) => response.json())
@@ -38,14 +36,24 @@ export default function Testsuit() {
       .catch((error) => console.error(error));
   }, []);
 
-  const [openDialogs, setOpenDialogs] = useState([]);
-  const [idx, setClickedIdx] = useState(0);
-  const [nestedData, setNestedData] = useState("None");
-  const [isConnectivityMap, setConnectivityMap] = useState(false);
-  const [stack, setStack] = useState(["none"]);
-  const [path, setPath] = useState(["Configurations"]);
-  const [expanded, setExpanded] = useState(false);
-  const [expandedIndex, setExpandedIndex] = useState(-1);
+  const{
+    openDialogs,
+    setOpenDialogs,
+    idx,
+    setClickedIdx,
+    nestedData,
+    setNestedData,
+    isConnectivityMap,
+    setConnectivityMap,
+    stack,
+    setStack,
+    path,
+    setPath,
+    expanded, 
+    setExpanded,
+    expandedIndex,
+    setExpandedIndex
+  } = useNestedData();
 
   const toggleDialog = (index) => {
     const newOpenDialogs = [...openDialogs];

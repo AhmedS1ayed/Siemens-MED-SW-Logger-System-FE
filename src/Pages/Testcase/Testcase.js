@@ -11,6 +11,7 @@ import LinkIcon from "@mui/icons-material/Link";
 import { BackButton } from "../../Components/DialogContent/BackButton.js";
 import { DialogContent } from "../../Components/DialogContent/DialogContent.js";
 import { DialogPath } from "../../Components/DialogContent/DialogPath.js";
+import { useNestedData } from "../../CustomHooks/useNestedData";
 
 export default function Testcase() {
 
@@ -21,13 +22,24 @@ export default function Testcase() {
       },
     ]);
 
-  const [openDialogs, setOpenDialogs] = useState([]);
-  const [idx , setClickedIdx] = useState(0);
-  const [nestedData , setNestedData] = useState('None');
-  const [stack , setStack] =useState(['none']);  
-  const [path, setPath] = useState(["Configurations"]);
-
-
+  const{
+    openDialogs,
+    setOpenDialogs,
+    idx,
+    setClickedIdx,
+    nestedData,
+    setNestedData,
+    isConnectivityMap,
+    setConnectivityMap,
+    stack,
+    setStack,
+    path,
+    setPath,
+    expanded, 
+    setExpanded,
+    expandedIndex,
+    setExpandedIndex
+  } = useNestedData();
   
 
 
