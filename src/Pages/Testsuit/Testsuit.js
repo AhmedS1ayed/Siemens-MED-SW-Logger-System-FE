@@ -14,10 +14,9 @@ import { BackButton } from "../../Components/DialogContent/BackButton.js";
 import { DialogContent } from "../../Components/DialogContent/DialogContent.js";
 import { DialogPath } from "../../Components/DialogContent/DialogPath.js";
 import  {useNestedData}  from "../../CustomHooks/useNestedData.js";
+import { dataRepresentation } from "../../Utils/dataRepresentation";
 
-let filteredData = null;
 export default function Testsuit() {
-  let flattenedData = [];
   let ConnectivityLinks = [];
   let ConnectivityNodes = [];
 
@@ -30,7 +29,11 @@ export default function Testsuit() {
     fetch("http://localhost:8080/TestSuites/")
       .then((response) => response.json())
       .then((data) => {
-        if (data) setData(data);
+        if (data)
+        {
+          setData(data);
+          setFilteredData(dataRepresentation(data));
+        }
         console.log(data);
       })
       .catch((error) => console.error(error));
@@ -95,63 +98,7 @@ export default function Testsuit() {
     (item) => item.isSuccessful === false
   ).length;
 
-  const data_columns = [];
-  data.forEach((row) => getColumnName(row, data_columns));
-
-  let count = 0;
-  data_columns.unshift({
-    name: "ID",
-    label: "ID",
-    options: {
-      filter: false,
-      sort: true,
-      customBodyRender: () => {
-        if (count === data.length) count = 0;
-        count++;
-        return count;
-      },
-    },
-  });
-
-  data_columns.push({
-    name: "",
-    label: "",
-    options: {
-      filter: false,
-      sort: false,
-      customBodyRender: (value, tableMeta, updateValue) => {
-        let testsuitId = null;
-        if (data) {
-          testsuitId = data[tableMeta.rowIndex].id;
-        }
-        return (
-          <Link to={`/testcases?testsuitId=${testsuitId || ""}`}>
-            <LinkIcon className="custom-link" style={{ color: "black" }} />
-          </Link>
-        );
-      },
-    },
-  });
-  if (data) {
-    flattenedData = data.map((item) => flattenObject(item));
-  }
-  if (flattenedData) {
-    if (data_columns) {
-      filteredData = flattenedData.map((item) => {
-        const filteredItem = {};
-        Object.keys(item).forEach((key) => {
-          if (
-            data_columns.some(
-              (column) =>
-                column.name.substring(column.name.lastIndexOf(".") + 1) === key
-            )
-          ) {
-            filteredItem[key] = item[key];
-          }
-        });
-        return filteredItem;
-      });
-    }
+  const [{filteredData,data_columns},setFilteredData] = useState(dataRepresentation(data));
     return (
       <Container key={Math.random()} maxWidth="x">
         {/* <h1>statistics</h1> */}
@@ -221,4 +168,3 @@ export default function Testsuit() {
       </Container>
     );
   }
-}

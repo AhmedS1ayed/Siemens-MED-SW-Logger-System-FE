@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 // import data from "../../Data/Mock_Test_Case.json";
 import { getColumnName, getKeys , isNumber , cleanData } from "../../Utils/utilities";
+import { dataRepresentation } from "../../Utils/dataRepresentation";
 import { Dialog,Container , Card } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
@@ -51,7 +52,11 @@ export default function Testcase() {
   useEffect(() => {
     fetch(`http://localhost:8080/testCases/?testSuite[id]=${testsuitId}`)
     .then(response => response.json())
-    .then(data => {if(data) setData(data);})
+    .then(data => {if(data)
+       {
+        setData(data);
+        setFilteredData(dataRepresentation(data));
+      }})
     
       .catch(error => console.error(error));
   }, []);
@@ -91,46 +96,8 @@ export default function Testcase() {
     setPath(path.slice(0, path.length - 1));
     //Might need some fixes in the future
   }
-
-  let data_columns = [];
-  data.forEach((row) => getColumnName(row, data_columns));
-
-  data_columns.push({
-    name: "",
-    label: "",
-    options: {
-      filter: false,
-      sort: false,
-      customBodyRender: (value, tableMeta, updateValue) => {
-        
-        const testcaseId = data[tableMeta.rowIndex].id;
-        return (
-          <Link
-            to={`/validtags?testsuitId=${testsuitId}&testcaseId=${testcaseId}`}
-          >
-            <LinkIcon className ="custom-link" style={{ color: 'black' }}/>
-          </Link>
-        );
-      },
-    },
-  });
-
-  let count = 0;
-  data_columns.unshift({
-    name: "ID",
-    label: "ID",
-    options: {
-      filter: false,
-      sort: true,
-      customBodyRender: () => {
-       if(count === data.length) count = 0; 
-        count++;
-        return (count);
-      },
-    },
-  });
-
-
+  
+  const [{filteredData,data_columns},setFilteredData] = useState(dataRepresentation(data));
   return (
     <Container key={Math.random()} maxWidth="x">
       <div className="statistics-container">
