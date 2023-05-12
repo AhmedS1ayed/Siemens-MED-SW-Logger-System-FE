@@ -7,12 +7,12 @@ import InsertChartIcon from "@mui/icons-material/InsertChart";
 
 export default function Navbar() {
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#fffff3", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)" }}>
-      <Container maxWidth="xl">
+    <AppBar position="static" sx={{ backgroundColor: "#0C0C0C", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)" }}>
+      <Container maxWidth="x">
         <Toolbar disableGutters>
           <InsertChartIcon
             sx={{ display: { xs: "none", md: "flex" }, mr: 1, color: "#333333", fontWeight: "bold", textShadow: "1px 1px #cccccc" }}
-            style={{ color: 'black' ,fontSize: 50}}
+            style={{ color: 'white' ,fontSize: 50}}
           />
           <Typography
             variant="h6"
@@ -22,15 +22,16 @@ export default function Navbar() {
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
+              fontSize:"18px",
               fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "#333333",
+              letterSpacing: ".05rem",
+              color: "white",
               textDecoration: "none",
-              textShadow: "1px 1px #cccccc"
+              textShadow: "0.5px 1px #cccccc"
             }}
           >
-            LOGGER
+            TEST RESULT VISUALIZER
           </Typography>
         </Toolbar>
       </Container>

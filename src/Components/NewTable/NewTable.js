@@ -1,28 +1,32 @@
 import React from "react";
 import MUIDataTable from "mui-datatables";
 import { getColumnName } from "../../Utils/utilities";
-import "./newTable.css";
-import MetaDataCard from "../MetaDataCard/MetaDataCard";
 
+import "./NewTable.css";
+import MetaDataCard from "../MetaDataCard/MetaDataCard";
 
 export const ExpandableRowTable = (props) => {
   const options = {
-    tableHeaderStyles: {
-      backgroundColor: '#de0707',
-      fontWeight: 'bold',
-      borderBottom: '1px solid #ddd',
-    },
     filter: true,
+    setCellProps: () => {
+      return {
+        className: "tableCell",
+      };
+    },
     selectableRows: false,
     filterType: "multiselect",
-    // responsive: "scroll",
     rowsPerPage: 10,
+    draggableColumns: {
+      enabled: true,
+    },
     setRowProps: (row, rowIndex) => {
       return {
         className: rowIndex % 2 === 0 ? "even-row" : "odd-row",
+        style: { cursor: "pointer" },
       };
     },
-    expandableRows: false,
+
+    expandableRows: props.expandable,
     onRowClick: (rowData, rowMeta) => {
       if (props.onRowClickEnabled) {
         props.onRowClick(rowMeta.dataIndex);
@@ -33,10 +37,10 @@ export const ExpandableRowTable = (props) => {
       const rowObject = props.Data[dataIndex];
       let keys = [];
       let values = [];
-      if (rowObject["metaData"]) {
-        Object.keys(rowObject["metaData"]).forEach((key) => {
+      if (rowObject["meta_data"]) {
+        Object.keys(rowObject["meta_data"]).forEach((key) => {
           keys.push(key);
-          values.push(rowObject["metaData"][key]);
+          values.push(rowObject["meta_data"][key]);
         });
       }
       return (
@@ -49,10 +53,9 @@ export const ExpandableRowTable = (props) => {
         </React.Fragment>
       );
     },
-    page: 2,
   };
 
-  const columns = getColumnName(props.Data[0], props.regularColumns);
+  const columns = props.Data && getColumnName(props.Data[0], props.regularColumns);
   return (
     <div className="table-container">
       <MUIDataTable

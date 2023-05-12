@@ -9,7 +9,7 @@ const Welcome = () =>{
       <h1>Welcome to our Application!
       </h1>
 
-      <p>This is a Logger System (Read Only) repository.</p>
+      <p>This is a Test Results Visualizer.</p>
       <Link style={{ color: 'green'}} className="custom-link-welcome" to="/testsuits">Click here to go to test suite page.
       <InsertChartIcon 
             sx={{ display: { xs: "none", md: "flex" }, mr: 1, color: "#333333", fontWeight: "bold", textShadow: "1px 1px #cccccc" }}

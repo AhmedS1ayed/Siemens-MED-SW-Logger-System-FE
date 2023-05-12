@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 // import data from "../../Data/log.json";
-import { getColumnName } from "../../Utils/utilities";
+import { getColumnName,cleanData } from "../../Utils/utilities";
 import { Container, Dialog, Divider, Grid } from "@mui/material";
 import ExpandableRowTable from "../../Components/NewTable/NewTable";
 import { Box } from "@mui/material";
@@ -10,8 +10,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
 import "./ValidationTag.css";
-import { DialogTitle } from "@mui/material";
 
+
+let filteredData = null;
 export default function ValidationTag() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -30,9 +31,16 @@ export default function ValidationTag() {
         {
           setData(data);
         }
+        console.log("validation taga: ",data);
       })
       .catch(error => console.error(error));
   }, []); 
+
+  let [flattenedData, setflattenedData] = useState([
+    {
+      _id: "none",
+    },
+  ]);
 
   const [data, setData] = useState([
     {
@@ -59,13 +67,72 @@ export default function ValidationTag() {
     rowIdx === selectedRow ? setSelectedRow(-1) : setSelectedRow(rowIdx);
   };
 
+  const renderTree = (data) => {
+    return (
+      Object.keys(data).map((sub_data) => {
+        if(sub_data !== 'results'){
+          if(typeof data[sub_data] === 'object'){
+            return(
+              <>
+                <TreeItem key={sub_data} nodeId={sub_data} label={sub_data}>
+                  {renderTree(data[sub_data])}
+                </TreeItem>
+                <Divider className="divider" />
+              </>
+            )
+          }else {
+            return(
+              <TreeItem key={sub_data} nodeId={sub_data} label={sub_data + ": " + data[sub_data]}/>
+            )
+          }
+       }
+      })
+    )
+  }
+
   let sad = [];
+  let meta = [];
+  let combinedData = [];
+
+  if(typeof data[0] !== 'undefined' && typeof data[0]['validationPoints'] !== 'undefined'){
+     for(let i = 0 ; i < data.length ; i++){
+      meta.push(data[i]['metaData']);
+     }  
+  }
+
+  if(meta){
+    if(data_columns){
+        filteredData = data.map((item) => {
+          const filteredItem = {};
+          Object.keys(item).forEach((key) => {
+            if (data_columns.some((column) => column.name.substring(column.name.lastIndexOf(".") + 1) === key)) {
+              filteredItem[key] = item[key];
+            }
+          });
+          return filteredItem;
+        });
+
+        let metaFiltered = meta.map((item) => {
+          const filteredItem = {};
+          Object.keys(item).forEach((key) => {
+            if (data_columns.some((column) => column.name.substring(column.name.lastIndexOf(".") + 1) === key)) {
+              filteredItem[key] = item[key];
+            }
+          });
+          return filteredItem;
+        });
+
+        combinedData = filteredData.map((item, index) => {
+          return { ...item, ...metaFiltered[index] };
+        });
+
+    }
+  console.log('filteredData',filteredData);
   return (
     <Container maxWidth="x">
-      
       <ExpandableRowTable
         title="Validation Tags"
-        Data={data}
+        Data={combinedData}
         regularColumns={data_columns}
         expandable={false}
         onRowClickEnabled={true}
@@ -87,9 +154,6 @@ export default function ValidationTag() {
             {data[selectedRow]["name"]}
             </h2>
           </div>
-            // <h2 className="validation_points_header">Validation Points </h2>
-            // <h2 className="validation_points_header">Validation Points of {data[selectedRow]["name"]}  </h2>
-            // <h3 validation_points_header> {data[selectedRow]["name"]}</h3>
           )}
         </Box>
 
@@ -102,9 +166,10 @@ export default function ValidationTag() {
           className="validation_points_container"
         >
           {selectedRow !== -1 &&
+            
             data[selectedRow]["validationPoints"].map((valid_point, idx) => {
               return (
-                <Grid item xs={12} sm={6} md={4} lg={3}>
+                <Grid item xs={12} sm={12} md={6} lg={6}>
                   
                   <Box className="validation_point scale-up-center">
                     <TreeView
@@ -114,35 +179,11 @@ export default function ValidationTag() {
                       sx={{
                         height: 300,
                         flexGrow: 1,
-                        maxWidth: 400,
+                        maxWidth: "97%",
                         overflowY: "auto",
                       }}
                     >
-                      {Object.keys(valid_point).map((valid_key) => {
-                        if (valid_key !== "results") {
-                          return (
-                            <>
-                              <TreeItem nodeId={valid_key} label={valid_key}>
-                                {Object.keys(valid_point[valid_key]).map(
-                                  (valid_data) => {
-                                    return (
-                                      <TreeItem
-                                        nodeId={valid_data}
-                                        label={
-                                          valid_data +
-                                          ": " +
-                                          valid_point[valid_key][valid_data]
-                                        }
-                                      />
-                                    );
-                                  }
-                                )}
-                              </TreeItem>
-                              <Divider className="divider" />
-                            </>
-                          );
-                        }
-                      })}
+                      {renderTree(valid_point)}
                     </TreeView>
                     <button
                       className="results_btn"
@@ -172,4 +213,5 @@ export default function ValidationTag() {
       </section>
     </Container>
   );
+          }
 }

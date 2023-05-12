@@ -2,12 +2,25 @@ import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
 
 const pushColumn = (data_columns, inputKey) => {
+  let modifiedKey = inputKey.split("_");
   let newColumn = {
     name: inputKey,
-    label: inputKey,
+    label: modifiedKey.join(" "),
     options: {
-      display: inputKey === "_id" || inputKey === "id" || inputKey === "__v" ? false : true,
-
+      display:
+        inputKey === "_id" || inputKey === "id" || inputKey === "__v"
+          ? "excluded"
+          : true,
+      setCellHeaderProps: () => {
+        return {
+          className: "tableHeadCell",
+        };
+      },
+      setCellProps: () => {
+        return {
+          className: "tableCell",
+        };
+      },
       filterOptions: {
         renderValue: (value) => {
           if (value === "" || value === null || value === undefined) {
@@ -30,7 +43,7 @@ const pushColumn = (data_columns, inputKey) => {
     },
   };
   if (
-    !data_columns.find((column) => {
+    data_columns && !data_columns.find((column) => {
       return JSON.stringify(column) === JSON.stringify(newColumn);
     })
   ) {
@@ -46,7 +59,7 @@ export const getColumnName = (data, data_columns) => {
       const obj = data[key];
       Object.keys(obj).forEach((objKey) => {
         if (
-          !data_columns.find((column) => column.name === objKey) &&
+          data_columns && !data_columns.find((column) => column.name === objKey) &&
           objKey !== "metaData" &&
           objKey !== "design_info" &&
           typeof obj[objKey] !== "object"
@@ -69,16 +82,13 @@ export const getKeys = (data) => {
   return dataKeys;
 };
 
-export const isNumber = (item) =>{
-  for(let i=0;i<item.length;i++)
-  {
-    if( (item[i] >'a' && item[i] <'z') || (item[i] >'A' && item[i] <'Z') ) 
+export const isNumber = (item) => {
+  for (let i = 0; i < item.length; i++) {
+    if ((item[i] > "a" && item[i] < "z") || (item[i] > "A" && item[i] < "Z"))
       return false;
   }
   return true;
-}
-
-
+};
 
 export const flattenObject = (obj) => {
   return Object.keys(obj).reduce((acc, key) => {
@@ -92,17 +102,29 @@ export const flattenObject = (obj) => {
 };
 
 export const getFilteredData = (data, data_columns) => {
-  let filteredData = [];
-  if( typeof data !== 'undefined' && data !== null && data.length > 0){
-    
-  filteredData = data.map((item) => {
-    const filteredItem = {};
-    Object.keys(item).forEach((key) => {
-      if (data_columns.some((column) => column.name.substring(column.name.lastIndexOf(".") + 1) === key)) {
-        filteredItem[key] = item[key];
-      }
+  if (typeof data !== "undefined" && data !== null && data.length > 0) {
+    data.map((item) => {
+      const filteredItem = {};
+      Object.keys(item).forEach((key) => {
+        if (
+          data_columns.some(
+            (column) =>
+              column.name.substring(column.name.lastIndexOf(".") + 1) === key
+          )
+        ) {
+          filteredItem[key] = item[key];
+        }
+      });
+      return filteredItem;
     });
-    return filteredItem;
-  });
-} 
+  }
 };
+
+export const cleanData = (str) => {
+  if(Number.isInteger(str)) return str; 
+  str = str.slice().replaceAll('_' , ' ');
+  str = str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
+    return word.toUpperCase();
+  }).replace(/\s+/g, ' ');
+  return str;
+}

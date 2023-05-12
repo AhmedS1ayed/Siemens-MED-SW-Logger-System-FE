@@ -1,7 +1,7 @@
 .validation_points_section {
   margin-top: 100px;
   font-size: 30px;
-  color: rgb(116, 116, 116);
+  color: rgb(255, 255, 255);
 }
 
 .validation_points_header {
@@ -22,7 +22,7 @@
 }
 
 .validation_point:hover {
-  box-shadow: 0px 20px 20px 0px rgba(68, 0, 255, 0.2);
+  box-shadow: 0px 20px 20px 0px rgba(207, 207, 208, 0.2);
 }
 
 .validation_point .results_btn {
