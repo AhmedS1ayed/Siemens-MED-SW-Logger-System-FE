@@ -70,12 +70,11 @@ export default function Testsuit() {
     } else {
       setConnectivityMap(false);
     }
-    setPath([...path, cleanData(item)]); // add user's selection to path
+    setPath([...path, cleanData(item)]); 
   };
   const handleBackward = () => {
     setNestedData(stack[stack.length - 1]);
     stack.pop();
-    //Might need some fixes in the future
     setConnectivityMap(false);
     setPath(path.slice(0, path.length - 1));
   };
@@ -93,8 +92,8 @@ export default function Testsuit() {
 
   let count = 0;
   data_columns.unshift({
-    name: "INDEX",
-    label: "INDEX",
+    name: "ID",
+    label: "ID",
     options: {
       filter: false,
       sort: true,
@@ -125,8 +124,6 @@ export default function Testsuit() {
       },
     },
   });
-
-  console.log("path", path);
   if (data) {
     flattenedData = data.map((item) => flattenObject(item));
   }
@@ -188,7 +185,6 @@ export default function Testsuit() {
           }}
           open={openDialogs[idx]}
           maxWidth={isConnectivityMap ? undefined : "xl"}
-          // maxHeight={isConnectivityMap ? undefined : false}
           style={{ borderRadius: "50px" }}
         >
           <DialogPath

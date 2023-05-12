@@ -105,8 +105,8 @@ export default function Testcase() {
 
   let count = 0;
   data_columns.unshift({
-    name: "INDEX",
-    label: "INDEX",
+    name: "ID",
+    label: "ID",
     options: {
       filter: false,
       sort: true,
@@ -148,46 +148,6 @@ export default function Testcase() {
         onRowClickEnabled={true}
         onRowClick={handleRowClicked}
       />
-      {/* <Dialog
-              onClose={() => toggleDialog(idx)}
-              open={openDialogs[idx]}
-              maxWidth='md'
-              maxHeight={false}
-            >
-               <div style={{padding: '26px'}} > 
-              {Object.keys(nestedData).map((item) =>{
-                if(typeof nestedData[item] === "object" && !Array.isArray(nestedData))
-                return(
-                <div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{cleanData(item)}</button>
-                </div>)
-                else if( typeof nestedData[item] === "object" && Array.isArray(nestedData))
-                {
-                  let itemN='Not Found';
-                  if(nestedData[item]["id"] != undefined) itemN = nestedData[item]["id"];
-                  if(nestedData[item]["master_id"] != undefined) itemN = nestedData[item]["master_id"];
-                  if(nestedData[item]["slave_id"] != undefined) itemN = nestedData[item]["slave_id"];
-                  if(nestedData[item]["Port Offset"] != undefined) itemN = nestedData[item]["Port Offset"];
-                  return (<div className="display: inline"><button className="results_btn" key={item} label={item} onClick = {() =>{handleKeyClicked(item)}}   >{itemN}</button>
-                  </div>);
-                }         
-              })}
-              <div className="display:inline">
-              {Object.keys(nestedData).map((key,value) =>{
-                if(typeof nestedData[key] != "object"){
-                return(
-                <Card className="card">
-                <div className="header">{cleanData(key)}</div>
-                <div className="header_detail">
-                  <div className="header_detail2" >{nestedData[key]}</div>
-                </div>
-                
-                </Card> 
-                )}
-                })}
-                </div>
-                {stack.length > 1 ? (<button className="results_btn" key='back' label='back' onClick = {handleBackward}> ← </button>) : <></>}
-                </div>
-      </Dialog> */}
       <Dialog
           onClose={() => {
             toggleDialog(idx);

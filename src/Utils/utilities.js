@@ -121,6 +121,7 @@ export const getFilteredData = (data, data_columns) => {
 };
 
 export const cleanData = (str) => {
+  if(Number.isInteger(str)) return str; 
   str = str.slice().replaceAll('_' , ' ');
   str = str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
     return word.toUpperCase();
