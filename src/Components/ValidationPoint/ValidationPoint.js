@@ -16,38 +16,38 @@ import { getColumnName } from "../../Utils/utilities";
 import ExpandableRowTable from "../NewTable/NewTable";
 import "./ValidationPoint.css";
 
-export default function ValidaitonPoint({ data, selectedRow }) {
+export default function ValidaitonPoint({ data, selected_row }) {
   // Lists to keep track of opened dialogs and fliped cards
-  const [openDialogs, setOpenDialogs] = useState([]);
-  const [flipedCards, setFlipedCards] = useState([]);
+  const [open_dialogs, set_open_dialogs] = useState([]);
+  const [fliped_cards, set_fliped_cards] = useState([]);
   // List contains name of keys that we want to expand by default inside tree
   const defaultExpanded = ["levels"];
-  let columns = [];
+  let data_columns_names = [];
 
+  // reset all dialogs to close
   useEffect(() => {
-    if (selectedRow !== -1) {
-      setOpenDialogs(data[selectedRow]["validationPoints"].map(() => false));
+    if (selected_row !== -1) {
+      set_open_dialogs(data[selected_row]["validationPoints"].map(() => false));
     }
-  }, [data, selectedRow]);
-
-  useEffect(() => {
-    if (selectedRow !== -1) {
-      setFlipedCards(
-        Array(data[selectedRow]["validationPoints"].length).fill(false)
-      );
-    }
-  }, [data, selectedRow]);
+  }, [data, selected_row]);
 
   const toggleDialog = (index) => {
-    const newOpenDialogs = [...openDialogs];
-    newOpenDialogs[index] = !newOpenDialogs[index];
-    setOpenDialogs(newOpenDialogs);
+    const new_open_dialogs = [...open_dialogs];
+    new_open_dialogs[index] = !new_open_dialogs[index];
+    set_open_dialogs(new_open_dialogs);
   };
 
+  const flip = (idx) => {
+    const new_fliped_cards = [...fliped_cards];
+    new_fliped_cards[idx] = !new_fliped_cards[idx];
+    set_fliped_cards(new_fliped_cards);
+  };
+
+  // search on data as we find objects create more levels of the treeItem else return one treeItem
   const renderTree = (data) => {
     return Object.keys(data).map((sub_data) => {
-      console.log("sub: ", sub_data);
       if (
+        // remove all these data from being rendered inside tree
         sub_data !== "results" &&
         sub_data !== "isSuccessful" &&
         sub_data !== "parent" &&
@@ -57,6 +57,7 @@ export default function ValidaitonPoint({ data, selectedRow }) {
         if (typeof data[sub_data] === "object") {
           return (
             <>
+              {/* go deep on each object untill they finish */}
               <TreeItem key={sub_data} nodeId={sub_data} label={sub_data}>
                 {renderTree(data[sub_data])}
               </TreeItem>
@@ -82,25 +83,16 @@ export default function ValidaitonPoint({ data, selectedRow }) {
     });
   };
 
-  const flip = (idx) => {
-    const newFlipedCards = [...flipedCards];
-    newFlipedCards[idx] = !newFlipedCards[idx];
-    setFlipedCards(newFlipedCards);
-  };
-
   return (
     <section className="validation_points_section">
       <Box>
-        {selectedRow === -1 ? (
+        {selected_row === -1 ? (
           <h2 className="validation_points_header">
             Click on a row to show validation points
           </h2>
         ) : (
           <div>
             <h2 className="validation_points_header">Validation Points</h2>
-            <h2 className="validation_points_header">
-              {data[selectedRow]["name"]}
-            </h2>
           </div>
         )}
       </Box>
@@ -113,17 +105,20 @@ export default function ValidaitonPoint({ data, selectedRow }) {
         justifyContent="space-evenly"
         className="validation_points_container"
       >
-        {selectedRow !== -1 &&
-          data[selectedRow]["validationPoints"].map((valid_point, idx) => {
+        {selected_row !== -1 &&
+          data[selected_row]["validationPoints"].map((valid_point, idx) => {
             return (
               <Grid item xs={12} sm={6} md={4} lg={4}>
-                <div className={`card ${flipedCards[idx] ? "flip" : ""}`}>
+                {/*if card is flipped give it flip class */}
+                <div className={`card ${fliped_cards[idx] ? "flip" : ""}`}>
                   <div className="face front">
                     <Card className="validation_point scale-up-center">
                       <CardHeader
+                        //give validation_point specific class represents its state pass or fail
                         className={`valid_point_header_${valid_point["isSuccessful"]}`}
+                        // create validation point name by mergin validation tag name and validation point levels
                         title={
-                          data[selectedRow]["metaData"]["name"] +
+                          data[selected_row]["metaData"]["name"] +
                           Object.keys(valid_point["levels"]).map(
                             (level_key) => {
                               return ` ${level_key} ${valid_point["levels"][level_key]} `;
@@ -163,14 +158,14 @@ export default function ValidaitonPoint({ data, selectedRow }) {
 
                         <Dialog
                           onClose={() => toggleDialog(idx)}
-                          open={openDialogs[idx]}
+                          open={open_dialogs[idx]}
                         >
                           {valid_point["results"].forEach((result) =>
-                            getColumnName(result, columns)
+                            getColumnName(result, data_columns_names)
                           )}
                           <ExpandableRowTable
                             Data={valid_point["results"]}
-                            regularColumns={columns}
+                            regularColumns={data_columns_names}
                             expandable={false}
                             onRowClickEnabled={false}
                           />
@@ -179,12 +174,14 @@ export default function ValidaitonPoint({ data, selectedRow }) {
                     </Card>
                   </div>
                   <div className="face back">
+                    {/*put meta_data content on the back card */}
                     <div className="metaData">
                       <Card>
                         <CardHeader
                           className={`valid_point_header_${valid_point["isSuccessful"]}`}
+                          // create validation point name by mergin validation tag name and validation point levels
                           title={
-                            data[selectedRow]["metaData"]["name"] +
+                            data[selected_row]["metaData"]["name"] +
                             Object.keys(valid_point["levels"]).map(
                               (level_key) => {
                                 return ` ${level_key} ${valid_point["levels"][level_key]} `;
@@ -201,6 +198,7 @@ export default function ValidaitonPoint({ data, selectedRow }) {
                             Meta Data
                           </Typography>
                           <div className="metaData_body">
+                            {/*render meta_data content */}
                             {Object.keys(valid_point["metaData"]).map((key) => {
                               return (
                                 <div className="metaData_content">

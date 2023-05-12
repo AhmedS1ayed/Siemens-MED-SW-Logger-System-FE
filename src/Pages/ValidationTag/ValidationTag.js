@@ -105,7 +105,7 @@ export default function ValidationTag() {
           onRowClickEnabled={true}
           onRowClick={handleRowClick}
         />
-        <ValidaitonPoint data={data} selectedRow={selectedRow} />
+        <ValidaitonPoint data={data} selected_row={selectedRow} />
       </Container>
     );
   }
