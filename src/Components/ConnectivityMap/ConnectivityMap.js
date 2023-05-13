@@ -15,7 +15,7 @@ import CustomEdgeStartEnd from './CustomEdgeStartEnd';
     const edgeTypes = {
       'start-end': CustomEdgeStartEnd,
     };
-    const [nodes, setNodes, onNodesChange] = useNodesState(props.nodes);
+    const [nodes, , onNodesChange] = useNodesState(props.nodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(props.links);
   
     const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);

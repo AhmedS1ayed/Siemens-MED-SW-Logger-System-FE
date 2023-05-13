@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { dataRepresentation } from "../Utils/dataRepresentationTS";
 import { cleanData, getItemId } from "../Utils/utilities";
 import { useNestedData } from "./useNestedData";
-import Alert from "@mui/material/Alert";
 
 function TestSuiteHook() {
   let connectivity_links = [];

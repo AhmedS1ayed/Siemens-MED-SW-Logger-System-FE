@@ -1,7 +1,6 @@
 import React from "react";
 import MUIDataTable from "mui-datatables";
 import { getColumnName } from "../../Utils/utilities";
-import MetaDataCard from "../MetaDataCard/MetaDataCard";
 import "./DataTable.css";
 
 export const ExpandableRowTable = (props) => {

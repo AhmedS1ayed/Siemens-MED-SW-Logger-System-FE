@@ -80,6 +80,7 @@ export default function ValidaitonPoint({ data, selected_row }) {
           );
         }
       }
+      return <></>;
     });
   };
 

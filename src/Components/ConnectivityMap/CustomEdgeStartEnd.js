@@ -44,7 +44,7 @@ const CustomEdge = ({
     } else {
       edgePath = `M ${sourceX},${sourceY} H ${sourceX - xStep} V ${targetY - yStep} H ${targetX}`;
     }
-  }else if( type == 'smoothstep'){
+  }else if( type === 'smoothstep'){
     const xDiff = Math.abs(targetX - sourceX);
     const yDiff = Math.abs(targetY - sourceY);
     const xStep = xDiff / 2;
