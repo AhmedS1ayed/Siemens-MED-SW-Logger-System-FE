@@ -30,7 +30,7 @@ export default function Testcase() {
     stack,
   ] = TestCaseHook();
   return (
-    <Container key={Math.random()} maxWidth="xl">
+    <Container key={Math.random()} maxWidth="x">
       <div className="StatisticsContainer">
         <StatisticCard
           title="Total Test Cases"

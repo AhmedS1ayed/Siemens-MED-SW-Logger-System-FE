@@ -35,7 +35,7 @@ export default function Testsuit() {
   ] = TestSuiteHook();
 
   return (
-    <Container key={Math.random()} maxWidth="xl">
+    <Container key={Math.random()} maxWidth="x">
       <div className="StatisticsContainer">
         <StatisticCard
           title="Total Test Suites"

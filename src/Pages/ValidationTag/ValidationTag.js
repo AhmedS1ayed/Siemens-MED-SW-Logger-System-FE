@@ -7,7 +7,7 @@ export default function ValidationTag() {
   const [combinedData, data_columns, handleRowClick, data, selectedRow] =
     ValidationTagHook();
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="x">
       <ExpandableRowTable
         title="Validation Tags"
         Data={combinedData}

@@ -4,11 +4,12 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
-
+import ThemeButton from "../Theme/ThemeButton";
 export default function Navbar() {
   return (
     <AppBar position="static" sx={{ backgroundColor: "var(--body_color)", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)" }}>
       <Container maxWidth="x">
+     
         <Toolbar disableGutters>
           <InsertChartIcon
             sx={{
@@ -40,6 +41,7 @@ export default function Navbar() {
             TEST RESULT VISUALIZER
           </Typography>
         </Toolbar>
+          <ThemeButton  />
       </Container>
     </AppBar>
   );
