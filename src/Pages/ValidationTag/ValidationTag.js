@@ -45,6 +45,7 @@ export default function ValidationTag() {
 
   const handleRowClick = (rowIdx) => {
     rowIdx === selectedRow ? setSelectedRow(-1) : setSelectedRow(rowIdx);
+    window.location.href = "#validation_points_section";
   };
 
   let meta = [];

@@ -84,7 +84,10 @@ export default function ValidaitonPoint({ data, selected_row }) {
   };
 
   return (
-    <section className="validation_points_section">
+    <section
+      className="validation_points_section"
+      id="validation_points_section"
+    >
       <Box>
         {selected_row === -1 ? (
           <h2 className="validation_points_header">
