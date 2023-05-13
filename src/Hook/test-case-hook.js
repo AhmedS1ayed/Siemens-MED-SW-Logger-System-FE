@@ -78,6 +78,7 @@ function TestCaseHook() {
     stack.pop();
     setPath(path.slice(0, path.length - 1));
   };
+  console.log('data' , data);
   return [
     handleBackward,
     handleKeyClicked,
@@ -95,7 +96,7 @@ function TestCaseHook() {
     openDialogs,
     path,
     nestedData,
-    stack,
+    stack
   ];
 }
 

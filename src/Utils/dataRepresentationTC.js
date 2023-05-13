@@ -1,4 +1,4 @@
-import { flattenObject, getColumnName } from "./utilities";
+import { getColumnName } from "./utilities";
 import { Link } from "react-router-dom";
 import LinkIcon from "@mui/icons-material/Link";
 export const dataRepresentationTC = (
@@ -28,8 +28,8 @@ export const dataRepresentationTC = (
   
     let count = 0;
     data_columns.unshift({
-      name: "INDEX",
-      label: "INDEX",
+      name: "ID",
+      label: "ID",
       options: {
         filter: false,
         sort: true,

@@ -72,16 +72,6 @@ export const getColumnName = (data, data_columns) => {
   return data_columns;
 };
 
-export const getKeys = (data) => {
-  let dataKeys = [];
-  Object.keys(data).forEach((key) => {
-    if (typeof data[key] === "object") {
-      dataKeys.push(key);
-    }
-  });
-  return dataKeys;
-};
-
 export const isNumber = (item) => {
   for (let i = 0; i < item.length; i++) {
     if ((item[i] > "a" && item[i] < "z") || (item[i] > "A" && item[i] < "Z"))
@@ -133,13 +123,13 @@ export const cleanData = (str) => {
 export const getItemId = (item , nestedData)=>
 {
   let itemN = "Not Found";
-  if (nestedData[item]["id"] != undefined)
+  if (nestedData[item]["id"] !== undefined)
     itemN = nestedData[item]["id"];
-  else if (nestedData[item]["master_id"] != undefined)
+  else if (nestedData[item]["master_id"] !== undefined)
     itemN = nestedData[item]["master_id"];
-  else if (nestedData[item]["slave_id"] != undefined)
+  else if (nestedData[item]["slave_id"] !== undefined)
     itemN = nestedData[item]["slave_id"];
-  else if (nestedData[item]["Port Offset"] != undefined)
+  else if (nestedData[item]["Port Offset"] !== undefined)
     itemN = nestedData[item]["Port Offset"];
   else  return item;
   

@@ -9,11 +9,11 @@ const PathContainer = styled.div`
   background-color: #f2f2f2;
   border-radius: 5px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
+  margin-bottom: 40px;
 `;
 
 const PathItem = styled.span`
-  color: #333333;
+  color:#a5a391;
   &:not(:last-child)::after {
     content: ">";
     margin: 0 5px;

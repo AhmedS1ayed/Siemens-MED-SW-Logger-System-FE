@@ -27,7 +27,7 @@ export default function Testcase() {
     openDialogs,
     path,
     nestedData,
-    stack,
+    stack
   ] = TestCaseHook();
   return (
     <Container key={Math.random()} maxWidth="lg">
@@ -69,7 +69,7 @@ export default function Testcase() {
         maxWidth={"xl"}
         style={{ borderRadius: "50px" }}
       >
-        <NestHeader title={idx+" - Test Case"}></NestHeader>
+        <NestHeader title={(idx+1).toString()+" - Test Case"}></NestHeader>
         <NestPath
           style={{ padding: "10px", fontWeight: "bold", fontSize: "16px" }}
           path={path}
