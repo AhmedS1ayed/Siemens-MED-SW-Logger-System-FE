@@ -76,7 +76,7 @@
   width: 30%;
   height: 50px;
   padding: 13px 23px;
-  background-color: rgb(2, 21, 27);
+  background-color: var(--body_color);
   border: none;
   outline: none;
   border-radius: 5px;
@@ -124,7 +124,7 @@
 }
 
 .tree_item_key {
-  background-color: rgb(2, 16, 20);
+  background-color: var(--body_color);
   color: #fff;
   margin-right: 20px;
   width: 100px;

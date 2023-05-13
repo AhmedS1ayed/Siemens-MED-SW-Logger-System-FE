@@ -3,8 +3,8 @@
   font-size:20px;
   color: #ffffff;
   font-family:'Courier New', Courier, monospace;
-  border-bottom: 5px solid #1b201c;
-  background-color: #161616;
+  border-bottom: 5px solid var(--body_background);
+  background-color: var(--table_color);
   /* margin:auto; */
   margin-bottom:0px;
   text-align: center;
