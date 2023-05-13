@@ -75,7 +75,7 @@ export default function Testsuit() {
         open={openDialogs}
         maxWidth={isConnectivityMap ? undefined : "xl"}
       >
-        {!isConnectivityMap && <NestHeader title={filteredData[idx]['owner'] + "- Test Case"}></NestHeader>}
+        {!isConnectivityMap && <NestHeader title={filteredData[idx]['owner'] + "- Test Suite"}></NestHeader>}
         <NestPath
           path= {path}
         ></NestPath>

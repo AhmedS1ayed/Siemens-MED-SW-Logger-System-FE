@@ -10,7 +10,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ValidationTag from "./Pages/ValidationTag/ValidationTag";
 import ValidationPoints from "./Pages/ValidationPoints/ValidationPoints";
 import Welcome from "./Pages/Welcome/Welcome";
-import BasicFlow from "./Components/ConnectivityMap/ConnectivityMap";
 
 function App() {
   return (
