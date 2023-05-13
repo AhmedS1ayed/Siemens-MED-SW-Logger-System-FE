@@ -75,11 +75,11 @@ export default function Testsuit() {
         }}
         open={openDialogs[idx]}
         maxWidth={isConnectivityMap ? undefined : "xl"}
-        style={{ borderRadius: "50px" }}
+        
       >
+        <h2 style={{margin:"auto" , padding:"10px"}} > {filteredData[idx]['owner']} Test Suite</h2>
         <DialogPath
-          style={{ padding: "10px", fontWeight: "bold", fontSize: "16px" }}
-          path={path}
+          path= {path}
         ></DialogPath>
         <DialogContent
           style={{
