@@ -66,6 +66,28 @@
   justify-content: space-around;
 }
 
+.validation_point .buttons .results_btn,
+.metaData_btn {
+  margin: 0;
+  width: 30%;
+  height: 50px;
+  padding: 13px 23px;
+  background-color: var(--body_color);
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all ease-in 0.2s;
+}
+
+.validation_point .results_btn:hover,
+.metaData_btn:hover {
+  background-color: rgb(15, 81, 157);
+}
+
 .valid_point_header_false {
   background-color: rgb(185, 0, 0);
 }
@@ -98,7 +120,7 @@
 }
 
 .tree_item_key {
-  background-color: rgb(0, 109, 142);
+  background-color: var(--body_color);
   color: #fff;
   margin-right: 20px;
   width: 100px;
