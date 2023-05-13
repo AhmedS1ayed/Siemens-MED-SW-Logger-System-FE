@@ -96,9 +96,7 @@ export default function ValidaitonPoint({ data, selected_row }) {
           </h2>
         ) : (
           <div>
-            {console.log(data[selected_row])}
             <h2 className="validation_points_header" > {data[selected_row]['metaData']["name"]} Points</h2>
-            {/* <h2 className="validation_points_header">Validation Points</h2> */}
           </div>
         )}
       </Box>
@@ -116,7 +114,7 @@ export default function ValidaitonPoint({ data, selected_row }) {
             return (
               <Grid item xs={12} sm={6} md={4} lg={4}>
                 {/*if card is flipped give it flip class */}
-                <div className={`card ${fliped_cards[idx] ? "flip" : ""}`}>
+                <div className={`card ${fliped_cards[idx] ? "flip" : ""}`} style={{border_raduis:"100px"}}>
                   <div className="face front">
                     <Card className="validation_point scale-up-center">
                       <CardHeader
@@ -194,6 +192,7 @@ export default function ValidaitonPoint({ data, selected_row }) {
                               }
                             )
                           }
+                         
                         />
                         <CardContent>
                           <Typography
