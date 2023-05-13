@@ -9,7 +9,7 @@ export default function Navbar() {
   return (
     <AppBar position="static" sx={{ backgroundColor: "var(--body_color)", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)" }}>
       <Container maxWidth="x">
-     
+      <ThemeButton  />
         <Toolbar disableGutters>
           <InsertChartIcon
             sx={{
@@ -41,7 +41,6 @@ export default function Navbar() {
             TEST RESULT VISUALIZER
           </Typography>
         </Toolbar>
-          <ThemeButton  />
       </Container>
     </AppBar>
   );
