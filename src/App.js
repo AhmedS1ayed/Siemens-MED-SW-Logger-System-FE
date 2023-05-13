@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <ThemeButton />
+      <ThemeButton  />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Welcome />} />
