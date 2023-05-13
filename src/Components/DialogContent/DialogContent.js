@@ -1,5 +1,5 @@
 import React from "react";
-import { cleanData } from "../../Utils/utilities";
+import { cleanData, getItemId } from "../../Utils/utilities";
 import { Card } from "@mui/material";
 import BasicFlow from "../ConnectivityMap/ConnectivityMap";
 import { NestButton } from "./NestButton";
@@ -16,46 +16,32 @@ export const DialogContent = (props) => {
     <div
       style={{
         display: "flex",
+        flexDirection:"column",
         alignItems: "center",
         justifyContent: "center",
+        marginRight:10, marginLeft:15
       }}
     >
-      {Object.keys(nestedData).map((item) => {
-        if (typeof nestedData[item] === "object" && !Array.isArray(nestedData))
-          return (
-            <NestButton
-              item={item}
-              itemN={item}
-              handleKeyClicked={props.handleKeyClicked}
-            ></NestButton>
-          );
-        else if (
-          typeof nestedData[item] === "object" &&
-          Array.isArray(nestedData)
-        ) {
-          let itemN = "Not Found";
-          if (nestedData[item]["id"] != undefined)
-            itemN = nestedData[item]["id"];
-          if (nestedData[item]["master_id"] != undefined)
-            itemN = nestedData[item]["master_id"];
-          if (nestedData[item]["slave_id"] != undefined)
-            itemN = nestedData[item]["slave_id"];
-          if (nestedData[item]["Port Offset"] != undefined)
-            itemN = nestedData[item]["Port Offset"];
-          return (
-            <NestButton
-              item={item}
-              itemN={itemN}
-              handleKeyClicked={props.handleKeyClicked}
-            ></NestButton>
-          );
-        }
-      })}
-      <div className="display:flex;">
+      <div style={{display:"flex" , flexDirection:"row" , marginBottom:"20px"}}>
+        {Object.keys(nestedData).map((item) => {
+          if(typeof nestedData[item] === "object") 
+          {
+              let itemN = getItemId(item,nestedData);
+            return (
+              <NestButton
+                item={item}
+                itemN={itemN}
+                handleKeyClicked={props.handleKeyClicked}
+              ></NestButton>
+            );
+          }
+        })}
+      </div>
+      <div>
         {Object.keys(nestedData).map((key, value) => {
           if (typeof nestedData[key] != "object" && !isConnectivityMap) {
             return (
-              <div style={{display:"inline-flex" , paddingLeft:"5px"}}>
+              <div style={{display:"inline-flex" , paddingLeft:10}}>
               <NestCard
                 keyV={key}
                 valueV={value}

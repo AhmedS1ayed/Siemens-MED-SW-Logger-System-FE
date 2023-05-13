@@ -30,7 +30,7 @@ export default function Testcase() {
     stack,
   ] = TestCaseHook();
   return (
-    <Container key={Math.random()} maxWidth="x">
+    <Container key={Math.random()} maxWidth="lg">
       <div className="statistics-container">
         <StatisticCard
           title="Total Test Cases"
@@ -50,7 +50,7 @@ export default function Testcase() {
           color="#f3d4d1"
           icon="error"
         />
-      </div>
+      </div>{" "}
       <ExpandableRowTable
         title="Test Cases"
         Data={filteredData}

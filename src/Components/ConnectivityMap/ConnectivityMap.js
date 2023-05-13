@@ -33,9 +33,8 @@ import CustomEdgeStartEnd from './CustomEdgeStartEnd';
         <Controls />
         <MiniMap />
         <Background variant="dots" gap={12} size={1} />
-        </ReactFlow>
-      </div>
-    );
+      </ReactFlow>
+    </div>
+  );
 };
-
-export default BasicFlow;   
+export default BasicFlow;

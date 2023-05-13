@@ -128,3 +128,20 @@ export const cleanData = (str) => {
   }).replace(/\s+/g, ' ');
   return str;
 }
+
+
+export const getItemId = (item , nestedData)=>
+{
+  let itemN = "Not Found";
+  if (nestedData[item]["id"] != undefined)
+    itemN = nestedData[item]["id"];
+  else if (nestedData[item]["master_id"] != undefined)
+    itemN = nestedData[item]["master_id"];
+  else if (nestedData[item]["slave_id"] != undefined)
+    itemN = nestedData[item]["slave_id"];
+  else if (nestedData[item]["Port Offset"] != undefined)
+    itemN = nestedData[item]["Port Offset"];
+  else  return item;
+  
+  return itemN;
+}

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNestedData } from "./useNestedData";
 import { dataRepresentationTC } from "../Utils/dataRepresentationTC";
 import { useLocation } from "react-router-dom";
-import { cleanData } from "../Utils/utilities";
+import { cleanData, getItemId } from "../Utils/utilities";
 function TestCaseHook() {
   const [data, setData] = useState([
     {
@@ -74,7 +74,12 @@ function TestCaseHook() {
   const handleKeyClicked = (item) => {
     setStack([...stack, nestedData]);
     setNestedData(nestedData[item]);
-    setPath([...path, cleanData(item)]); // add user's selection to path
+    if(typeof nestedData[item] === "object") 
+    {
+      let itemN = getItemId(item,nestedData);
+      setPath([...path, cleanData(itemN)]);
+    }
+    else setPath([...path, cleanData(item)]);
   };
   const handleBackward = () => {
     setNestedData(stack[stack.length - 1]);

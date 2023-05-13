@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { dataRepresentation } from "../Utils/dataRepresentationTS";
-import { cleanData } from "../Utils/utilities";
+import { cleanData, getItemId } from "../Utils/utilities";
 import { useNestedData } from "./useNestedData";
 
 function TestSuiteHook() {
@@ -65,7 +65,13 @@ function TestSuiteHook() {
     } else {
       setConnectivityMap(false);
     }
-    setPath([...path, cleanData(item)]);
+
+    if(typeof nestedData[item] === "object") 
+    {
+      let itemN = getItemId(item,nestedData);
+      setPath([...path, cleanData(itemN)]);
+    }
+    else setPath([...path, cleanData(item)]);
   };
   const handleBackward = () => {
     setNestedData(stack[stack.length - 1]);

@@ -23,7 +23,7 @@
   animation-fill-mode: forwards;
 }
 
-@keyframes slide-in {
+/* @keyframes slide-in {
   from {
     opacity: 1;
     transform: translateX(-100%);
@@ -32,4 +32,4 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
+} */
