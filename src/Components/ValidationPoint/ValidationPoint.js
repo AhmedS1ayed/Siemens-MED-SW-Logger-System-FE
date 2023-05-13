@@ -97,8 +97,8 @@ export default function ValidaitonPoint({ data, selected_row }) {
         ) : (
           <div>
             {console.log(data[selected_row])}
-            <h2 className="validation_points_header" > {data[selected_row]['metaData']["name"]}</h2>
-            <h2 className="validation_points_header">Validation Points</h2>
+            <h2 className="validation_points_header" > {data[selected_row]['metaData']["name"]} Points</h2>
+            {/* <h2 className="validation_points_header">Validation Points</h2> */}
           </div>
         )}
       </Box>

@@ -6,6 +6,7 @@
   position: relative;
   transform-style: preserve-3d;
   background-color: transparent;
+  border-radius: 16px;
 }
 
 .card .face,
