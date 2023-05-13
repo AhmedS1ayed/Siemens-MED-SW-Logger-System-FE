@@ -156,7 +156,7 @@
 }
 
 .metaData .metaData_content .metaData_key {
-  background-color: rgb(0, 109, 142);
+  background-color: var(--body_color);
   color: #fff;
   margin-right: 20px;
   width: 100px;
