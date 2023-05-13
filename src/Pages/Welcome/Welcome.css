@@ -11,7 +11,7 @@
   padding: 2em;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  /* text-align: center; */
 }
 
 .welcome h1 {
@@ -47,6 +47,6 @@
 }
 
 .welcome-icon {
-  /* position: relative; */
+  /* position: relative;  */
   margin: auto;
 }
