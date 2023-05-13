@@ -10,11 +10,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ValidationTag from "./Pages/ValidationTag/ValidationTag";
 import ValidationPoints from "./Pages/ValidationPoints/ValidationPoints";
 import Welcome from "./Pages/Welcome/Welcome";
+import ThemeButton from "./Components/Theme/ThemeButton";
 
 function App() {
   return (
     <>
       <Navbar />
+      <ThemeButton />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Welcome />} />

@@ -1,3 +1,18 @@
+:root
+{
+  --body_background:#1f1e1e;
+  --body_color:#0C0C0C;
+  --table_color:#111111;
+}
+
+[data-theme = "light"]
+{
+  --body_background:#000;
+  --body_color:#000;
+  --table_color:#000;
+}
+
+
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
 
 * {
@@ -10,7 +25,10 @@ html {
 
 body {
   margin: 0;
-  background-color: #1f1e1e;
+  background-color: var(--body_background);
 }
+
+
+
 
 

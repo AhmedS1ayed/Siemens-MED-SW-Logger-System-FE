@@ -37,7 +37,7 @@
 
 .MuiTableCell-head {
   margin: auto;
-  background-color: #111111 !important;
+  background-color: var(--table_color) !important;
 }
 
 .meta-data-card__container {
