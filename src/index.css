@@ -3,6 +3,7 @@
   --body_background:#1f1e1e;
   --body_color:#0C0C0C;
   --table_color:#111111;
+  --validation-point-font-color:#fff;
 }
 
 [data-theme = "light"]
@@ -10,6 +11,7 @@
   --body_background:#c7c7c7;
   --body_color:#006D8E;
   --table_color:#08607B;
+  --validation-point-font-color:#414141;
 }
 
 

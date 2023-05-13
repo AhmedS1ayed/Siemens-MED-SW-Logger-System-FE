@@ -38,7 +38,7 @@
 .validation_points_section {
   margin-top: 100px;
   font-size: 30px;
-  color: rgb(65, 65, 65);
+  color: var(--validation-point-font-color);
 }
 
 .validation_points_header {
@@ -178,7 +178,7 @@
   width: 30%;
   height: 50px;
   padding: 13px 23px;
-  background-color: rgb(0, 109, 142);
+  background-color: var(--body_color);
   border: none;
   outline: none;
   border-radius: 5px;
