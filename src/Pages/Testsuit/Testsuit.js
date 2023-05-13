@@ -73,11 +73,10 @@ export default function Testsuit() {
           setStack(["none"]);
           setPath(["Configurations"]);
         }}
-        open={openDialogs[idx]}
+        open={openDialogs}
         maxWidth={isConnectivityMap ? undefined : "xl"}
-        
       >
-        <h2 style={{margin:"auto" , padding:"10px"}} > {filteredData[idx]['owner']} Test Suite</h2>
+        {!isConnectivityMap && <h2 style={{fontFamily:"inherit" ,borderBottom:"10px solid #000",borderRadius:"10px",color:"#fff" , background:"#161616",margin:"auto" , marginBottom:"30px",marginTop:"10px" , padding:"10px"}} > {filteredData[idx]['owner']} Test Suite</h2>}
         <DialogPath
           path= {path}
         ></DialogPath>

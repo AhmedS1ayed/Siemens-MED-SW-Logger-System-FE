@@ -65,7 +65,7 @@ export default function Testcase() {
           setStack(["none"]);
           setPath(["Configurations"]);
         }}
-        open={openDialogs[idx]}
+        open={openDialogs}
         maxWidth={"xl"}
         style={{ borderRadius: "50px" }}
       >

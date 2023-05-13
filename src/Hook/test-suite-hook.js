@@ -43,10 +43,8 @@ function TestSuiteHook() {
     setExpandedIndex,
   } = useNestedData();
 
-  const toggleDialog = (index) => {
-    const newOpenDialogs = [...openDialogs];
-    newOpenDialogs[index] = !newOpenDialogs[index];
-    setOpenDialogs(newOpenDialogs);
+  const toggleDialog = () => {
+    setOpenDialogs(!openDialogs);
   };
 
   const handleRowClicked = (index) => {

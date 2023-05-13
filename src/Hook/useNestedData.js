@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export const useNestedData = () =>{
-    const [openDialogs, setOpenDialogs] = useState([]);
+    const [openDialogs, setOpenDialogs] = useState(false);
     const [idx, setClickedIdx] = useState(0);
     const [nestedData, setNestedData] = useState("None");
     const [isConnectivityMap, setConnectivityMap] = useState(false);
