@@ -1,13 +1,11 @@
 import React from "react";
-import { cleanData, getItemId } from "../../Utils/utilities";
-import { Card } from "@mui/material";
+import { getItemId } from "../../Utils/utilities";
 import BasicFlow from "../ConnectivityMap/ConnectivityMap";
 import { NestButton } from "./NestButton";
 import { NestCard } from "./NestCard";
 
-export const DialogContent = (props) => {
+export const NestContent = (props) => {
   const nestedData = props.nestedData;
-  const expandedIndex = props.expandedIndex;
   const isConnectivityMap = props.isConnectivityMap;
   const ConnectivityNodes = props.ConnectivityNodes;
   const ConnectivityLinks = props.ConnectivityLinks;
@@ -16,17 +14,19 @@ export const DialogContent = (props) => {
     <div
       style={{
         display: "flex",
-        flexDirection:"column",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        marginRight:10, marginLeft:15
+        marginRight: 10,
+        marginLeft: 15,
       }}
     >
-      <div style={{display:"flex" , flexDirection:"row" , marginBottom:"20px"}}>
+      <div
+        style={{ display: "flex", flexDirection: "row", marginBottom: "20px" }}
+      >
         {Object.keys(nestedData).map((item) => {
-          if(typeof nestedData[item] === "object") 
-          {
-              let itemN = getItemId(item,nestedData);
+          if (typeof nestedData[item] === "object") {
+            let itemN = getItemId(item, nestedData);
             return (
               <NestButton
                 item={item}
@@ -35,24 +35,24 @@ export const DialogContent = (props) => {
               ></NestButton>
             );
           }
+          return <></>;
         })}
       </div>
       <div>
         {Object.keys(nestedData).map((key, value) => {
-          if (typeof nestedData[key] != "object" && !isConnectivityMap) {
+          if (typeof nestedData[key] !== "object" && !isConnectivityMap) {
             return (
-              <div style={{display:"inline-flex" , paddingLeft:10}}>
-              <NestCard
-                keyV={key}
-                valueV={value}
-                expandedIndex={expandedIndex}
-                nestedData={nestedData}
-              ></NestCard>
+              <div style={{ display: "inline-flex", paddingLeft: 10 }}>
+                <NestCard
+                  keyV={key}
+                  valueV={value}
+                  nestedData={nestedData}
+                ></NestCard>
               </div>
             );
-          } else if (typeof nestedData[key] != "object" && isConnectivityMap) {
+          } else if (typeof nestedData[key] !== "object" && isConnectivityMap) {
             if (
-              key != nestedData[key] &&
+              key !== nestedData[key] &&
               ConnectivityNodes.filter((item) => item.id === key).length === 0
             ) {
               ConnectivityNodes.push({
@@ -72,6 +72,7 @@ export const DialogContent = (props) => {
               });
             }
           }
+          return <></>;
         })}
       </div>
 

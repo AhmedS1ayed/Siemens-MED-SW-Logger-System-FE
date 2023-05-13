@@ -20,7 +20,7 @@ const PathItem = styled.span`
   }
 `;
 
-export const DialogPath = (props) => {
+export const NestPath = (props) => {
   return (
     <PathContainer>
       {props.path.map((item, index) => (

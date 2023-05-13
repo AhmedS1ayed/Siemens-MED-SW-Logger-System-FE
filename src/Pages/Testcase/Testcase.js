@@ -3,10 +3,11 @@ import { Dialog, Container } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
 import ExpandableRowTable from "../../Components/NewTable/NewTable";
-import { BackButton } from "../../Components/DialogContent/BackButton.js";
-import { DialogContent } from "../../Components/DialogContent/DialogContent.js";
-import { DialogPath } from "../../Components/DialogContent/DialogPath.js";
+import { BackButton } from "../../Components/NestContent/BackButton.js";
+import { NestContent } from "../../Components/NestContent/NestContent.js";
+import { NestPath } from "../../Components/NestContent/NestPath.js";
 import TestCaseHook from "../../Hook/test-case-hook";
+import NestHeader from "../../Components/NestContent/NestHeader";
 
 export default function Testcase() {
   const [
@@ -17,7 +18,6 @@ export default function Testcase() {
     failedTestSuites,
     successfulTestSuites,
     totalTestSuites,
-    testcaseId,
     filteredData,
     data_columns,
     idx,
@@ -69,11 +69,12 @@ export default function Testcase() {
         maxWidth={"xl"}
         style={{ borderRadius: "50px" }}
       >
-        <DialogPath
+        <NestHeader title={idx+" - Test Case"}></NestHeader>
+        <NestPath
           style={{ padding: "10px", fontWeight: "bold", fontSize: "16px" }}
           path={path}
-        ></DialogPath>
-        <DialogContent
+        ></NestPath>
+        <NestContent
           style={{
             display: "flex",
             alignItems: "center",
@@ -81,7 +82,7 @@ export default function Testcase() {
           }}
           nestedData={nestedData}
           handleKeyClicked={handleKeyClicked}
-        ></DialogContent>
+        ></NestContent>
         <BackButton stack={stack} handleBackward={handleBackward}></BackButton>
       </Dialog>
     </Container>

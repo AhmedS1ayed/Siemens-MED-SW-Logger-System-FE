@@ -20,23 +20,16 @@ function TestCaseHook() {
     setClickedIdx,
     nestedData,
     setNestedData,
-    isConnectivityMap,
     setConnectivityMap,
     stack,
     setStack,
     path,
     setPath,
-    expanded,
-    setExpanded,
-    expandedIndex,
-    setExpandedIndex,
   } = useNestedData();
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const testsuitId = searchParams.get("testsuitId");
-  // ! This is not working backend need to implement a new api
-  const testcaseId = searchParams.get("testcaseId");
   useEffect(() => {
     fetch(`http://localhost:8080/testCases/?testSuite[id]=${testsuitId}`)
       .then((response) => response.json())
@@ -48,7 +41,7 @@ function TestCaseHook() {
       })
 
       .catch((error) => console.error(error));
-  }, []);
+  }, [testsuitId]);
 
   const totalTestSuites = data.length;
   const successfulTestSuites = data.filter(
@@ -60,6 +53,7 @@ function TestCaseHook() {
 
   const toggleDialog = () => {
     setOpenDialogs(!openDialogs);
+    setConnectivityMap(false);
   };
 
   const handleRowClicked = (index) => {
@@ -92,7 +86,6 @@ function TestCaseHook() {
     failedTestSuites,
     successfulTestSuites,
     totalTestSuites,
-    testcaseId,
     filteredData,
     data_columns,
     idx,
@@ -102,7 +95,7 @@ function TestCaseHook() {
     openDialogs,
     path,
     nestedData,
-    stack
+    stack,
   ];
 }
 

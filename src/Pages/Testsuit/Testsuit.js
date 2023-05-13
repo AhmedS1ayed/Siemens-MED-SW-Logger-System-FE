@@ -4,10 +4,11 @@ import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
 import ExpandableRowTable from "../../Components/NewTable/NewTable.js";
 import "./Testsuit.css";
-import { BackButton } from "../../Components/DialogContent/BackButton.js";
-import { DialogContent } from "../../Components/DialogContent/DialogContent.js";
-import { DialogPath } from "../../Components/DialogContent/DialogPath.js";
+import { BackButton } from "../../Components/NestContent/BackButton.js";
+import { NestContent } from "../../Components/NestContent/NestContent.js";
+import { NestPath } from "../../Components/NestContent/NestPath.js";
 import TestSuiteHook from "../../Hook/test-suite-hook";
+import NestHeader from "../../Components/NestContent/NestHeader";
 
 export default function Testsuit() {
   const [
@@ -26,9 +27,7 @@ export default function Testsuit() {
     isConnectivityMap,
     path,
     nestedData,
-    setExpandedIndex,
     handleKeyClicked,
-    expandedIndex,
     ConnectivityLinks,
     ConnectivityNodes,
     stack,
@@ -76,24 +75,22 @@ export default function Testsuit() {
         open={openDialogs}
         maxWidth={isConnectivityMap ? undefined : "xl"}
       >
-        {!isConnectivityMap && <h2 style={{fontFamily:"inherit" ,borderBottom:"10px solid #000",borderRadius:"10px",color:"#fff" , background:"#161616",margin:"auto" , marginBottom:"30px",marginTop:"10px" , padding:"10px"}} > {filteredData[idx]['owner']} Test Suite</h2>}
-        <DialogPath
+        {!isConnectivityMap && <NestHeader title={filteredData[idx]['owner'] + "- Test Case"}></NestHeader>}
+        <NestPath
           path= {path}
-        ></DialogPath>
-        <DialogContent
+        ></NestPath>
+        <NestContent
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
           nestedData={nestedData}
-          setExpandedIndex={setExpandedIndex}
           handleKeyClicked={handleKeyClicked}
-          expandedIndex={expandedIndex}
           isConnectivityMap={isConnectivityMap}
           ConnectivityLinks={ConnectivityLinks}
           ConnectivityNodes={ConnectivityNodes}
-        ></DialogContent>
+        ></NestContent>
         <BackButton stack={stack} handleBackward={handleBackward}></BackButton>
       </Dialog>
     </Container>

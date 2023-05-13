@@ -37,14 +37,11 @@ function TestSuiteHook() {
     setStack,
     path,
     setPath,
-    expanded,
-    setExpanded,
-    expandedIndex,
-    setExpandedIndex,
   } = useNestedData();
 
   const toggleDialog = () => {
     setOpenDialogs(!openDialogs);
+    setConnectivityMap(false);
   };
 
   const handleRowClicked = (index) => {
@@ -106,9 +103,7 @@ function TestSuiteHook() {
     isConnectivityMap,
     path,
     nestedData,
-    setExpandedIndex,
     handleKeyClicked,
-    expandedIndex,
     ConnectivityLinks,
     ConnectivityNodes,
     stack,
