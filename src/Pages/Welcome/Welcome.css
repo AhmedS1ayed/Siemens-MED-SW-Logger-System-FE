@@ -1,36 +1,39 @@
-.welcome-container {
-  /* display: flex;
-  justify-content: center; */
-  /* align-items: center; */
+.WelcomeContainer {
   height: 100vh;
   width: 100%;
 }
 
-.welcome {
+.Welcome {
   background-color: #f8f8f8;
   padding: 2em;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  /* text-align: center; */
 }
 
-.welcome h1 {
+.Welcome .WelcomeBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Welcome .WelcomeBody h1 {
   font-size: 3em;
   color: #333;
   margin-bottom: 0.5em;
 }
 
-.welcome p {
+.Welcome .WelcomeBody p {
   font-size: 1.5em;
   color: #666;
   margin-top: 0;
 }
 
-.custom-link-welcome {
+.Welcome .WelcomeBody .CustomLinkWelcome {
   text-decoration: none;
 }
 
-.button-welcome {
+.Welcome .WelcomeBody .CustomLinkWelcome .WelcomeBtn {
   background-color: #0077cc;
   color: white;
   border: none;
@@ -42,11 +45,6 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-.button-welcome:hover {
+.Welcome .WelcomeBody .CustomLinkWelcome .WelcomeBtn:hover {
   background-color: #005fa3;
-}
-
-.welcome-icon {
-  /* position: relative;  */
-  margin: auto;
 }

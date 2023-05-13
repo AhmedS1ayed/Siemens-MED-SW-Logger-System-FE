@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
-import { dataRepresentationVT } from '../Utils/dataRepresentationVT';
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { dataRepresentationVT } from "../Utils/dataRepresentationVT";
 
-function ValidationTagHook() 
-{
-    const location = useLocation();
+function ValidationTagHook() {
+  const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const testsuitId = searchParams.get("testsuitId");
   const testcaseId = searchParams.get("testcaseId");
@@ -22,8 +21,8 @@ function ValidationTagHook()
         console.log("validation taga: ", data);
       })
       .catch((error) => console.error(error));
-  }, [testcaseId,testsuitId]);
-  
+  }, [testcaseId, testsuitId]);
+
   const [data, setData] = useState([
     {
       id: "none",
@@ -31,11 +30,12 @@ function ValidationTagHook()
   ]);
   const handleRowClick = (rowIdx) => {
     rowIdx === selectedRow ? setSelectedRow(-1) : setSelectedRow(rowIdx);
+    window.location.href = "#validation_points_section";
   };
 
-  const [combinedData,data_columns] = dataRepresentationVT(data);
-  
-  return [combinedData,data_columns,handleRowClick,data,selectedRow];
+  const [combinedData, data_columns] = dataRepresentationVT(data);
+
+  return [combinedData, data_columns, handleRowClick, data, selectedRow];
 }
 
 export default ValidationTagHook;

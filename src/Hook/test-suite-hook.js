@@ -2,16 +2,18 @@ import { useEffect, useState } from "react";
 import { dataRepresentation } from "../Utils/dataRepresentationTS";
 import { cleanData, getItemId } from "../Utils/utilities";
 import { useNestedData } from "./useNestedData";
+import Alert from "@mui/material/Alert";
 
 function TestSuiteHook() {
-  let ConnectivityLinks = [];
-  let ConnectivityNodes = [];
+  let connectivity_links = [];
+  let connectivity_nodes = [];
 
   const [data, setData] = useState([
     {
       id: "none",
     },
   ]);
+  // Fetch Data of test suites
   useEffect(() => {
     fetch("http://localhost:8080/TestSuites/")
       .then((response) => response.json())
@@ -21,7 +23,9 @@ function TestSuiteHook() {
           setFilteredData(dataRepresentation(data));
         }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error("error while fetching Testsuites data: ", error);
+      });
   }, []);
 
   const {
@@ -61,12 +65,10 @@ function TestSuiteHook() {
       setConnectivityMap(false);
     }
 
-    if(typeof nestedData[item] === "object") 
-    {
-      let itemN = getItemId(item,nestedData);
+    if (typeof nestedData[item] === "object") {
+      let itemN = getItemId(item, nestedData);
       setPath([...path, cleanData(itemN)]);
-    }
-    else setPath([...path, cleanData(item)]);
+    } else setPath([...path, cleanData(item)]);
   };
   const handleBackward = () => {
     setNestedData(stack[stack.length - 1]);
@@ -87,7 +89,7 @@ function TestSuiteHook() {
     dataRepresentation(data)
   );
 
-  return ([
+  return [
     totalTestSuites,
     successfulTestSuites,
     failedTestSuites,
@@ -104,11 +106,11 @@ function TestSuiteHook() {
     path,
     nestedData,
     handleKeyClicked,
-    ConnectivityLinks,
-    ConnectivityNodes,
+    connectivity_links,
+    connectivity_nodes,
     stack,
     handleBackward,
-  ]);
+  ];
 }
 
 export default TestSuiteHook;

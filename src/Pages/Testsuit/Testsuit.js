@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Dialog } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
-import ExpandableRowTable from "../../Components/NewTable/NewTable.js";
+import ExpandableRowTable from "../../Components/DataTable/DataTable.js";
 import "./Testsuit.css";
 import { BackButton } from "../../Components/NestContent/BackButton.js";
 import { NestContent } from "../../Components/NestContent/NestContent.js";
@@ -28,19 +28,18 @@ export default function Testsuit() {
     path,
     nestedData,
     handleKeyClicked,
-    ConnectivityLinks,
-    ConnectivityNodes,
+    connectivity_links,
+    connectivity_nodes,
     stack,
-    handleBackward
+    handleBackward,
   ] = TestSuiteHook();
+
   return (
-    <Container key={Math.random()} maxWidth="x">
-      {/* <h1>statistics</h1> */}
-      <div className="statistics-container">
+    <Container key={Math.random()} maxWidth="xl">
+      <div className="StatisticsContainer">
         <StatisticCard
           title="Total Test Suites"
           count={totalTestSuites}
-          // color="#ffffff"
           icon="equalizer"
         />
         <StatisticCard
@@ -56,7 +55,6 @@ export default function Testsuit() {
           icon="error"
         />
       </div>
-
       <ExpandableRowTable
         title="Test Suites"
         Data={filteredData}
@@ -75,10 +73,12 @@ export default function Testsuit() {
         open={openDialogs}
         maxWidth={isConnectivityMap ? undefined : "xl"}
       >
-        {!isConnectivityMap && <NestHeader title={filteredData[idx]['owner'] + "- Test Suite"}></NestHeader>}
-        <NestPath
-          path= {path}
-        ></NestPath>
+        {!isConnectivityMap && (
+          <NestHeader
+            title={filteredData[idx]["owner"] + "- Test Suite"}
+          ></NestHeader>
+        )}
+        <NestPath path={path}></NestPath>
         <NestContent
           style={{
             display: "flex",
@@ -88,8 +88,8 @@ export default function Testsuit() {
           nestedData={nestedData}
           handleKeyClicked={handleKeyClicked}
           isConnectivityMap={isConnectivityMap}
-          ConnectivityLinks={ConnectivityLinks}
-          ConnectivityNodes={ConnectivityNodes}
+          ConnectivityLinks={connectivity_links}
+          ConnectivityNodes={connectivity_nodes}
         ></NestContent>
         <BackButton stack={stack} handleBackward={handleBackward}></BackButton>
       </Dialog>

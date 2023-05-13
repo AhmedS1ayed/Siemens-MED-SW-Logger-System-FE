@@ -1,8 +1,3 @@
-._header {
-  text-align: center;
-  
-}
-
 .custom-link {
   display: inline;
   align-items: center;
@@ -13,37 +8,4 @@
 
 .custom-link:hover {
   border-bottom: 2px solid #c21a1a;
-}
-
-.dialog {
-  opacity: 0;
-  transform: translateY(-100%);
-  animation-name: slide-in;
-  animation-duration: 0.3s;
-  animation-fill-mode: forwards;
-}
-
-/* @keyframes slide-in {
-  from {
-    opacity: 1;
-    transform: translateX(-100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-} */
-
-.h2
-{
-  font-size:20px;
-  color: #ffffff;
-  font-family:'Courier New', Courier, monospace;
-  border-bottom: 5px solid #1b201c;
-  background-color: #161616;
-  /* margin:auto; */
-  margin-bottom:30px;
-  text-align: center;
-  /* margin-top:10px ; */
-  padding:10px;
 }

@@ -33,10 +33,20 @@ export const dataRepresentationTC = (
       options: {
         filter: false,
         sort: true,
+        setCellProps: () => {
+          return {
+            className: "tableCell",
+          };
+        },
+        setCellHeaderProps: () => {
+          return {
+            className: "tableHeadCell",
+          };
+        },
         customBodyRender: () => {
-         if(count === data.length) count = 0; 
+          if (count === data.length) count = 0;
           count++;
-          return (count);
+          return count;
         },
       },
     });

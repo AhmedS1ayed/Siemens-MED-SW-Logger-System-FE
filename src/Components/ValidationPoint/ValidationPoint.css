@@ -19,26 +19,26 @@
   display: flex;
   backface-visibility: hidden;
   transition: 1s ease-in-out;
-  transform: perspective(500px) rotateY(0deg);
+  transform: perspective(800px) rotateY(0deg);
 }
 
 .flip .face.front {
-  transform: perspective(500px) rotateY(180deg);
+  transform: perspective(800px) rotateY(180deg);
 }
 
 .card .face.back {
   color: #fff;
-  transform: perspective(500px) rotateY(180deg);
+  transform: perspective(800px) rotateY(180deg);
 }
 
 .flip .face.back {
-  transform: perspective(500px) rotateY(360deg);
+  transform: perspective(800px) rotateY(360deg);
 }
 
 .validation_points_section {
   margin-top: 100px;
   font-size: 30px;
-  color: rgb(255, 255, 255);
+  color: rgb(65, 65, 65);
 }
 
 .validation_points_header {
@@ -60,36 +60,10 @@
   transition: all ease-in-out 0.3s;
 }
 
-.validation_point:hover {
-  box-shadow: 0px 20px 20px 0px rgba(207, 207, 208, 0.2);
-}
-
 .buttons {
   display: flex;
   align-items: center;
   justify-content: space-around;
-}
-
-.validation_point .buttons .results_btn,
-.metaData_btn {
-  margin: 0;
-  width: 30%;
-  height: 50px;
-  padding: 13px 23px;
-  background-color: rgb(2, 21, 27);
-  border: none;
-  outline: none;
-  border-radius: 5px;
-  color: #fff;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all ease-in 0.2s;
-}
-
-.validation_point .results_btn:hover,
-.metaData_btn:hover {
-  background-color: rgb(15, 81, 157);
 }
 
 .valid_point_header_false {
@@ -124,7 +98,7 @@
 }
 
 .tree_item_key {
-  background-color: rgb(2, 16, 20);
+  background-color: rgb(0, 109, 142);
   color: #fff;
   margin-right: 20px;
   width: 100px;
@@ -160,7 +134,7 @@
 }
 
 .metaData .metaData_content .metaData_key {
-  background-color: rgb(2, 16, 20);
+  background-color: rgb(0, 109, 142);
   color: #fff;
   margin-right: 20px;
   width: 100px;
@@ -174,6 +148,28 @@
   font-size: 18px;
   display: flex;
   align-items: center;
+}
+
+.validation_point .buttons .results_btn,
+.metaData_btn {
+  margin: 0;
+  width: 30%;
+  height: 50px;
+  padding: 13px 23px;
+  background-color: rgb(0, 109, 142);
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all ease-in 0.2s;
+}
+
+.validation_point .results_btn:hover,
+.metaData_btn:hover {
+  background-color: rgb(15, 81, 157);
 }
 
 .MuiTreeItem-label {

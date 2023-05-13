@@ -13,7 +13,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
 import { Card, CardHeader } from "@mui/material";
 import { getColumnName } from "../../Utils/utilities";
-import ExpandableRowTable from "../NewTable/NewTable";
+import ExpandableRowTable from "../DataTable/DataTable";
 import "./ValidationPoint.css";
 
 export default function ValidaitonPoint({ data, selected_row }) {
@@ -84,7 +84,10 @@ export default function ValidaitonPoint({ data, selected_row }) {
   };
 
   return (
-    <section className="validation_points_section">
+    <section
+      className="validation_points_section"
+      id="validation_points_section"
+    >
       <Box>
         {selected_row === -1 ? (
           <h2 className="validation_points_header">

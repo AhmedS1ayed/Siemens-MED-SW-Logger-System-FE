@@ -2,7 +2,7 @@ import React from "react";
 import { Dialog, Container } from "@mui/material";
 import StatisticCard from "../../Components/statistics/StatisticsCard";
 import "../../Components/statistics/StatisticsCard.css";
-import ExpandableRowTable from "../../Components/NewTable/NewTable";
+import ExpandableRowTable from "../../Components/DataTable/DataTable";
 import { BackButton } from "../../Components/NestContent/BackButton.js";
 import { NestContent } from "../../Components/NestContent/NestContent.js";
 import { NestPath } from "../../Components/NestContent/NestPath.js";
@@ -27,11 +27,11 @@ export default function Testcase() {
     openDialogs,
     path,
     nestedData,
-    stack
+    stack,
   ] = TestCaseHook();
   return (
-    <Container key={Math.random()} maxWidth="lg">
-      <div className="statistics-container">
+    <Container key={Math.random()} maxWidth="xl">
+      <div className="StatisticsContainer">
         <StatisticCard
           title="Total Test Cases"
           count={totalTestSuites}
@@ -69,7 +69,7 @@ export default function Testcase() {
         maxWidth={"xl"}
         style={{ borderRadius: "50px" }}
       >
-        <NestHeader title={(idx+1).toString()+" - Test Case"}></NestHeader>
+        <NestHeader title={(idx + 1).toString() + " - Test Case"}></NestHeader>
         <NestPath
           style={{ padding: "10px", fontWeight: "bold", fontSize: "16px" }}
           path={path}

@@ -18,7 +18,7 @@ const pushColumn = (data_columns, inputKey) => {
       },
       setCellProps: () => {
         return {
-          className: "tableCell",
+          className: inputKey === "owner" ? "tableCell ownerCell" : "tableCell",
         };
       },
       filterOptions: {
@@ -38,12 +38,17 @@ const pushColumn = (data_columns, inputKey) => {
           ) : (
             <ClearIcon className="failed-class" />
           );
-        else return value;
+        else if (value === "pass") {
+          return <span className="pass">{value}</span>;
+        } else if (value === "fail") {
+          return <span className="fail">{value}</span>;
+        } else return value;
       },
     },
   };
   if (
-    data_columns && !data_columns.find((column) => {
+    data_columns &&
+    !data_columns.find((column) => {
       return JSON.stringify(column) === JSON.stringify(newColumn);
     })
   ) {
@@ -59,7 +64,8 @@ export const getColumnName = (data, data_columns) => {
       const obj = data[key];
       Object.keys(obj).forEach((objKey) => {
         if (
-          data_columns && !data_columns.find((column) => column.name === objKey) &&
+          data_columns &&
+          !data_columns.find((column) => column.name === objKey) &&
           objKey !== "metaData" &&
           objKey !== "design_info" &&
           typeof obj[objKey] !== "object"
@@ -111,27 +117,26 @@ export const getFilteredData = (data, data_columns) => {
 };
 
 export const cleanData = (str) => {
-  if(Number.isInteger(str)) return str; 
-  str = str.slice().replaceAll('_' , ' ');
-  str = str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
-    return word.toUpperCase();
-  }).replace(/\s+/g, ' ');
+  if (Number.isInteger(str)) return str;
+  str = str.slice().replaceAll("_", " ");
+  str = str
+    .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
+      return word.toUpperCase();
+    })
+    .replace(/\s+/g, " ");
   return str;
-}
+};
 
-
-export const getItemId = (item , nestedData)=>
-{
+export const getItemId = (item, nestedData) => {
   let itemN = "Not Found";
-  if (nestedData[item]["id"] !== undefined)
-    itemN = nestedData[item]["id"];
+  if (nestedData[item]["id"] !== undefined) itemN = nestedData[item]["id"];
   else if (nestedData[item]["master_id"] !== undefined)
     itemN = nestedData[item]["master_id"];
   else if (nestedData[item]["slave_id"] !== undefined)
     itemN = nestedData[item]["slave_id"];
   else if (nestedData[item]["Port Offset"] !== undefined)
     itemN = nestedData[item]["Port Offset"];
-  else  return item;
-  
+  else return item;
+
   return itemN;
-}
+};
