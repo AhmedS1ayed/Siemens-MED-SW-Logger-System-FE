@@ -45,10 +45,10 @@ function TestCaseHook() {
 
   const totalTestSuites = data.length;
   const successfulTestSuites = data.filter(
-    (item) => item.isSuccessful === true
+    (item) => item.status === true
   ).length;
   const failedTestSuites = data.filter(
-    (item) => item.isSuccessful === false
+    (item) => item.status === false
   ).length;
 
   const toggleDialog = () => {

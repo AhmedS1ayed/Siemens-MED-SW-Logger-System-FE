@@ -20,6 +20,7 @@ function TestSuiteHook() {
         if (data) {
           setData(data);
           setFilteredData(dataRepresentation(data));
+          console.log("data: ", data);
         }
       })
       .catch((error) => {
@@ -78,10 +79,10 @@ function TestSuiteHook() {
 
   const totalTestSuites = data.length;
   const successfulTestSuites = data.filter(
-    (item) => item.isSuccessful === true
+    (item) => item.status === true
   ).length;
   const failedTestSuites = data.filter(
-    (item) => item.isSuccessful === false
+    (item) => item.status === false
   ).length;
 
   const [{ filteredData, data_columns }, setFilteredData] = useState(

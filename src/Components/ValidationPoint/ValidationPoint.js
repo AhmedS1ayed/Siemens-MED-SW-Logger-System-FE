@@ -49,7 +49,7 @@ export default function ValidaitonPoint({ data, selected_row }) {
       if (
         // remove all these data from being rendered inside tree
         sub_data !== "results" &&
-        sub_data !== "isSuccessful" &&
+        sub_data !== "status" &&
         sub_data !== "parent" &&
         sub_data !== "id" &&
         sub_data !== "metaData"
@@ -119,7 +119,7 @@ export default function ValidaitonPoint({ data, selected_row }) {
                     <Card className="validation_point scale-up-center">
                       <CardHeader
                         //give validation_point specific class represents its state pass or fail
-                        className={`valid_point_header_${valid_point["isSuccessful"]}`}
+                        className={`valid_point_header_${valid_point["status"]}`}
                         // create validation point name by mergin validation tag name and validation point levels
                         title={
                           data[selected_row]["metaData"]["name"] +
@@ -182,7 +182,7 @@ export default function ValidaitonPoint({ data, selected_row }) {
                     <div className="metaData">
                       <Card>
                         <CardHeader
-                          className={`valid_point_header_${valid_point["isSuccessful"]}`}
+                          className={`valid_point_header_${valid_point["status"]}`}
                           // create validation point name by mergin validation tag name and validation point levels
                           title={
                             data[selected_row]["metaData"]["name"] +
