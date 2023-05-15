@@ -12,7 +12,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
 import { Card, CardHeader } from "@mui/material";
-import { getColumnName } from "../../Utils/utilities";
+import { cleanData, getColumnName } from "../../Utils/utilities";
 import ExpandableRowTable from "../DataTable/DataTable";
 import "./ValidationPoint.css";
 
@@ -185,10 +185,10 @@ export default function ValidaitonPoint({ data, selected_row }) {
                           className={`valid_point_header_${valid_point["status"]}`}
                           // create validation point name by mergin validation tag name and validation point levels
                           title={
-                            data[selected_row]["metaData"]["name"] +
+                            cleanData(data[selected_row]["metaData"]["name"]) +
                             Object.keys(valid_point["levels"]).map(
                               (level_key) => {
-                                return ` ${level_key} ${valid_point["levels"][level_key]} `;
+                                return cleanData(` ${level_key} ${valid_point["levels"][level_key]} `);
                               }
                             )
                           }
@@ -209,7 +209,7 @@ export default function ValidaitonPoint({ data, selected_row }) {
                                 <div className="metaData_content">
                                   <div className="metaData_key">{key}</div>
                                   <div className="metaData_value">
-                                    {valid_point["metaData"][key]}
+                                    cleanData({valid_point["metaData"][key]})
                                   </div>
                                 </div>
                               );
