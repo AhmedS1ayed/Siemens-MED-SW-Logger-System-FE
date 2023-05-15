@@ -35,11 +35,21 @@ export const dataRepresentation = (
   });
 
   data_columns.push({
-    name: "",
-    label: "",
+    name: "Test Cases",
+    label: "Test Cases",
     options: {
       filter: false,
       sort: false,
+      setCellProps: () => {
+        return {
+          className: "tableCell",
+        };
+      },
+      setCellHeaderProps: () => {
+        return {
+          className: "tableHeadCell",
+        };
+      },
       customBodyRender: (value, tableMeta, updateValue) => {
         let testsuitId = null;
         if (data) {
