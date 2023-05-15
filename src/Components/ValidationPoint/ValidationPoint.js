@@ -72,8 +72,8 @@ export default function ValidaitonPoint({ data, selected_row }) {
               nodeId={sub_data}
               label={
                 <div className="tree_item_content">
-                  <div className="tree_item_key">{sub_data}</div>
-                  <div className="tree_item_value">{data[sub_data]}</div>
+                  <div className="tree_item_key">{cleanData(sub_data)}</div>
+                  <div className="tree_item_value">{cleanData(data[sub_data])}</div>
                 </div>
               }
             />
@@ -96,7 +96,7 @@ export default function ValidaitonPoint({ data, selected_row }) {
           </h2>
         ) : (
           <div>
-            <h2 className="validation_points_header" > {data[selected_row]['metaData']["name"]} Points</h2>
+            <h2 className="validation_points_header" > {cleanData(data[selected_row]['metaData']["name"])} Points</h2>
           </div>
         )}
       </Box>
@@ -209,7 +209,7 @@ export default function ValidaitonPoint({ data, selected_row }) {
                                 <div className="metaData_content">
                                   <div className="metaData_key">{key}</div>
                                   <div className="metaData_value">
-                                    cleanData({valid_point["metaData"][key]})
+                                    {cleanData(valid_point["metaData"][key])}
                                   </div>
                                 </div>
                               );
