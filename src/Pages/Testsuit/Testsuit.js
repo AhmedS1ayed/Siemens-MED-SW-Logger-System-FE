@@ -55,7 +55,6 @@ export default function Testsuit() {
           icon="error"
         />
       </div>
-      <h1 style={{textAlign:"center" , color:"var(--validation-point-font-color)" ,fontSize:"50px"}} >Test Suite</h1>
       <ExpandableRowTable
         title="Test Suites"
         Data={filteredData}
