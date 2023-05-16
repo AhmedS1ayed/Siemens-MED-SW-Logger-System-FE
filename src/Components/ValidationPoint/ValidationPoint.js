@@ -156,7 +156,7 @@ export default function ValidaitonPoint({ data, selected_row }) {
                             className="metaData_btn"
                             onClick={() => flip(idx)}
                           >
-                            Meta Data
+                            Description
                           </button>
                         </div>
 

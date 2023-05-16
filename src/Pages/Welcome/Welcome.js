@@ -5,23 +5,29 @@ import "./Welcome.css";
 import FetchDbHook from "../../Hook/fetch-db-hook";
 
 const Welcome = () => {
-  const [handleSubmit,handleChange,response] = FetchDbHook();
+  const [handleSubmit, handleChange, response] = FetchDbHook();
   return (
     <div className="WelcomeContainer">
       <div className="Welcome">
         <div className="WelcomeBody">
-        <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <label>
-              connect to db:
-              <input type="text" id= "databaseUrl" name="databaseUrl" onChange={handleChange} />
+              Database path:
+              <input
+                type="text"
+                id="databaseUrl"
+                name="databaseUrl"
+                onChange={handleChange}
+              />
             </label>
-            <button className="WelcomeBtn" type="submit">Submit</button>
-        </form>
-        {response && <h1> connected</h1>}
+            <button className="WelcomeBtn" type="submit">
+              Submit
+            </button>
+          </form>
 
           <h1>Test Results Visualizer</h1>
           <Link className="CustomLinkWelcome" to="/testsuits">
-            <button className="WelcomeBtn">
+            <button className="WelcomeBtn" disabled={!response}>
               Click here to go to test suite page
             </button>
           </Link>

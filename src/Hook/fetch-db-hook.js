@@ -1,26 +1,42 @@
-import { useState } from 'react'
+import { useState } from "react";
 
 function FetchDbHook() {
-    const [formData, setFormData] = useState();
-    const [response, setResponse] = useState();
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      fetch('http://localhost:8080/database/urls', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      }).then(response => response.json())
-      .then(data => setResponse(true))
-      .catch(error => setResponse('failed'));
+  const [formData, setFormData] = useState();
+  const [response, setResponse] = useState();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!formData || Object.keys(formData).length === 0) {
+      window.alert("No URL provided!");
+      setResponse(false);
+      return;
     }
-    const handleChange = (event) => {
-      console.log(event);
-      setFormData({[event.target.name]: event.target.value});
-      console.log('ff' , event.target.value);
-    }
-  return [handleSubmit,handleChange,response];
+
+    fetch("http://localhost:8080/database/urls", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          window.alert("Database connection successfull!");
+          setResponse(true);
+        } else {
+          window.alert("Database connection failed!");
+          setResponse(false);
+        }
+      })
+      .catch((error) => {
+        console.log("An error occurred: ", error);
+        setResponse(false);
+      });
+  };
+  const handleChange = (event) => {
+    setFormData({ [event.target.name]: event.target.value });
+  };
+
+  return [handleSubmit, handleChange, response];
 }
 
-export default FetchDbHook
+export default FetchDbHook;

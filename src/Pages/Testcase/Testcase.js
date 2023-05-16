@@ -51,7 +51,7 @@ export default function Testcase() {
           icon="error"
         />
       </div>{" "}
-      <h1 style={{textAlign:"center" , color:"var(--validation-point-font-color)" ,fontSize:"50px"}} >Test Case</h1>
+      <h1 style={{textAlign:"center" , color:"var(--validation-point-font-color)" ,fontSize:"50px"}} >Test Cases</h1>
       <ExpandableRowTable
         title="Test Cases"
         Data={filteredData}
