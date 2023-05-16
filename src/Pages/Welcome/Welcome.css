@@ -47,6 +47,7 @@
 
 .WelcomeForm {
   margin-bottom: 20px;
+  padding-left: 10px;
   background-color: #63636365;
   width: 500px;
   display: flex;
@@ -57,7 +58,7 @@
 .FormButton {
   margin-left: 20px;
   padding: 10px 20px;
-  width: 150px;
+  width: 130px;
   background-color: rgb(0, 109, 142);
   border: none;
   outline: none;
