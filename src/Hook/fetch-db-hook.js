@@ -3,10 +3,10 @@ import { useState } from "react";
 function FetchDbHook() {
   const [formData, setFormData] = useState();
   const [response, setResponse] = useState();
-  const handleSubmit = (event) => {
+  const handleConnect = (event) => {
     event.preventDefault();
     if (!formData || Object.keys(formData).length === 0) {
-      window.alert("No URL provided!");
+      console.log("No URL provided");
       setResponse(false);
       return;
     }
@@ -20,10 +20,10 @@ function FetchDbHook() {
     })
       .then((response) => {
         if (response.ok) {
-          window.alert("Database connection successfull!");
-          setResponse(true);
+          console.log("Database connection successfull!");
+          setResponse("Connected");
         } else {
-          window.alert("Database connection failed!");
+          console.log("Database connection failed!");
           setResponse(false);
         }
       })
@@ -36,7 +36,19 @@ function FetchDbHook() {
     setFormData({ [event.target.name]: event.target.value });
   };
 
-  return [handleSubmit, handleChange, response];
+  const handleDisconnect = () => {
+    fetch("http://localhost:8080/database/urls", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((data) => setResponse("Disconnected"))
+      .catch((error) => setResponse("failed"));
+  };
+  return [handleConnect, handleChange, response, handleDisconnect];
 }
 
 export default FetchDbHook;

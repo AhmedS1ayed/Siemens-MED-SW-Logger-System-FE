@@ -76,7 +76,7 @@ function TestSuiteHook() {
     setConnectivityMap(false);
     setPath(path.slice(0, path.length - 1));
   };
-
+  
   const totalTestSuites = data.length;
   const successfulTestSuites = data.filter(
     (item) => item.status === true

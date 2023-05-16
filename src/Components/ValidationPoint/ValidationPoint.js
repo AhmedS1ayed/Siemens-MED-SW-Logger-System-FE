@@ -73,7 +73,9 @@ export default function ValidaitonPoint({ data, selected_row }) {
               label={
                 <div className="tree_item_content">
                   <div className="tree_item_key">{cleanData(sub_data)}</div>
-                  <div className="tree_item_value">{cleanData(data[sub_data])}</div>
+                  <div className="tree_item_value">
+                    {cleanData(data[sub_data])}
+                  </div>
                 </div>
               }
             />
@@ -96,7 +98,10 @@ export default function ValidaitonPoint({ data, selected_row }) {
           </h2>
         ) : (
           <div>
-            <h2 className="validation_points_header" > {cleanData(data[selected_row]['metaData']["name"])} Points</h2>
+            <h2 className="validation_points_header">
+              {" "}
+              {cleanData(data[selected_row]["metaData"]["name"])} Points
+            </h2>
           </div>
         )}
       </Box>
@@ -114,7 +119,10 @@ export default function ValidaitonPoint({ data, selected_row }) {
             return (
               <Grid item xs={12} sm={6} md={4} lg={4}>
                 {/*if card is flipped give it flip class */}
-                <div className={`card ${fliped_cards[idx] ? "flip" : ""}`} style={{border_raduis:"100px"}}>
+                <div
+                  className={`card ${fliped_cards[idx] ? "flip" : ""}`}
+                  style={{ border_raduis: "100px" }}
+                >
                   <div className="face front">
                     <Card className="validation_point scale-up-center">
                       <CardHeader
@@ -188,11 +196,12 @@ export default function ValidaitonPoint({ data, selected_row }) {
                             cleanData(data[selected_row]["metaData"]["name"]) +
                             Object.keys(valid_point["levels"]).map(
                               (level_key) => {
-                                return cleanData(` ${level_key} ${valid_point["levels"][level_key]} `);
+                                return cleanData(
+                                  ` ${level_key} ${valid_point["levels"][level_key]} `
+                                );
                               }
                             )
                           }
-                         
                         />
                         <CardContent>
                           <Typography
@@ -200,7 +209,7 @@ export default function ValidaitonPoint({ data, selected_row }) {
                             component="div"
                             className="metaData_header"
                           >
-                            Meta Data
+                            Description
                           </Typography>
                           <div className="metaData_body">
                             {/*render meta_data content */}

@@ -34,7 +34,7 @@
 }
 
 .Welcome .WelcomeBody .CustomLinkWelcome .WelcomeBtn {
-  background-color: #0077cc;
+  background-color: rgb(0, 109, 142);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -45,6 +45,35 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-.Welcome .WelcomeBody .CustomLinkWelcome .WelcomeBtn:hover {
+.WelcomeForm {
+  margin-bottom: 20px;
+  background-color: #63636365;
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.FormButton {
+  margin-left: 20px;
+  padding: 10px 20px;
+  width: 150px;
+  background-color: rgb(0, 109, 142);
+  border: none;
+  outline: none;
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.Welcome .WelcomeBody .CustomLinkWelcome .WelcomeBtn:hover,
+.FormButton:hover {
   background-color: #005fa3;
+}
+
+.FormLabel {
+  font-weight: 800;
+  font-size: 18px;
+  margin-right: 10px;
 }

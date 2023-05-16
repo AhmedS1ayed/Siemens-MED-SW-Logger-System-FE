@@ -8,7 +8,6 @@ export default function ValidationTag() {
     ValidationTagHook();
   return (
     <Container maxWidth="x">
-      <h1 style={{textAlign:"center" , color:"var(--validation-point-font-color)" ,fontSize:"50px"}} >Validation Tags</h1>
       <ExpandableRowTable
         title="Validation Tags"
         Data={combinedData}

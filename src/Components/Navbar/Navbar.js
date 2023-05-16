@@ -7,9 +7,15 @@ import InsertChartIcon from "@mui/icons-material/InsertChart";
 import ThemeButton from "../Theme/ThemeButton";
 export default function Navbar() {
   return (
-    <AppBar position="static" sx={{ backgroundColor: "var(--body_color)", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)" }}>
+    <AppBar
+      position="static"
+      sx={{
+        backgroundColor: "var(--body_color)",
+        boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)",
+      }}
+    >
       <Container maxWidth="x">
-      <ThemeButton  />
+        <ThemeButton />
         <Toolbar disableGutters>
           <InsertChartIcon
             sx={{
@@ -38,7 +44,7 @@ export default function Navbar() {
               textShadow: "0.5px 1px #cccccc",
             }}
           >
-            TEST RESULT VISUALIZER
+            TEST RESULTS VISUALIZER
           </Typography>
         </Toolbar>
       </Container>
