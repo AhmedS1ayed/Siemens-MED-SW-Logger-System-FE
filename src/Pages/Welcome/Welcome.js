@@ -11,6 +11,7 @@ const Welcome = () => {
     <div className="WelcomeContainer">
       <div className="Welcome">
         <div className="WelcomeBody">
+        <h1>Test Results Visualizer</h1>
           <form onSubmit={handleConnect} className="WelcomeForm">
             <label className="FormLabel">
               Database path:
@@ -36,7 +37,7 @@ const Welcome = () => {
           
           {connected && <h1> Connected </h1>}
 
-          <h1>Test Results Visualizer</h1>
+         
           <Link className="CustomLinkWelcome" to="/testsuits">
             <button className="WelcomeBtn" disabled={!connected}>
               Click here to go to test suite page
