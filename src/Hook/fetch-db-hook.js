@@ -49,12 +49,15 @@ function FetchDbHook() {
       },
       body: JSON.stringify(formData),
     })
-      .then((response) => response.json())
-      .then((data) => {console.log(data)})
-      .catch((error) => {console.log(error)});
-
-      setConnect(false);
-      saveState(false);
+      .then((response) => {
+        if (response.status === 200) {
+          setConnect(false);
+          saveState(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return [handleConnect, handleChange, connect, handleDisconnect];
 }
