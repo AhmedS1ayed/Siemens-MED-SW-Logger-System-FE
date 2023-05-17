@@ -6,6 +6,8 @@ import FetchDbHook from "../../Hook/fetch-db-hook";
 const Welcome = () => {
   const [handleConnect, handleChange, connected, handleDisconnect] =
     FetchDbHook();
+
+    console.log(connected);
   return (
     <div className="WelcomeContainer">
       <div className="Welcome">

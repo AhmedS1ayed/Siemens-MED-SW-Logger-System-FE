@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import DatabaseContext from "../Contexts/DatabaseContext";
+import { saveState } from "../Storage/storage";
 function FetchDbHook() {
   const [connect, setConnect] = useContext(DatabaseContext);
   const [formData, setFormData] = useState();
@@ -8,6 +9,7 @@ function FetchDbHook() {
     if (!formData || Object.keys(formData).length === 0) {
       console.log("No URL provided");
       setConnect(false);
+      saveState(false);
       return;
     }
 
@@ -22,14 +24,17 @@ function FetchDbHook() {
         if (response.ok) {
           console.log("Database connection successfull!");
           setConnect(true);
+          saveState(true);
         } else {
           console.log("Database connection failed!");
           setConnect(false);
+          saveState(false);
         }
       })
       .catch((error) => {
         console.log("An error occurred: ", error);
         setConnect(false);
+        saveState(false);
       });
   };
   const handleChange = (event) => {
@@ -45,7 +50,7 @@ function FetchDbHook() {
       body: JSON.stringify(formData),
     })
       .then((response) => response.json())
-      .then((data) => setConnect("Disconnected"))
+      .then((data) => {setConnect(false); saveState(false);})
       .catch((error) => {});
   };
   return [handleConnect, handleChange, connect, handleDisconnect];

@@ -7,15 +7,12 @@ import Testcase from "./Pages/Testcase/Testcase";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ValidationTag from "./Pages/ValidationTag/ValidationTag";
 import Welcome from "./Pages/Welcome/Welcome";
-import DatabaseContext from "./Contexts/DatabaseContext.js";
-import { useState } from "react";
+import { DataBaseContextProvider } from "./Contexts/DatabaseContext.js";
 
 function App() {
-  const [connect, setConnect] = useState();
   return (
-    <DatabaseContext.Provider value={[connect,setConnect]}>
+    <DataBaseContextProvider>
       <Navbar />
-      
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Welcome />} />
@@ -24,7 +21,7 @@ function App() {
           <Route path="/validtags" element={<ValidationTag />} />
         </Routes>
       </BrowserRouter>
-    </DatabaseContext.Provider>
+    </DataBaseContextProvider>
   );
 }
 
