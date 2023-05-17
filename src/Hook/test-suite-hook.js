@@ -6,27 +6,35 @@ import { useNestedData } from "./useNestedData";
 function TestSuiteHook() {
   let connectivity_links = [];
   let connectivity_nodes = [];
+  let totalTestSuites = 0;
+  let successfulTestSuites = 0;
+  let failedTestSuites = 0;
 
   const [data, setData] = useState([
     {
       id: "none",
     },
   ]);
+  const [{ filteredData, data_columns }, setFilteredData] = useState(
+    dataRepresentation(data)
+  );
   // Fetch Data of test suites
   useEffect(() => {
     fetch("http://localhost:8080/TestSuites/")
       .then((response) => response.json())
       .then((data) => {
-        if (data) {
+        if (data && data.message !=="Client must be connected before running operations") {
           setData(data);
           setFilteredData(dataRepresentation(data));
-          console.log("data: ", data);
         }
+        else window.location.reload();
       })
       .catch((error) => {
         console.error("error while fetching Testsuites data: ", error);
       });
   }, []);
+
+
 
   const {
     openDialogs,
@@ -42,7 +50,7 @@ function TestSuiteHook() {
     path,
     setPath,
   } = useNestedData();
-
+  
   const toggleDialog = () => {
     setOpenDialogs(!openDialogs);
     setConnectivityMap(false);
@@ -77,17 +85,14 @@ function TestSuiteHook() {
     setPath(path.slice(0, path.length - 1));
   };
   
-  const totalTestSuites = data.length;
-  const successfulTestSuites = data.filter(
-    (item) => item.status === true
-  ).length;
-  const failedTestSuites = data.filter(
-    (item) => item.status === false
-  ).length;
 
-  const [{ filteredData, data_columns }, setFilteredData] = useState(
-    dataRepresentation(data)
-  );
+    totalTestSuites = data.length;
+    successfulTestSuites = data.filter(
+      (item) => item.status === true
+    ).length;
+    failedTestSuites = data.filter(
+      (item) => item.status === false
+    ).length;
 
   return [
     totalTestSuites,

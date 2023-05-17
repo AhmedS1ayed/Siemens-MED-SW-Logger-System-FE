@@ -50,8 +50,11 @@ function FetchDbHook() {
       body: JSON.stringify(formData),
     })
       .then((response) => response.json())
-      .then((data) => {setConnect(false); saveState(false);})
-      .catch((error) => {});
+      .then((data) => {console.log(data)})
+      .catch((error) => {console.log(error)});
+
+      setConnect(false);
+      saveState(false);
   };
   return [handleConnect, handleChange, connect, handleDisconnect];
 }

@@ -11,11 +11,11 @@ export const loadState = () => {
     }
   };
   
-  export const saveState = (state) => {
-    try {
-      const serializedState = JSON.stringify(state);
-      localStorage.setItem('myContextState', serializedState);
-    } catch (error) {
-      console.log('Error saving state to localStorage:', error);
-    }
-  };
+export const saveState = (state) => {
+  try {
+    const serializedState = JSON.stringify(state);
+    localStorage.setItem('myContextState', serializedState);
+  } catch (error) {
+    console.log('Error saving state to localStorage:', error);
+  }
+};

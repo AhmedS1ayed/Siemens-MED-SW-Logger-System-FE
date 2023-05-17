@@ -6,8 +6,7 @@ import FetchDbHook from "../../Hook/fetch-db-hook";
 const Welcome = () => {
   const [handleConnect, handleChange, connected, handleDisconnect] =
     FetchDbHook();
-
-    console.log(connected);
+    
   return (
     <div className="WelcomeContainer">
       <div className="Welcome">
@@ -30,7 +29,7 @@ const Welcome = () => {
 
           <form onSubmit={handleDisconnect} className="WelcomeForm">
             <label className="FormLabel">Disconnect From Database: </label>
-            <button className="FormButton" type="submit">
+            <button className="FormButton">
               Disconnect
             </button>
           </form>
