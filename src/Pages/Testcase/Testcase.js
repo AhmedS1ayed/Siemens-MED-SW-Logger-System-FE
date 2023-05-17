@@ -69,7 +69,7 @@ export default function Testcase() {
         maxWidth={"xl"}
         style={{ borderRadius: "50px" }}
       >
-        <NestHeader title={"Test Case - " + (idx + 1).toString()}></NestHeader>
+        <NestHeader title={"Test Case " + (idx + 1).toString()}></NestHeader>
         <NestPath
           style={{ padding: "10px", fontWeight: "bold", fontSize: "16px" }}
           path={path}
