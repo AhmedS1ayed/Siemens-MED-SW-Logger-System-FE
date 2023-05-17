@@ -1,13 +1,13 @@
-import { useState } from "react";
-
+import { useContext, useState } from "react";
+import DatabaseContext from "../Contexts/DatabaseContext";
 function FetchDbHook() {
+  const [connect, setConnect] = useContext(DatabaseContext);
   const [formData, setFormData] = useState();
-  const [response, setResponse] = useState();
   const handleConnect = (event) => {
     event.preventDefault();
     if (!formData || Object.keys(formData).length === 0) {
       console.log("No URL provided");
-      setResponse(false);
+      setConnect(false);
       return;
     }
 
@@ -21,15 +21,15 @@ function FetchDbHook() {
       .then((response) => {
         if (response.ok) {
           console.log("Database connection successfull!");
-          setResponse("Connected");
+          setConnect(true);
         } else {
           console.log("Database connection failed!");
-          setResponse(false);
+          setConnect(false);
         }
       })
       .catch((error) => {
         console.log("An error occurred: ", error);
-        setResponse(false);
+        setConnect(false);
       });
   };
   const handleChange = (event) => {
@@ -45,10 +45,10 @@ function FetchDbHook() {
       body: JSON.stringify(formData),
     })
       .then((response) => response.json())
-      .then((data) => setResponse("Disconnected"))
-      .catch((error) => setResponse("failed"));
+      .then((data) => setConnect("Disconnected"))
+      .catch((error) => {});
   };
-  return [handleConnect, handleChange, response, handleDisconnect];
+  return [handleConnect, handleChange, connect, handleDisconnect];
 }
 
 export default FetchDbHook;

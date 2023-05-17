@@ -8,8 +8,8 @@ function ThemeButton() {
     document.querySelector("body").setAttribute("data-theme", "light");
   };
   const toggleTheme = (event) => {
-    if (event.target.checked) setLightMode();
-    else setDarkMode();
+    if (event.target.checked) setDarkMode();
+    else setLightMode();
   };
   return (
     <div style={{ float:"right" ,marginTop:"10px"}}>

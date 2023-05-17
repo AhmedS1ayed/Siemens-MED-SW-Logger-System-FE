@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
 import "./Welcome.css";
 import FetchDbHook from "../../Hook/fetch-db-hook";
-
 const Welcome = () => {
-  const [handleConnect, handleChange, response, handleDisconnect] =
+  const [handleConnect, handleChange, connected, handleDisconnect] =
     FetchDbHook();
   return (
     <div className="WelcomeContainer">
@@ -33,11 +32,12 @@ const Welcome = () => {
               Disconnect
             </button>
           </form>
-          {response && <h1> Connected </h1>}
+          
+          {connected && <h1> Connected </h1>}
 
           <h1>Test Results Visualizer</h1>
           <Link className="CustomLinkWelcome" to="/testsuits">
-            <button className="WelcomeBtn" disabled={!response}>
+            <button className="WelcomeBtn" disabled={!connected}>
               Click here to go to test suite page
             </button>
           </Link>
