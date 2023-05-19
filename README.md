@@ -2,7 +2,7 @@
 This is a Logger System Built Using React Framework
 
 ## Dependencies
-npm install @mui/material
+npm install @mui/material <br>
 npm install reactflow
 
 ## Start Project
