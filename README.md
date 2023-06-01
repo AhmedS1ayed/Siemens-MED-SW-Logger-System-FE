@@ -1,7 +1,7 @@
 # Siemens-MED-SW-Logger-System-FE
 This is a Logger System Built Using React Framework
 ## Installation :
-npm install
+npm -f install
 ## Dependencies
 mui/material <br>
 reactflow
